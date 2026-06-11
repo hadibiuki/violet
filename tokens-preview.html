@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violet — Design Tokens</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--vt-color-bg); color:var(--vt-color-text);
+         font-family:var(--vt-font-sans); transition:background .2s,color .2s; }
+  .wrap { max-width:1080px; margin:0 auto; padding:var(--vt-space-12) var(--vt-space-6) var(--vt-space-24); }
+  header.hero { background:linear-gradient(150deg,var(--vt-ink-950),var(--vt-ink-900) 55%,#3B0764);
+    border-radius:var(--vt-radius-2xl); padding:var(--vt-space-16) var(--vt-space-12); color:#fff; position:relative; overflow:hidden; }
+  header.hero h1 { font-family:var(--vt-font-display); font-weight:300; font-size:var(--vt-text-6xl); margin:0; letter-spacing:-.02em; }
+  header.hero .ey { font-size:var(--vt-text-xs); letter-spacing:.24em; color:var(--vt-gold-300); text-transform:uppercase; margin-bottom:var(--vt-space-3); }
+  header.hero p { color:var(--vt-violet-200); font-size:var(--vt-text-lg); margin:var(--vt-space-2) 0 0; }
+  h2 { font-size:var(--vt-text-2xl); font-weight:600; color:var(--vt-color-text-strong); margin:var(--vt-space-16) 0 var(--vt-space-2); letter-spacing:-.01em; }
+  h2 .k { font-family:var(--vt-font-mono); font-size:var(--vt-text-xs); color:var(--vt-color-text-subtle); font-weight:400; margin-left:8px; }
+  .lead { color:var(--vt-color-text-muted); margin:0 0 var(--vt-space-6); font-size:var(--vt-text-sm); }
+  .grid { display:grid; gap:var(--vt-space-4); }
+  .sw { border-radius:var(--vt-radius-md); overflow:hidden; border:1px solid var(--vt-color-border);
+        background:var(--vt-color-surface); box-shadow:var(--vt-shadow-xs); }
+  .sw .chip { height:64px; }
+  .sw .meta { padding:var(--vt-space-2) var(--vt-space-3); }
+  .sw .n { font-size:var(--vt-text-xs); font-weight:600; color:var(--vt-color-text-strong); }
+  .sw .v { font-family:var(--vt-font-mono); font-size:10px; color:var(--vt-color-text-muted); }
+  .ramp { display:grid; grid-template-columns:repeat(11,1fr); gap:6px; }
+  .ramp.short { grid-template-columns:repeat(7,1fr); }
+  .ramp .step { border-radius:var(--vt-radius-sm); height:56px; display:flex; align-items:flex-end; padding:4px; font-size:9px;
+                font-family:var(--vt-font-mono); border:1px solid var(--vt-color-border); }
+  .cards { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); }
+  .type-row { display:flex; align-items:baseline; gap:var(--vt-space-4); padding:var(--vt-space-3) 0; border-bottom:1px solid var(--vt-color-divider); }
+  .type-row .lab { font-family:var(--vt-font-mono); font-size:10px; color:var(--vt-color-text-subtle); width:120px; flex:none; }
+  .elev { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); }
+  .elev .box { background:var(--vt-color-surface); border-radius:var(--vt-radius-lg); height:110px; display:flex; align-items:center; justify-content:center;
+               font-family:var(--vt-font-mono); font-size:11px; color:var(--vt-color-text-muted); }
+  .radii { grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); }
+  .radii .box { height:90px; background:var(--vt-color-primary-subtle); border:1.5px solid var(--vt-color-primary);
+                display:flex; align-items:flex-end; justify-content:center; padding:8px; font-family:var(--vt-font-mono); font-size:10px; color:var(--vt-color-primary); }
+  .space-row { display:flex; align-items:center; gap:var(--vt-space-4); margin-bottom:8px; font-family:var(--vt-font-mono); font-size:11px; color:var(--vt-color-text-muted); }
+  .space-row .bar { background:var(--vt-color-primary); height:14px; border-radius:3px; }
+  .toggle { position:fixed; top:18px; right:18px; z-index:9; background:var(--vt-color-surface); color:var(--vt-color-text);
+            border:1px solid var(--vt-color-border-strong); border-radius:var(--vt-radius-pill); padding:8px 16px; cursor:pointer;
+            font-family:var(--vt-font-sans); font-size:13px; font-weight:500; box-shadow:var(--vt-shadow-md); }
+  .pill { display:inline-flex; align-items:center; gap:6px; border-radius:var(--vt-radius-pill); padding:4px 12px; font-size:12px; font-weight:500; }
+  .pill .dot { width:8px; height:8px; border-radius:50%; }
+</style>
+</head>
+<body>
+<button class="toggle" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark'?'light':'dark'">◐ Toggle theme</button>
+<div class="wrap">
+  <header class="hero">
+    <div class="ey">Brand · Watches</div>
+    <h1>Violet</h1>
+    <p>Design Tokens — colors, typography, elevation, radius & spacing, generated from <code style="font-family:var(--vt-font-mono)">tokens.css</code></p>
+  </header>
+
+  <h2>Brand ramps <span class="k">--vt-violet-* · --vt-gold-* · --vt-ink-*</span></h2>
+  <p class="lead">Raw primitives. UI uses the semantic tokens below, never these directly.</p>
+  <div id="ramps"></div>
+
+  <h2>Semantic colors <span class="k">--vt-color-*</span></h2>
+  <p class="lead">The tokens you actually build with. Try the theme toggle — these remap for dark.</p>
+  <div class="grid cards" id="semantic"></div>
+
+  <h2>Order-status pills <span class="k">B2B pipeline</span></h2>
+  <div id="status" style="display:flex;flex-wrap:wrap;gap:12px"></div>
+
+  <h2>Typography <span class="k">--vt-font-* · --vt-text-*</span></h2>
+  <div id="type"></div>
+
+  <h2>Elevation <span class="k">--vt-shadow-*</span></h2>
+  <div class="grid elev" id="elev"></div>
+
+  <h2>Radius <span class="k">--vt-radius-*</span></h2>
+  <div class="grid radii" id="radii"></div>
+
+  <h2>Spacing <span class="k">--vt-space-* · 4px base</span></h2>
+  <div id="space"></div>
+</div>
+<script>
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const ramps = {
+  violet:[50,100,200,300,400,500,600,700,800,900,950],
+  gold:[50,100,200,300,400,500,600],
+  ink:[50,100,150,200,300,400,500,600,700,800,900,950]
+};
+document.getElementById('ramps').innerHTML = Object.entries(ramps).map(([fam,steps])=>{
+  return `<div style="margin-bottom:14px"><div class="sw-label" style="font-family:var(--vt-font-mono);font-size:11px;color:var(--vt-color-text-muted);margin-bottom:6px">${fam}</div>
+  <div class="ramp ${steps.length<=7?'short':''}">${steps.map(s=>{
+    const v=css('--vt-'+fam+'-'+s); const dark = (fam==='ink'&&s>=400)||s>=500;
+    return `<div class="step" style="background:${v};color:${dark?'#fff':'#000'}">${s}</div>`;}).join('')}</div></div>`;
+}).join('');
+
+const semantic = [
+ 'bg','surface','surface-sunken','surface-inverse','text','text-muted','text-subtle','link',
+ 'border','border-strong','divider','primary','primary-hover','primary-subtle','on-primary',
+ 'accent','accent-strong','success','warning','danger','info','focus-ring','badge-new','badge-limited'
+];
+document.getElementById('semantic').innerHTML = semantic.map(n=>{
+  const v=css('--vt-color-'+n);
+  return `<div class="sw"><div class="chip" style="background:${v}"></div>
+   <div class="meta"><div class="n">${n}</div><div class="v">${v||'—'}</div></div></div>`;
+}).join('');
+
+const statuses=['submitted','reviewing','approved','shipped','completed','rejected'];
+document.getElementById('status').innerHTML = statuses.map(s=>{
+  return `<span class="pill" style="background:var(--vt-color-status-${s}-bg);color:var(--vt-color-status-${s})">
+    <span class="dot" style="background:var(--vt-color-status-${s})"></span>${s}</span>`;
+}).join('');
+
+const type=[
+ ['Display / Hero','var(--vt-font-display)',64,300,'Violet'],
+ ['Display / Large','var(--vt-font-display)',48,400,'Timeless craftsmanship'],
+ ['Heading / H1','var(--vt-font-sans)',48,600,'New Models 2026'],
+ ['Heading / H3','var(--vt-font-sans)',28,600,'Chronograph Classic'],
+ ['Body / Large','var(--vt-font-sans)',18,400,'Discover the latest designs and innovations.'],
+ ['Body / Base','var(--vt-font-sans)',16,400,'Explore the complete Violet watch catalog.'],
+ ['Label / Caption','var(--vt-font-sans)',12,500,'Min. order: 10 units'],
+ ['Code / SKU','var(--vt-font-mono)',13,400,'VLT-2025-001'],
+ ['FA / Heading (Vazirmatn)','var(--vt-font-fa)',28,600,'مدل‌های جدید'],
+ ['FA / Body (Vazirmatn)','var(--vt-font-fa)',16,400,'ثبت سفارش عمده برای مشتریان']
+];
+document.getElementById('type').innerHTML = type.map(([lab,f,size,w,sample])=>{
+  const rtl = lab.startsWith('FA') ? 'dir="rtl"' : '';
+  return `<div class="type-row"><div class="lab">${lab}<br>${size}px · ${w}</div>
+    <div ${rtl} style="font-family:${f};font-size:${size}px;font-weight:${w};color:var(--vt-color-text-strong);line-height:1.2">${sample}</div></div>`;
+}).join('');
+
+const shadows=['xs','sm','md','lg','xl','2xl'];
+document.getElementById('elev').innerHTML = shadows.map(s=>
+  `<div class="box" style="box-shadow:var(--vt-shadow-${s})">shadow/${s}</div>`).join('');
+
+const radii=[['sm',6],['md',10],['lg',14],['xl',20],['2xl',28],['pill','9999']];
+document.getElementById('radii').innerHTML = radii.map(([n,px])=>
+  `<div class="box" style="border-radius:var(--vt-radius-${n})">radius/${n}<br>${px}px</div>`).join('');
+
+const spaces=[['1',4],['2',8],['3',12],['4',16],['5',20],['6',24],['8',32],['10',40],['12',48],['16',64],['20',80],['24',96]];
+document.getElementById('space').innerHTML = spaces.map(([n,px])=>
+  `<div class="space-row"><span style="width:60px">space/${n}</span><div class="bar" style="width:${px}px"></div><span>${px}px</span></div>`).join('');
+</script>
+</body>
+</html>
