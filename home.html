@@ -123,6 +123,39 @@
   .card .body .sku{font-family:var(--vt-font-mono,monospace);font-size:12px;color:var(--vt-color-text-muted);margin-top:4px}
   .card .body .price{margin-top:10px;font-size:16px;font-weight:600;color:var(--vt-color-primary)}
 
+  /* product lines */
+  .lines{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .line-card{position:relative;aspect-ratio:3/4;border-radius:var(--vt-radius-xl);overflow:hidden;cursor:pointer;
+       background:linear-gradient(160deg,var(--vt-violet-100),var(--vt-ink-100));transition:transform .5s cubic-bezier(.2,0,0,1),box-shadow .5s}
+  .line-card:hover{transform:translateY(-8px);box-shadow:var(--vt-shadow-xl)}
+  .line-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,0,0,1)}
+  .line-card:hover img{transform:scale(1.07)}
+  .line-card::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(13,10,30,.78))}
+  .line-card .lc{position:absolute;left:26px;bottom:26px;right:26px;z-index:2;color:#fff}
+  .line-card .lc h3{font-family:var(--vt-font-display);font-size:32px;font-weight:400}
+  .line-card .lc .desc{font-size:13px;color:rgba(255,255,255,.72);margin-top:2px}
+  .line-card .lc .ex{font-size:13px;color:var(--vt-gold-300);margin-top:12px;display:inline-flex;gap:8px;align-items:center;transition:gap .3s}
+  .line-card:hover .lc .ex{gap:15px}
+  .center-cta{text-align:center;margin-top:52px}
+
+  /* banner slider */
+  .slider{position:relative;overflow:hidden;height:clamp(420px,56vh,560px);background:linear-gradient(120deg,#231940,#3B0764)}
+  .slides{display:flex;height:100%;transition:transform .8s cubic-bezier(.2,0,0,1)}
+  .slide{position:relative;min-width:100%;height:100%;display:flex;align-items:center;overflow:hidden;background:linear-gradient(120deg,#231940,#3B0764)}
+  .slide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,10,30,.9),rgba(13,10,30,.5) 55%,rgba(13,10,30,.12))}
+  .slide .sc{position:relative;z-index:2;color:#fff;max-width:560px;opacity:0;transform:translateY(22px);transition:opacity .8s .25s,transform .8s .25s}
+  .slide.on .sc{opacity:1;transform:none}
+  .slide .sc h2{font-family:var(--vt-font-display);font-weight:300;font-size:clamp(36px,5vw,64px);line-height:1.05;margin:14px 0 16px;color:#fff}
+  .slide .sc p{color:#C4B5FD;font-size:17px;margin-bottom:26px;max-width:420px}
+  .s-dots{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;gap:10px;z-index:4}
+  .s-dots b{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:.35s}
+  .s-dots b.on{background:var(--vt-color-accent);width:28px;border-radius:5px}
+  .s-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+       background:rgba(255,255,255,.1);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:20px;transition:.3s}
+  .s-arrow:hover{background:rgba(255,255,255,.25)}
+  .s-arrow.prev{left:26px}.s-arrow.next{right:26px}
+
   /* split brand */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
   .split .imgwrap{position:relative;aspect-ratio:4/5;border-radius:var(--vt-radius-2xl);overflow:hidden;
@@ -165,7 +198,7 @@
   .fbar{border-top:1px solid rgba(167,139,250,.2);padding-top:24px;display:flex;justify-content:space-between;color:#A78BFA;font-size:13px;flex-wrap:wrap;gap:12px}
 
   @media(max-width:900px){
-    .hero .wrap,.split,.grid4,.stats,.gallery,.fcols{grid-template-columns:1fr}
+    .hero .wrap,.split,.grid4,.stats,.gallery,.fcols,.lines{grid-template-columns:1fr}
     .hero-media{height:360px}.navlinks{display:none}.gtile.wide,.gtile.tall{grid-column:auto;grid-row:auto}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
@@ -223,6 +256,43 @@
   </div>
 </section>
 
+<section class="slider" id="slider" aria-label="Collection highlights">
+  <div class="slides" id="slides">
+    <div class="slide on">
+      <img src="https://images.unsplash.com/photo-1495856458515-0637185db551?auto=format&fit=crop&w=1600&q=80" alt="" onerror="this.style.opacity=0">
+      <div class="wrap"><div class="sc"><span class="eyebrow">Autumn / Winter 2026</span><h2>The Heritage<br>Collection</h2><p>Hand-finished cases and sapphire crystal — refined for the season.</p><button class="btn btn-gold">View Collection <span class="arr">→</span></button></div></div>
+    </div>
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1600&q=80" alt="" onerror="this.style.opacity=0">
+      <div class="wrap"><div class="sc"><span class="eyebrow">The Sport Line</span><h2>Engineered<br>for motion</h2><p>Water-resistant to 200m — built to keep pace with you.</p><button class="btn btn-line">Discover Sport <span class="arr">→</span></button></div></div>
+    </div>
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?auto=format&fit=crop&w=1600&q=80" alt="" onerror="this.style.opacity=0">
+      <div class="wrap"><div class="sc"><span class="eyebrow">Limited Edition</span><h2>Aurora<br>Skeleton</h2><p>Only 500 pieces — the movement, laid bare.</p><button class="btn btn-gold">Reserve yours <span class="arr">→</span></button></div></div>
+    </div>
+  </div>
+  <button class="s-arrow prev" id="sPrev" aria-label="Previous slide">‹</button>
+  <button class="s-arrow next" id="sNext" aria-label="Next slide">›</button>
+  <div class="s-dots" id="sDots"></div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><span class="eyebrow">Find your style</span><h2 class="serif">Explore the lines</h2></div>
+      <a class="lnk">View All Products <span class="arr">→</span></a>
+    </div>
+    <div class="lines">
+      <a class="line-card reveal"><img alt="Classic" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80" onerror="this.style.opacity=0">
+        <div class="lc"><h3>Classic</h3><div class="desc">Timeless dress watches</div><span class="ex">Explore the line →</span></div></a>
+      <a class="line-card reveal d1"><img alt="Sport" src="https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=700&q=80" onerror="this.style.opacity=0">
+        <div class="lc"><h3>Sport</h3><div class="desc">Built for motion & depth</div><span class="ex">Explore the line →</span></div></a>
+      <a class="line-card reveal d2"><img alt="Smart" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=700&q=80" onerror="this.style.opacity=0">
+        <div class="lc"><h3>Smart</h3><div class="desc">Connected, quietly</div><span class="ex">Explore the line →</span></div></a>
+    </div>
+  </div>
+</section>
+
 <section class="surface">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -230,6 +300,7 @@
       <a class="lnk">Explore All Products <span class="arr">→</span></a>
     </div>
     <div class="grid4" id="featgrid"></div>
+    <div class="center-cta reveal"><button class="btn btn-ghost">View All Products <span class="arr">→</span></button></div>
   </div>
 </section>
 
@@ -259,7 +330,7 @@
 
 <section>
   <div class="wrap">
-    <div class="sec-head reveal"><div><span class="eyebrow">The world of Violet</span><h2 class="serif">In every moment</h2></div></div>
+    <div class="sec-head reveal"><div><span class="eyebrow">The world of Violet</span><h2 class="serif">In every moment</h2></div><a class="lnk">View the gallery <span class="arr">→</span></a></div>
     <div class="gallery reveal d1">
       <div class="gtile wide"><img alt="" src="https://images.unsplash.com/photo-1495856458515-0637185db551?auto=format&fit=crop&w=900&q=80" onerror="this.style.opacity=0"><span class="cap">Lifestyle</span></div>
       <div class="gtile tall"><img alt="" src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?auto=format&fit=crop&w=700&q=80" onerror="this.style.opacity=0"><span class="cap">Craft</span></div>
@@ -328,6 +399,23 @@
   const media=document.querySelector('.hero-media');
   addEventListener('mousemove',e=>{const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
     if(media)media.style.transform=`translate(${x*20}px,${y*16}px)`;});
+
+  // banner slider
+  (function(){
+    const slides=[...document.querySelectorAll('#slides .slide')],track=document.getElementById('slides'),dots=document.getElementById('sDots');
+    const n=slides.length;let i=0,timer;
+    dots.innerHTML=slides.map((_,k)=>`<b data-k="${k}"></b>`).join('');
+    const dotEls=[...dots.children];
+    function go(k){i=(k+n)%n;track.style.transform=`translateX(${-i*100}%)`;
+      slides.forEach((s,j)=>s.classList.toggle('on',j===i));dotEls.forEach((d,j)=>d.classList.toggle('on',j===i));}
+    function play(){stop();timer=setInterval(()=>go(i+1),5500);}
+    function stop(){clearInterval(timer);}
+    document.getElementById('sNext').onclick=()=>{go(i+1);play();};
+    document.getElementById('sPrev').onclick=()=>{go(i-1);play();};
+    dotEls.forEach(d=>d.onclick=()=>{go(+d.dataset.k);play();});
+    const sl=document.getElementById('slider');sl.addEventListener('mouseenter',stop);sl.addEventListener('mouseleave',play);
+    go(0);play();
+  })();
 
   // count up
   function countUp(el){const to=+el.dataset.to;if(!to){return;}const dur=1400,t0=performance.now();
