@@ -365,6 +365,15 @@
 </footer>
 
 <script>
+  // static presentation mode for investor decks: home.html?static
+  // freezes all motion and reveals every section so screenshots/print capture the full page
+  if(location.search.indexOf('static')>-1){
+    const fs=document.createElement('style');
+    fs.textContent='*{animation:none!important;transition:none!important}html{scroll-behavior:auto}';
+    document.head.appendChild(fs);
+    addEventListener('load',()=>document.querySelectorAll('.reveal').forEach(e=>e.classList.add('in')));
+  }
+
   // products
   const imgs=[
     'photo-1547996160-81dfa63595aa','photo-1524805444758-089113d48a6d','photo-1533139502658-0198f920d8e8','photo-1612817159949-195b6eb9e31a',

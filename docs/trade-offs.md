@@ -21,31 +21,32 @@ favors flow → "Load More" (keeps it simple, avoids infinite-scroll scroll-rest
 **Revisit when:** analytics show high page-depth browsing where infinite scroll would lift
 engagement, or catalog grows past where offset pagination is efficient (move to cursor).
 
-## TD-2 · Rendering strategy (site) 🟡
+## TD-2 · Rendering strategy (site) 🟢
 **Context:** Site must be international, multilingual, SEO-strong (hreflang, metadata),
 fast with heavy media; it's a vitrine (no auth, no checkout).
 **Options:** (a) SSG/ISR (static + incremental), (b) SSR per request, (c) CSR SPA.
-**Decision (leaning):** **SSG + ISR** (e.g., Next.js App Router or Astro) — pre-render
-catalog/PDP/brand pages per language, revalidate on CMS change.
+**Decision:** **Next.js (App Router) with SSG + ISR** — pre-render catalog/PDP/brand
+pages per language, revalidate on CMS change. *(Framework confirmed 2026-06-12.)*
 **Why:** Best SEO + TTFB for mostly-catalog content that changes via CMS, not per-user.
 ISR handles 1000+ PDPs without rebuilding everything. CSR-only would tank SEO (a core goal);
-full SSR is unnecessary cost for non-personalized pages.
+full SSR is unnecessary cost for non-personalized pages. Next.js shares React with the
+B2B app (one design system, one mental model) and ships mature i18n/metadata/hreflang
+APIs (`generateMetadata`, route-level locales) — settling TD-5's library to **`next-intl`**.
 **Revisit when:** content becomes personalized/real-time, or build times balloon (then lean
 more on ISR/on-demand).
-**⚪ Needs input:** preferred framework (Next.js vs. Astro vs. Remix) — affects scaffolding.
 
 ## TD-3 · Rendering strategy (B2B app) 🟢
 **Decision:** **CSR SPA behind auth** (Vite + React). No SEO need; it's an app.
 **Why:** Snappy interactions, simple auth/session model, no crawler concerns.
 **Revisit when:** never likely; only if parts need shareable links.
 
-## TD-4 · One repo or two? ⚪
+## TD-4 · One repo or two? 🟢
 **Context:** Two products, *not technically coupled*, but must share brand, **design
 system**, and product-data shape.
 **Options:** (a) monorepo (pnpm/turbo) with shared `design-system` + `types` packages,
 (b) two separate repos, (c) shared private npm package.
-**Decision (recommend):** **Monorepo** with shared packages: `@violet/tokens`,
-`@violet/ui`, `@violet/types` (product-data contract).
+**Decision:** **Monorepo** with shared packages: `@violet/tokens`, `@violet/ui`,
+`@violet/types` (product-data contract). *(Confirmed 2026-06-12.)*
 **Why:** Keeps brand + data shape in sync (a stated requirement) without coupling runtime.
 Each app deploys independently. Two repos would drift; the design system is already built to
 be shared.
@@ -75,13 +76,21 @@ enables proper pagination counts, and the URL-as-state gives deep-linking + back
 
 ## TD-7 · Image pipeline (4000+ frames) 🟢
 **Context:** 4000+ frames, gallery zoom, color variants, mobile swipe, "speed is critical".
-**Decision:** **CDN + on-the-fly/derivative transforms** (WebP/AVIF, responsive `srcset`,
-multiple sizes), `loading="lazy"`, `aspect-ratio` reservations, blur/skeleton placeholders,
-preload only the active gallery + variant thumbs.
-**Why:** Build-time transforms of 4000+ assets don't scale; a CDN with on-demand variants does.
-Reqs explicitly call for WebP/compressed/lazy.
-**Revisit when:** asset count or cost makes a pre-baked pipeline cheaper, or AVIF support is universal.
-**⚪ Needs input:** is there an existing DAM/CDN (Cloudinary, imgix, S3+CloudFront) or do we choose?
+**Decision:** **Hosting + transforms are a backend/API concern** *(confirmed 2026-06-12)* —
+the frontend does **not** own a CDN/DAM. Instead, the **API returns responsive image
+variants** and the frontend consumes them: builds `srcset`/`sizes`, sets `loading="lazy"`,
+reserves space via `aspect-ratio` (tokens already define product 1/1, banner 21/9), shows
+blur/skeleton placeholders, and preloads only the active gallery + variant thumbs.
+**Frontend contract requirement (feeds TD-8):** the `Product`/`Variant` image shape must be
+a **set of variants**, not a single URL — e.g. each image carries `{ src, width, format }`
+across multiple sizes (and WebP/AVIF where available) plus `alt`, an optional LQIP/blur
+placeholder, and an aspect ratio. A single-URL-per-image API would break responsive delivery,
+so this is specified up front (backend is frontend-first, TD-2/below).
+**Why:** Frontend can't transform 4000+ assets at build time and won't run image infra; the
+backend already serves the assets, so it owns derivatives. The frontend's job is correct
+consumption (srcset/lazy/CLS-safe), which is fully in our control regardless of host.
+**Revisit when:** the API can't produce multiple sizes (then add a Next.js Image
+Optimization / proxy loader in front of the origin as a fallback).
 
 ## TD-8 · Product-data contract (shared) 🟢
 **Context:** Site and app must show the *same* model identity/specs though decoupled.
@@ -91,6 +100,11 @@ Reqs explicitly call for WebP/compressed/lazy.
 API to it. Wholesale-only fields (price, MOQ, stock) are an *extension* used by the app, absent
 on the public site.
 **Revisit when:** the two backends diverge enough to need per-system DTOs (then map at the edge).
+**Frontend-first note (confirmed 2026-06-12):** the APIs are **to-be-built**, so `@violet/types`
+is the **source of truth** — the frontend defines the contract (incl. the responsive image
+variant shape from TD-7) and the backend implements to it. Frontend develops against **typed
+mocks/fixtures** matching the contract until the real endpoints land; an OpenAPI/schema doc is
+generated from the types so backend and frontend stay aligned.
 
 ## TD-9 · Catalog state & data fetching (both apps) 🟢
 **Decision:** **Server-state via TanStack Query** (caching, retries, background refetch);
@@ -124,19 +138,26 @@ headless primitives give accessible focus/keyboard behavior for free.
 **Revisit when:** a component needs styling Tailwind can't express cleanly (drop to CSS module
 against the same tokens).
 
-## TD-13 · Accessibility & browser scope 🟡
-**Decision (recommend):** Target **WCAG 2.1 AA**, modern evergreen browsers + Safari iOS,
-graceful degradation (site content renders without JS for SEO/no-JS).
-**⚪ Needs input:** any required legacy support (older Android webviews common in some markets)?
+## TD-13 · Accessibility & browser scope 🟢
+**Decision:** Target **WCAG 2.1 AA**, **modern evergreen browsers only** (latest 2 of
+Chrome/Edge/Firefox/Safari + iOS Safari) *(confirmed 2026-06-12)*. Site content still
+degrades gracefully without JS for SEO/no-JS, but **no legacy/old-Android polyfilling**.
+**Why:** Lets us use modern CSS freely — logical properties (RTL), `aspect-ratio`, AVIF/WebP
+`<picture>`, container queries — without fallback overhead. Evergreen coverage is sufficient
+for the target markets per the client.
+**Revisit when:** analytics reveal meaningful traffic from old Android Webviews in RU/Arab/
+Iran markets (then add targeted fallbacks for those specific features).
 
 ---
 
-## Open questions for you (⚪)
-1. **Framework** for the site (TD-2): Next.js, Astro, or Remix?
-2. **Repo shape** (TD-4): monorepo with shared packages — OK to proceed?
-3. **Image hosting** (TD-7): existing CDN/DAM, or should I pick one?
-4. **Browser/legacy scope** (TD-13): any old-device targets in RU/Arab/Iran markets?
-5. **Backend reality:** are the two backends/APIs already defined, or are we designing the
-   front end against a to-be-built API (affects the data contract in TD-8)?
+## Resolved (decided 2026-06-12) ✅
+All previously-open questions are now answered — every TD row is 🟢:
+1. **Framework** (TD-2): **Next.js (App Router)**, SSG+ISR → i18n via `next-intl`.
+2. **Repo shape** (TD-4): **Monorepo** with `@violet/tokens` · `@violet/ui` · `@violet/types`.
+3. **Image hosting** (TD-7): **backend/API concern** — API returns **responsive image
+   variants**; frontend consumes (srcset/lazy/CLS-safe), owns no CDN/DAM.
+4. **Browser scope** (TD-13): **Modern evergreen only** (+ iOS Safari); no legacy fallbacks.
+5. **Backend reality** (TD-8): **To-be-built, frontend-first** — `@violet/types` is the
+   contract; backend implements to it; frontend runs on typed mocks until live.
 
-Answering these turns the 🟡/⚪ rows into 🟢 and unblocks scaffolding.
+→ Phase 5 (React monorepo) scaffolding is unblocked.
