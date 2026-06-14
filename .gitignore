@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+dist/
+build/
+.next/
+out/
+.turbo/
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs / os / editor
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+*.tsbuildinfo
+
+# test / coverage
+coverage/
