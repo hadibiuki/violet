@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing, dirForLocale } from "../../i18n/routing";
+import { routing, dirForLocale, isLocale } from "../../i18n/routing";
 import { Providers } from "../providers";
 import "@violet/tokens/tokens.css";
 import "../globals.css";
@@ -20,7 +20,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) notFound();
+  if (!isLocale(locale)) notFound();
 
   // Enable static rendering for this locale.
   setRequestLocale(locale);

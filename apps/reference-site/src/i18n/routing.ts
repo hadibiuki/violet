@@ -10,6 +10,12 @@ export const routing = defineRouting({
 
 export type Locale = (typeof routing.locales)[number];
 
+// Type-guard for a supported locale. (Replaces next-intl v4's `hasLocale`,
+// which isn't available on the v3 line this app pins.)
+export function isLocale(value: unknown): value is Locale {
+  return typeof value === "string" && (routing.locales as readonly string[]).includes(value);
+}
+
 // Arabic is RTL on the site; en/ru are LTR (docs/i18n-rtl.md §2).
 export function dirForLocale(locale: string): "rtl" | "ltr" {
   return locale === "ar" ? "rtl" : "ltr";
