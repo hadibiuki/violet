@@ -1,0 +1,18 @@
+{
+  "name": "@violet/types",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Violet shared product-data contract (Product, Variant, SpecSheet, Category, responsive image variants). Source of truth the backends implement to (docs/trade-offs.md TD-7, TD-8).",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

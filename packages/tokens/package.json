@@ -1,0 +1,12 @@
+{
+  "name": "@violet/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Violet design tokens — CSS custom properties (single source of truth) + Tailwind preset.",
+  "type": "module",
+  "files": ["src", "tailwind-preset.cjs"],
+  "exports": {
+    "./tokens.css": "./src/tokens.css",
+    "./preset": "./tailwind-preset.cjs"
+  }
+}

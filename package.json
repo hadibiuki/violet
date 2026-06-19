@@ -2,7 +2,7 @@
   "name": "violet",
   "version": "0.0.0",
   "private": true,
-  "description": "Violet — watch brand. Monorepo: reference site (EN/RU/AR) + B2B order app (FA), shared design system.",
+  "description": "Violet — watch brand. Monorepo: international reference site (EN/RU/AR) + Persian B2B order app (FA), shared design system. See docs/.",
   "packageManager": "pnpm@10.16.0",
   "engines": {
     "node": ">=20"
