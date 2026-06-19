@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Violet · Design Tokens</title>
+  <!-- The single source of truth. Relative url()s inside resolve against src/. -->
+  <link rel="stylesheet" href="./src/tokens.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--vt-color-bg);
+      color: var(--vt-color-text);
+      font-family: var(--vt-font-sans);
+      font-size: var(--vt-text-base);
+      line-height: var(--vt-leading-normal);
+      transition: background var(--vt-duration-base) var(--vt-ease-standard),
+                  color var(--vt-duration-base) var(--vt-ease-standard);
+    }
+    .wrap { max-width: var(--vt-container-2xl); margin-inline: auto; padding: var(--vt-space-12) var(--vt-space-8); }
+
+    /* Header */
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--vt-space-6);
+      padding-bottom: var(--vt-space-8); margin-bottom: var(--vt-space-12);
+      border-bottom: var(--vt-border-hairline) solid var(--vt-color-divider);
+    }
+    .brand { display: flex; align-items: center; gap: var(--vt-space-4); }
+    .mono-tile {
+      width: 56px; height: 56px; border-radius: var(--vt-radius-lg);
+      background: var(--vt-color-brand-ink) var(--vt-asset-monogram) center/64% no-repeat;
+      box-shadow: var(--vt-shadow-md);
+    }
+    .wordmark {
+      font-family: var(--vt-font-wordmark);
+      letter-spacing: var(--vt-tracking-wider);
+      font-size: var(--vt-text-2xl);
+      color: var(--vt-color-text-strong);
+    }
+    .sub { color: var(--vt-color-text-muted); font-size: var(--vt-text-sm); }
+    .toggle {
+      font-family: var(--vt-font-sans); font-size: var(--vt-text-sm); font-weight: var(--vt-weight-medium);
+      cursor: pointer; padding: var(--vt-space-2) var(--vt-space-4);
+      border-radius: var(--vt-radius-md); border: var(--vt-border-thin) solid var(--vt-color-border-strong);
+      background: var(--vt-color-surface); color: var(--vt-color-text);
+    }
+
+    /* Section scaffolding */
+    section { margin-bottom: var(--vt-space-16); }
+    h2 {
+      font-family: var(--vt-font-display); font-weight: var(--vt-weight-medium);
+      font-size: var(--vt-text-3xl); letter-spacing: var(--vt-tracking-display);
+      margin: 0 0 var(--vt-space-2);
+    }
+    .eyebrow {
+      text-transform: uppercase; letter-spacing: var(--vt-tracking-wider);
+      font-size: var(--vt-text-xs); font-weight: var(--vt-weight-semibold);
+      color: var(--vt-color-accent-strong); margin-bottom: var(--vt-space-1);
+    }
+    .note { color: var(--vt-color-text-muted); font-size: var(--vt-text-sm); margin: 0 0 var(--vt-space-6); }
+
+    /* Swatch grid */
+    .ramp { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--vt-space-3); margin-bottom: var(--vt-space-6); }
+    .swatch {
+      border-radius: var(--vt-radius-md); overflow: hidden;
+      border: var(--vt-border-hairline) solid var(--vt-color-border);
+      background: var(--vt-color-surface); box-shadow: var(--vt-shadow-xs);
+    }
+    .swatch .chip { height: 64px; }
+    .swatch .meta { padding: var(--vt-space-2) var(--vt-space-3); }
+    .swatch .name { font-size: var(--vt-text-xs); font-weight: var(--vt-weight-medium); }
+    .swatch .val { font-family: var(--vt-font-mono); font-size: var(--vt-text-2xs); color: var(--vt-color-text-muted); }
+
+    /* Type specimens */
+    .specimen { padding: var(--vt-space-5) 0; border-bottom: var(--vt-border-hairline) solid var(--vt-color-divider); }
+    .specimen .label { font-family: var(--vt-font-mono); font-size: var(--vt-text-xs); color: var(--vt-color-text-muted); margin-bottom: var(--vt-space-2); }
+
+    /* Spacing bars */
+    .scale-row { display: flex; align-items: center; gap: var(--vt-space-4); margin-bottom: var(--vt-space-2); font-family: var(--vt-font-mono); font-size: var(--vt-text-xs); }
+    .scale-row .tok { width: 120px; color: var(--vt-color-text-muted); }
+    .scale-row .bar { height: 14px; border-radius: var(--vt-radius-sm); background: var(--vt-color-accent); }
+
+    /* Radius / shadow tiles */
+    .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--vt-space-5); }
+    .tile {
+      background: var(--vt-color-surface); border: var(--vt-border-hairline) solid var(--vt-color-border);
+      padding: var(--vt-space-5); display: flex; flex-direction: column; gap: var(--vt-space-3); align-items: center;
+    }
+    .tile .demo { width: 84px; height: 84px; background: var(--vt-color-primary-subtle); border: var(--vt-border-thin) solid var(--vt-color-primary); }
+    .tile .shadowdemo { width: 84px; height: 84px; background: var(--vt-color-surface); border-radius: var(--vt-radius-md); }
+    .tile .cap { font-family: var(--vt-font-mono); font-size: var(--vt-text-xs); color: var(--vt-color-text-muted); }
+
+    /* Brand asset gallery */
+    .assets { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--vt-space-5); }
+    .asset { border: var(--vt-border-hairline) solid var(--vt-color-border); border-radius: var(--vt-radius-lg); overflow: hidden; background: var(--vt-color-surface); }
+    .asset .frame { height: 130px; display: grid; place-items: center; }
+    .asset img { max-width: 78%; max-height: 88px; }
+    .asset .frame.ink { background: var(--vt-color-brand-ink); }
+    .asset .frame.pattern { background-size: cover; background-position: center; }
+    .asset .cap { padding: var(--vt-space-2) var(--vt-space-3); font-family: var(--vt-font-mono); font-size: var(--vt-text-2xs); color: var(--vt-color-text-muted); border-top: var(--vt-border-hairline) solid var(--vt-color-divider); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mono-tile" title="violet-monogram.svg on brand-ink"></div>
+        <div>
+          <div class="wordmark">VIOLET</div>
+          <div class="sub">Design tokens &mdash; single source of truth</div>
+        </div>
+      </div>
+      <button class="toggle" id="themeBtn">Toggle dark</button>
+    </header>
+
+    <section id="colors">
+      <div class="eyebrow">Foundations</div>
+      <h2>Color</h2>
+      <p class="note">Primitive ramps (escape hatch) and the semantic roles you actually build with. Values shown are read live from the computed stylesheet.</p>
+      <div id="colorRoot"></div>
+    </section>
+
+    <section id="type">
+      <div class="eyebrow">Foundations</div>
+      <h2>Typography</h2>
+      <p class="note">Serif/sans duality. Display = Cormorant Garamond; UI = Inter (EN/RU), Vazirmatn (FA), Cairo (AR); mono = JetBrains Mono.</p>
+      <div id="typeRoot"></div>
+    </section>
+
+    <section id="scale">
+      <div class="eyebrow">Foundations</div>
+      <h2>Type scale &amp; Spacing</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-12)">
+        <div id="textScale"></div>
+        <div id="spaceScale"></div>
+      </div>
+    </section>
+
+    <section id="radius">
+      <div class="eyebrow">Foundations</div>
+      <h2>Radius &amp; Elevation</h2>
+      <div style="margin-bottom:var(--vt-space-8)"><div class="tiles" id="radiusRoot"></div></div>
+      <div class="tiles" id="shadowRoot"></div>
+    </section>
+
+    <section id="assets">
+      <div class="eyebrow">Brand</div>
+      <h2>Logos, patterns &amp; textures</h2>
+      <p class="note">Shipped in <code>@violet/tokens/assets/brand/</code> and referenced via <code>--vt-asset-*</code>.</p>
+      <div class="assets" id="assetRoot"></div>
+    </section>
+  </div>
+
+  <script>
+    const cs = getComputedStyle(document.documentElement);
+    const val = (n) => cs.getPropertyValue(n).trim();
+    const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; };
+
+    // ---- Colors ----
+    const ramps = {
+      Violet: ['50','100','200','300','400','500','600','700','800','900','950'].map(s => `--vt-violet-${s}`),
+      Gold:   ['50','100','200','300','400','500','600'].map(s => `--vt-gold-${s}`),
+      Ink:    ['50','100','150','200','300','400','500','600','700','800','900','950'].map(s => `--vt-ink-${s}`),
+      Status: ['--vt-green-500','--vt-amber-500','--vt-red-500','--vt-blue-500','--vt-green-600','--vt-amber-600','--vt-red-600','--vt-blue-600'],
+    };
+    const semantic = ['--vt-color-bg','--vt-color-surface','--vt-color-surface-sunken','--vt-color-primary','--vt-color-primary-hover','--vt-color-accent','--vt-color-accent-strong','--vt-color-text','--vt-color-text-muted','--vt-color-link','--vt-color-border','--vt-color-success','--vt-color-warning','--vt-color-danger','--vt-color-info'];
+    const colorRoot = document.getElementById('colorRoot');
+    const swatch = (name) => `<div class="swatch"><div class="chip" style="background:var(${name})"></div><div class="meta"><div class="name">${name.replace('--vt-','')}</div><div class="val">${val(name) || '—'}</div></div></div>`;
+    for (const [title, list] of Object.entries(ramps)) {
+      colorRoot.appendChild(el(`<div class="eyebrow" style="color:var(--vt-color-text-muted)">${title}</div>`));
+      colorRoot.appendChild(el(`<div class="ramp">${list.map(swatch).join('')}</div>`));
+    }
+    colorRoot.appendChild(el(`<div class="eyebrow" style="color:var(--vt-color-text-muted)">Semantic roles</div>`));
+    colorRoot.appendChild(el(`<div class="ramp">${semantic.map(swatch).join('')}</div>`));
+
+    // ---- Typography specimens ----
+    const typeRoot = document.getElementById('typeRoot');
+    const specimens = [
+      ['--vt-font-display', 'Timeless, reimagined for now.', '300', '40px'],
+      ['--vt-font-wordmark', 'VIOLET', '500', '34px'],
+      ['--vt-font-script', 'Violet', '400', '44px'],
+      ['--vt-font-sans', 'The quick brown fox · Inter UI (EN/RU)', '400', '20px'],
+      ['--vt-font-fa', 'ویولت — سامانهٔ سفارش عمده', '400', '20px'],
+      ['--vt-font-ar', 'فيوليت — مجموعة ساعات فاخرة', '400', '20px'],
+      ['--vt-font-mono', 'VLT-2601 · 42 mm · 5 ATM', '500', '18px'],
+    ];
+    for (const [font, text, w, size] of specimens) {
+      typeRoot.appendChild(el(`<div class="specimen"><div class="label">${font.replace('--vt-font-','')} &mdash; ${val(font)}</div><div style="font-family:var(${font});font-weight:${w};font-size:${size};letter-spacing:${font.includes('wordmark')?'var(--vt-tracking-wider)':'normal'}">${text}</div></div>`));
+    }
+
+    // ---- Type scale ----
+    const textScale = document.getElementById('textScale');
+    textScale.appendChild(el(`<div class="eyebrow" style="color:var(--vt-color-text-muted)">Type scale</div>`));
+    ['2xs','xs','sm','base','lg','xl','2xl','3xl','4xl','5xl','6xl'].forEach(s => {
+      const t = `--vt-text-${s}`;
+      textScale.appendChild(el(`<div style="display:flex;align-items:baseline;gap:var(--vt-space-4);padding:var(--vt-space-1) 0"><span style="width:90px;font-family:var(--vt-font-mono);font-size:var(--vt-text-xs);color:var(--vt-color-text-muted)">${s} · ${val(t)}</span><span style="font-size:var(${t});line-height:1">Violet</span></div>`));
+    });
+
+    // ---- Spacing scale ----
+    const spaceScale = document.getElementById('spaceScale');
+    spaceScale.appendChild(el(`<div class="eyebrow" style="color:var(--vt-color-text-muted)">Spacing (4px base)</div>`));
+    ['1','2','3','4','5','6','8','10','12','16','20','24','32'].forEach(s => {
+      const t = `--vt-space-${s}`;
+      spaceScale.appendChild(el(`<div class="scale-row"><span class="tok">space-${s} · ${val(t)}</span><span class="bar" style="width:var(${t})"></span></div>`));
+    });
+
+    // ---- Radius ----
+    const radiusRoot = document.getElementById('radiusRoot');
+    ['sm','md','lg','xl','2xl','pill'].forEach(s => {
+      const t = `--vt-radius-${s}`;
+      radiusRoot.appendChild(el(`<div class="tile"><div class="demo" style="border-radius:var(${t})"></div><div class="cap">radius-${s} · ${val(t)}</div></div>`));
+    });
+
+    // ---- Shadows ----
+    const shadowRoot = document.getElementById('shadowRoot');
+    ['xs','sm','md','lg','xl','2xl'].forEach(s => {
+      const t = `--vt-shadow-${s}`;
+      shadowRoot.appendChild(el(`<div class="tile"><div class="shadowdemo" style="box-shadow:var(${t})"></div><div class="cap">shadow-${s}</div></div>`));
+    });
+
+    // ---- Brand assets ----
+    const assetRoot = document.getElementById('assetRoot');
+    const assets = [
+      ['violet-wordmark.svg', 'ink', 'img'],
+      ['violet-monogram.svg', 'ink', 'img'],
+      ['violet-monogram-aubergine.png', '', 'img'],
+      ['violet-floral.svg', '', 'img'],
+      ['violet-card-full.png', '', 'img'],
+      ['violet-texture-wordmark.png', 'ink', 'img'],
+      ['violet-pattern-1.svg', 'pattern', 'bg'],
+      ['violet-pattern-2.svg', 'pattern', 'bg'],
+      ['violet-pattern-3.svg', 'pattern', 'bg'],
+    ];
+    assets.forEach(([file, cls, mode]) => {
+      const src = `./assets/brand/${file}`;
+      const frame = mode === 'bg'
+        ? `<div class="frame ${cls}" style="background-image:url('${src}')"></div>`
+        : `<div class="frame ${cls}"><img src="${src}" alt="${file}"/></div>`;
+      assetRoot.appendChild(el(`<div class="asset">${frame}<div class="cap">${file}</div></div>`));
+    });
+
+    // ---- Dark toggle ----
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      const root = document.documentElement;
+      const dark = root.getAttribute('data-theme') === 'dark';
+      if (dark) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+    });
+  </script>
+</body>
+</html>
