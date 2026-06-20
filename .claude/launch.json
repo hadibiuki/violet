@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "storybook",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@violet/ui", "storybook:ci"],
+      "port": 6006
+    },
+    {
       "name": "tokens-showcase",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["-y", "serve", "packages/tokens", "-l", "4321"],
