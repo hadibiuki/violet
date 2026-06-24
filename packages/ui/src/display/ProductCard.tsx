@@ -48,7 +48,11 @@ export function ProductCard({
       href={href}
       className="vt-pcard"
       style={{
-        display: "block",
+        // Flex column + full height so cards stretch to equal heights in a grid
+        // row regardless of how many lines the name wraps to.
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
         background: "var(--vt-color-surface)",
         border: "1px solid var(--vt-color-border)",
         borderRadius: "var(--vt-radius-lg)",
@@ -94,8 +98,27 @@ export function ProductCard({
           />
         )}
       </div>
-      <div style={{ padding: "var(--vt-space-4)" }}>
-        <h3 style={{ margin: 0, fontFamily: "var(--vt-font-sans)", fontSize: "var(--vt-text-base)", fontWeight: "var(--vt-weight-medium)", color: "var(--vt-color-text-strong)" }}>{name}</h3>
+      <div style={{ padding: "var(--vt-space-4)", flexGrow: 1, display: "flex", flexDirection: "column" }}>
+        <h3
+          title={name}
+          style={{
+            margin: 0,
+            fontFamily: "var(--vt-font-sans)",
+            fontSize: "var(--vt-text-base)",
+            fontWeight: "var(--vt-weight-medium)",
+            color: "var(--vt-color-text-strong)",
+            // Reserve exactly two lines so single- and double-line names occupy
+            // the same height → cards stay aligned. Longer names clamp with an ellipsis.
+            lineHeight: 1.3,
+            minHeight: "2.6em",
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 2,
+            overflow: "hidden",
+          }}
+        >
+          {name}
+        </h3>
         {sku && <div style={{ marginTop: 4, fontFamily: "var(--vt-font-mono)", fontSize: "var(--vt-text-xs)", color: "var(--vt-color-text-muted)" }}>{sku}</div>}
         {(price || action) && (
           <div style={{ marginTop: "var(--vt-space-3)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--vt-space-2)" }}>

@@ -1,3 +1,103 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Fonts are loaded via a <link> to Google Fonts in layout.tsx. The literal
+ * family names (Cormorant Garamond, Inter, Cairo, Amiri, Cinzel, JetBrains
+ * Mono) already live in the --vt-font-* tokens (tokens.css), so no override is
+ * needed here — the linked stylesheet supplies the faces those tokens name.
+ */
+
+body {
+  font-family: var(--vt-font-sans);
+  background: var(--vt-color-bg);
+  color: var(--vt-color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Home / marketing motion (mirrors the design prototype) ──────────────── */
+
+.vt-float {
+  animation: vt-float 7s ease-in-out infinite;
+}
+@keyframes vt-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+.vt-spin-slow { animation: vt-spin 40s linear infinite; }
+.vt-spin-rev { animation: vt-spin 60s linear infinite reverse; }
+@keyframes vt-spin { to { transform: rotate(360deg); } }
+
+.vt-aurora { animation: vt-aurora 18s ease-in-out infinite alternate; }
+@keyframes vt-aurora {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-30px, 20px, 0) scale(1.08); }
+}
+
+.vt-slide-in { animation: vt-slide-in 0.6s var(--vt-ease-standard) both; }
+@keyframes vt-slide-in {
+  from { opacity: 0; transform: translateX(-22px); }
+  to { opacity: 1; transform: none; }
+}
+.vt-slide-img { animation: vt-slide-img 0.7s var(--vt-ease-standard) both; }
+@keyframes vt-slide-img {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Scroll-reveal — toggled to .in by the <Reveal> client component. */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.65s var(--vt-ease-standard), transform 0.65s var(--vt-ease-standard);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Line card image zoom on hover. */
+.vt-linecard:hover img {
+  transform: scale(1.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-float, .vt-spin-slow, .vt-spin-rev, .vt-aurora, .vt-slide-in, .vt-slide-img {
+    animation: none !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ── Mobile filter drawer ────────────────────────────────────────────────── */
+
+/* Panel slides in from the inline-start edge (left in LTR, right in RTL). */
+.vt-filter-drawer {
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform 0.3s var(--vt-ease-emphasized), visibility 0.3s;
+}
+[dir="rtl"] .vt-filter-drawer {
+  transform: translateX(100%);
+}
+.vt-filter-drawer.is-open {
+  transform: translateX(0) !important;
+  visibility: visible;
+}
+
+.vt-drawer-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s var(--vt-ease-standard), visibility 0.3s;
+}
+.vt-drawer-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-filter-drawer, .vt-drawer-backdrop { transition: none; }
+}

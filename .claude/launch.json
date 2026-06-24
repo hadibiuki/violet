@@ -16,8 +16,8 @@
     {
       "name": "reference-site",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "@violet/reference-site", "dev"],
-      "port": 3000
+      "runtimeArgs": ["--filter", "@violet/reference-site", "exec", "next", "dev", "--port", "3100"],
+      "port": 3100
     },
     {
       "name": "order-app",

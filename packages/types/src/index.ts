@@ -1,14 +1,21 @@
 /**
- * @violet/types — shared product-data contract.
+ * @violet/types — the shared product-data contract for both Violet products.
  *
- * PLACEHOLDER (scaffold only): the versioned contract — `Product`, `Variant`,
- * `SpecSheet`, `Category`, the responsive image-variant shape ({ src, width,
- * format } sets + alt + LQIP + aspect ratio), and the B2B wholesale extension
- * (price / MOQ / stock) — is implemented on top of this skeleton next.
+ * Source of truth: the to-be-built backends generate their schema from these
+ * types (docs/trade-offs.md TD-7 image variants, TD-8 contract;
+ * docs/validation-rules.md). The reference site consumes the public surface
+ * (primitives, image, product, catalog); the B2B order app additionally
+ * consumes the wholesale surface (commerce, order, account).
  *
- * See docs/trade-offs.md (TD-7 image variants, TD-8 contract) and
- * docs/validation-rules.md. This is the source of truth; the to-be-built
- * backends generate their OpenAPI/schema from these types.
+ * Runtime `const` arrays (PRODUCT_LINES, ORDER_PIPELINE, …) ship alongside the
+ * types so apps can iterate facet/pipeline values without redeclaring them, and
+ * the unions are derived from those arrays — one source, no drift.
  */
 
-export {};
+export * from "./primitives";
+export * from "./image";
+export * from "./product";
+export * from "./catalog";
+export * from "./commerce";
+export * from "./order";
+export * from "./account";

@@ -1,6 +1,124 @@
 {
+  "Nav": {
+    "home": "Home",
+    "newModels": "New Models",
+    "products": "Products",
+    "brand": "Brand",
+    "about": "About",
+    "technologies": "Technologies",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "tagline": "Brand · Watches — an international reference for timeless design, crafted for those who value time.",
+    "col": {
+      "explore": "EXPLORE",
+      "brand": "BRAND",
+      "support": "SUPPORT"
+    },
+    "link": {
+      "newModels": "New Models",
+      "products": "Products",
+      "technologies": "Technologies",
+      "about": "About Violet",
+      "history": "History",
+      "quality": "Quality",
+      "contact": "Contact",
+      "findDealer": "Find a dealer",
+      "faq": "FAQ"
+    },
+    "copyright": "© {year} Violet Watches. All rights reserved."
+  },
   "Home": {
     "title": "Violet",
-    "tagline": "Timepieces, refined."
+    "tagline": "Timepieces, refined.",
+    "hero": {
+      "eyebrow": "Collection 2026",
+      "titleLead": "Timeless,",
+      "titleEmph": "reimagined for <em>now</em>",
+      "lead": "Over a thousand models of precision engineering and considered design — discover the latest Violet collection.",
+      "ctaPrimary": "View New Models",
+      "ctaSecondary": "Explore the brand"
+    },
+    "marquee": {
+      "words": ["Precision", "Craftsmanship", "Heritage", "Timeless", "Innovation"]
+    },
+    "newModels": {
+      "eyebrow": "Just arrived",
+      "title": "New Models",
+      "link": "View All New Models"
+    },
+    "lines": {
+      "eyebrow": "Find your style",
+      "title": "Explore the lines",
+      "link": "View All Products",
+      "exploreLine": "Explore the line",
+      "desc": {
+        "Classic": "Timeless dress watches",
+        "Sport": "Built for motion & depth",
+        "Smart": "Connected, quietly"
+      }
+    },
+    "spotlight": {
+      "eyebrow": "In the spotlight",
+      "title": "Featured this season",
+      "counter": "Featured · {current} / {total}",
+      "desc": "From the {line} line — precision engineering and considered design, finished to Violet's exacting standard.",
+      "cta": "View this model",
+      "prev": "Previous",
+      "next": "Next",
+      "goTo": "Slide {n}"
+    },
+    "featured": {
+      "eyebrow": "Most loved",
+      "title": "Featured Pieces",
+      "link": "Explore All Products",
+      "viewAll": "View All Products"
+    },
+    "about": {
+      "eyebrow": "About Violet",
+      "title": "Timekeeping, refined to its essence",
+      "body": "Each Violet timepiece unites precision movements with quiet, considered design — built to carry a sense of authenticity and confidence across borders. Restraint, made to last.",
+      "cta": "Discover our story"
+    },
+    "stats": {
+      "models": "Watch models",
+      "frames": "Photography frames",
+      "languages": "Languages · EN/RU/AR",
+      "design": "Timeless by design"
+    },
+    "cta": {
+      "eyebrow": "Begin",
+      "title": "Find the one that's yours",
+      "body": "Explore the complete Violet catalogue — over a thousand models await.",
+      "button": "Explore the collection"
+    }
+  },
+  "Catalog": {
+    "breadcrumb": { "home": "Home", "products": "Products" },
+    "hero": {
+      "eyebrow": "The collection",
+      "title": "All Products",
+      "subtitle": "Over a thousand models of precision timekeeping — a curated selection shown here."
+    },
+    "facets": {
+      "collection": "Collection",
+      "gender": "Gender",
+      "strap": "Strap",
+      "color": "Color",
+      "movement": "Movement"
+    },
+    "newOnly": "New models only",
+    "resultsLabel": "results",
+    "newChip": "New only",
+    "clearAll": "Clear all",
+    "sort": { "newest": "Newest", "nameAsc": "A–Z" },
+    "loadMore": "Load more ({count} more)",
+    "filtersToggle": "Filters",
+    "showResults": "Show {count} results",
+    "empty": {
+      "title": "No results",
+      "body": "Try relaxing the last filter you added.",
+      "cta": "Clear all filters"
+    }
   }
 }
