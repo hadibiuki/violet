@@ -14,3 +14,5 @@ export { Switch } from "./Switch";
 export type { SwitchProps } from "./Switch";
 export { QuantityStepper } from "./QuantityStepper";
 export type { QuantityStepperProps } from "./QuantityStepper";
+export { Textarea } from "./Textarea";
+export type { TextareaProps } from "./Textarea";

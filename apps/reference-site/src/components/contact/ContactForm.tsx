@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "@violet/ui";
+import { Button, Input, Select, Textarea } from "@violet/ui";
 
-const COUNTRIES = [
+const COUNTRIES: string[] = [
   "United Kingdom",
   "Russia",
   "United Arab Emirates",
@@ -27,28 +27,6 @@ type FormErrors = Partial<Record<keyof FormState, string>>;
 
 const EMPTY: FormState = { name: "", company: "", country: "", email: "", message: "" };
 
-function Field({
-  label,
-  htmlFor,
-  error,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label htmlFor={htmlFor} style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-      <span style={{ fontSize: 14, fontWeight: 500, color: "var(--vt-color-text)" }}>{label}</span>
-      {children}
-      {error && (
-        <span style={{ fontSize: 12.5, color: "var(--vt-color-danger)" }}>{error}</span>
-      )}
-    </label>
-  );
-}
-
 const CheckIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
@@ -61,11 +39,9 @@ export function ContactForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [sent, setSent] = useState(false);
 
-  function set(k: keyof FormState) {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-      setForm((f) => ({ ...f, [k]: e.target.value }));
-      setErrors((er) => ({ ...er, [k]: undefined }));
-    };
+  function setField(k: keyof FormState, value: string) {
+    setForm((f) => ({ ...f, [k]: value }));
+    setErrors((er) => ({ ...er, [k]: undefined }));
   }
 
   function validate(): FormErrors {
@@ -158,62 +134,56 @@ export function ContactForm() {
       }}
     >
       <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2">
-        <Field label={t("form.name")} htmlFor="c-name" error={errors.name}>
-          <input
-            id="c-name"
-            className={`vt-field${errors.name ? " err" : ""}`}
-            value={form.name}
-            onChange={set("name")}
-            placeholder={t("form.namePlaceholder")}
-          />
-        </Field>
-        <Field label={t("form.company")} htmlFor="c-company" error={errors.company}>
-          <input
-            id="c-company"
-            className={`vt-field${errors.company ? " err" : ""}`}
-            value={form.company}
-            onChange={set("company")}
-            placeholder={t("form.companyPlaceholder")}
-          />
-        </Field>
+        <Input
+          label={t("form.name")}
+          placeholder={t("form.namePlaceholder")}
+          error={errors.name}
+          value={form.name}
+          onChange={(e) => setField("name", e.target.value)}
+          size="lg"
+          autoComplete="name"
+        />
+        <Input
+          label={t("form.company")}
+          placeholder={t("form.companyPlaceholder")}
+          error={errors.company}
+          value={form.company}
+          onChange={(e) => setField("company", e.target.value)}
+          size="lg"
+          autoComplete="organization"
+        />
       </div>
 
       <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2">
-        <Field label={t("form.country")} htmlFor="c-country" error={errors.country}>
-          <select
-            id="c-country"
-            className={`vt-field${errors.country ? " err" : ""}`}
-            value={form.country}
-            onChange={set("country")}
-            style={{ color: form.country ? "var(--vt-color-text-strong)" : "var(--vt-color-text-subtle)" }}
-          >
-            <option value="">{t("form.countryPlaceholder")}</option>
-            {COUNTRIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </Field>
-        <Field label={t("form.email")} htmlFor="c-email" error={errors.email}>
-          <input
-            id="c-email"
-            type="email"
-            className={`vt-field${errors.email ? " err" : ""}`}
-            value={form.email}
-            onChange={set("email")}
-            placeholder={t("form.emailPlaceholder")}
-          />
-        </Field>
+        <Select
+          label={t("form.country")}
+          placeholder={t("form.countryPlaceholder")}
+          error={errors.country}
+          value={form.country}
+          options={COUNTRIES}
+          onChange={(val) => setField("country", val)}
+          size="lg"
+        />
+        <Input
+          label={t("form.email")}
+          type="email"
+          placeholder={t("form.emailPlaceholder")}
+          error={errors.email}
+          value={form.email}
+          onChange={(e) => setField("email", e.target.value)}
+          size="lg"
+          autoComplete="email"
+        />
       </div>
 
-      <Field label={t("form.message")} htmlFor="c-message" error={errors.message}>
-        <textarea
-          id="c-message"
-          className={`vt-field${errors.message ? " err" : ""}`}
-          value={form.message}
-          onChange={set("message")}
-          placeholder={t("form.messagePlaceholder")}
-        />
-      </Field>
+      <Textarea
+        label={t("form.message")}
+        placeholder={t("form.messagePlaceholder")}
+        error={errors.message}
+        value={form.message}
+        onChange={(e) => setField("message", e.target.value)}
+        minHeight={128}
+      />
 
       <div
         style={{
