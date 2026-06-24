@@ -101,3 +101,34 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .vt-filter-drawer, .vt-drawer-backdrop { transition: none; }
 }
+
+/* ── Contact form fields ─────────────────────────────────────────────────── */
+
+.vt-field {
+  font-family: var(--vt-font-sans);
+  font-size: 14px;
+  color: var(--vt-color-text-strong);
+  width: 100%;
+  background: var(--vt-color-surface);
+  border: 1.5px solid var(--vt-color-border-strong);
+  border-radius: var(--vt-radius-sm);
+  padding: 0 14px;
+  height: 44px;
+  outline: none;
+  transition: border-color var(--vt-duration-base), box-shadow var(--vt-duration-base);
+}
+textarea.vt-field {
+  height: auto;
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 128px;
+  font: inherit;
+  line-height: 1.6;
+}
+.vt-field:focus {
+  border-color: var(--vt-color-primary);
+  box-shadow: var(--vt-shadow-focus);
+}
+.vt-field.err {
+  border-color: var(--vt-color-danger);
+}

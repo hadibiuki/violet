@@ -120,5 +120,121 @@
       "body": "Try relaxing the last filter you added.",
       "cta": "Clear all filters"
     }
+  },
+  "Contact": {
+    "breadcrumb": { "home": "Home", "contact": "Contact" },
+    "hero": {
+      "eyebrow": "Get in touch",
+      "title": "Contact Violet",
+      "subtitle": "Distributor enquiries, dealer locations, or a question about a specific model — we're glad to help."
+    },
+    "form": {
+      "name": "Full name",
+      "namePlaceholder": "Your name",
+      "company": "Company",
+      "companyPlaceholder": "Company or store",
+      "country": "Country",
+      "countryPlaceholder": "Select a country…",
+      "email": "Email",
+      "emailPlaceholder": "you@company.com",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your enquiry — distribution, a specific model, or finding a dealer.",
+      "privacy": "We'll only use your details to respond to this enquiry.",
+      "submit": "Send message",
+      "errors": {
+        "name": "Please enter your name.",
+        "company": "Please enter your company.",
+        "country": "Please select a country.",
+        "email": "Please enter your email.",
+        "emailInvalid": "That doesn't look like a valid email.",
+        "message": "Please tell us a little about your enquiry."
+      },
+      "success": {
+        "title": "Thank you, {name}",
+        "body": "Your enquiry has reached the Violet team. We'll be in touch at {email} shortly — usually within two business days.",
+        "again": "Send another message"
+      }
+    },
+    "side": {
+      "eyebrow": "Find a dealer",
+      "title": "Prefer to buy in person?",
+      "body": "Violet is carried by authorised retailers across Europe, Russia, and the Middle East. Tell us your country in the form and we'll point you to your nearest dealer.",
+      "items": {
+        "email":  { "label": "Email" },
+        "phone":  { "label": "Phone" },
+        "office": { "label": "Head office" },
+        "hours":  { "label": "Hours" }
+      }
+    }
+  },
+  "Brand": {
+    "hero": {
+      "eyebrow": "Collection 2026",
+      "title1": "The Violet",
+      "title2": "identity system",
+      "tagline": "Japanese precision, World reputation",
+      "body": "Every element below — the monogram, the champagne palette, the engraved type and the guilloché — is drawn directly from the Collection 2026 master.",
+      "ctaPrimary": "Explore the system",
+      "ctaSecondary": "View the collection"
+    },
+    "mark": {
+      "eyebrow": "The mark",
+      "title": "A monogram, a wordmark, one lockup",
+      "sub": "The calligraphic V is the signature; the engraved VIOLET wordmark gives it voice. Use the full medallion lockup for primary placements, the horizontal lockup for headers, and the bare monogram as an app or favicon mark."
+    },
+    "palette": {
+      "eyebrow": "Palette",
+      "title": "Aubergine leads, champagne signs",
+      "sub": "Primary is the deep aubergine of the master field; secondary is the champagne gold reserved for signatures, rules and rare premium actions. Neutrals are tinted toward the aubergine so the whole system feels of one ink."
+    },
+    "type": {
+      "eyebrow": "Typography",
+      "title": "Engraved, calligraphic, composed",
+      "sub": "Two faces carry the identity; two carry the interface. Cinzel engraves the wordmark, Pinyon Script signs the monogram, Cormorant Garamond sets heritage headlines, and Inter runs the UI."
+    },
+    "texture": {
+      "eyebrow": "Texture",
+      "title": "The floral lattice",
+      "body": "A six-petal damask drawn from the Collection 2026 master — seamless, recolorable line-work with the script V worked between the blooms. It belongs to dark hero fields, packaging, endpapers and certificates — never behind body copy."
+    },
+    "application": {
+      "eyebrow": "In application",
+      "title": "One brand, two registers",
+      "sub": "The dark aubergine register carries heroes and signatures; the light register carries the catalogue and the interface. Gold appears sparingly across both."
+    }
+  },
+  "Product": {
+    "breadcrumb": { "home": "Home", "products": "Products" },
+    "collection": "{line} Collection",
+    "highlights": {
+      "heading": "KEY HIGHLIGHTS",
+      "movement": "{movement} movement",
+      "case": "Stainless Steel 316L case",
+      "water": "Water resistant — {atm} ATM ({m} m)",
+      "glass": "Sapphire-grade mineral glass",
+      "diameter": "{mm} mm case diameter"
+    },
+    "colours": { "heading": "AVAILABLE COLOURS" },
+    "cta": {
+      "catalogue": "Download Catalogue (PDF)",
+      "retailer": "Contact a retailer"
+    },
+    "description": "A refined {line} timepiece — stainless steel, sapphire-clear mineral glass, and a balanced {mm} mm case on a {strap} strap. Designed in the Violet tradition of quiet, lasting elegance.",
+    "specs": {
+      "heading": "Specifications",
+      "caseDiameter": "Case Diameter",
+      "caseMaterial": "Case Material",
+      "caseMaterialValue": "Stainless Steel 316L",
+      "strapMaterial": "Strap Material",
+      "glass": "Glass Type",
+      "glassValue": "Mineral Crystal",
+      "movement": "Movement",
+      "waterResistance": "Water Resistance",
+      "waterValue": "{atm} ATM ({m} m)",
+      "gender": "Gender",
+      "colours": "Available Colours",
+      "coloursValue": "Midnight · Gold · Steel · Plum"
+    },
+    "related": { "heading": "You may also like" }
   }
 }

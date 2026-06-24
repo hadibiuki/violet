@@ -23,7 +23,6 @@ const FRAME_COUNT = 12;
  */
 export function frame(i: number, _size = 640): string {
   const n = String(i % FRAME_COUNT).padStart(2, "0");
-  // return `/watches/watch-${n}.svg`;
   return `/watches/watch-${n}.jpg`;
 }
 
@@ -40,27 +39,33 @@ export interface SiteProductCard {
   strap: Strap;
   dialColor: DialColor;
   movement: Movement;
+  /** Water resistance in ATM. */
+  water: number;
   /** Primary catalog image. */
   image: string;
   /** Second frame, revealed on hover. */
   hoverImage: string;
 }
 
-// frame index pairs (primary / hover) match the prototype's f / f2. Facet values
-// carry over from the prototype's site/data.js.
+/** Full PDP-level data, extends the card with a 4-image gallery. */
+export interface SiteProductDetail extends SiteProductCard {
+  gallery: [string, string, string, string];
+}
+
+// f = primary frame index, f2 = hover frame index (matches prototype data.js)
 const RAW: Array<Omit<SiteProductCard, "image" | "hoverImage"> & { f: number; f2: number }> = [
-  { name: "Chronograph Classic 42", sku: "VLT-2601", line: "Classic", isNew: true, gender: "Men", strap: "Leather", dialColor: "Midnight", movement: "Quartz", f: 0, f2: 1 },
-  { name: "Heritage Automatic 40", sku: "VLT-2602", line: "Classic", isNew: true, gender: "Men", strap: "Steel", dialColor: "Steel", movement: "Automatic", f: 2, f2: 3 },
-  { name: "Sport Diver 44", sku: "VLT-2603", line: "Sport", isNew: true, gender: "Men", strap: "Rubber", dialColor: "Plum", movement: "Quartz", f: 3, f2: 5 },
-  { name: "Lunar Moonphase 41", sku: "VLT-2604", line: "Classic", isNew: true, gender: "Women", strap: "Leather", dialColor: "Gold", movement: "Automatic", f: 6, f2: 4 },
-  { name: "Aurora Skeleton 42", sku: "VLT-2605", line: "Classic", isNew: true, gender: "Men", strap: "Steel", dialColor: "Steel", movement: "Automatic", f: 7, f2: 4 },
-  { name: "Solaria Rose 36", sku: "VLT-2606", line: "Classic", isNew: true, gender: "Women", strap: "Mesh", dialColor: "Gold", movement: "Quartz", f: 8, f2: 9 },
-  { name: "Meridian GMT 43", sku: "VLT-2607", line: "Sport", isNew: true, gender: "Men", strap: "Steel", dialColor: "Midnight", movement: "Quartz", f: 4, f2: 0 },
-  { name: "Pulse Smart 45", sku: "VLT-2608", line: "Smart", isNew: true, gender: "Men", strap: "Rubber", dialColor: "Midnight", movement: "Smart", f: 10, f2: 1 },
-  { name: "Eclipse Dress 38", sku: "VLT-1182", line: "Classic", isNew: false, gender: "Women", strap: "Leather", dialColor: "Plum", movement: "Quartz", f: 5, f2: 2 },
-  { name: "Tempo Quartz 36", sku: "VLT-1183", line: "Smart", isNew: false, gender: "Women", strap: "Mesh", dialColor: "Steel", movement: "Quartz", f: 1, f2: 6 },
-  { name: "Nocturne Automatic 40", sku: "VLT-1184", line: "Classic", isNew: false, gender: "Men", strap: "Leather", dialColor: "Midnight", movement: "Automatic", f: 2, f2: 7 },
-  { name: "Regatta Sport 42", sku: "VLT-1186", line: "Sport", isNew: false, gender: "Men", strap: "Rubber", dialColor: "Plum", movement: "Quartz", f: 11, f2: 3 },
+  { name: "Chronograph Classic 42", sku: "VLT-2601", line: "Classic", isNew: true,  gender: "Men",   strap: "Leather", dialColor: "Midnight", movement: "Quartz",    water: 5,  f: 0,  f2: 1 },
+  { name: "Heritage Automatic 40",  sku: "VLT-2602", line: "Classic", isNew: true,  gender: "Men",   strap: "Steel",   dialColor: "Steel",    movement: "Automatic", water: 5,  f: 2,  f2: 3 },
+  { name: "Sport Diver 44",         sku: "VLT-2603", line: "Sport",   isNew: true,  gender: "Men",   strap: "Rubber",  dialColor: "Plum",     movement: "Quartz",    water: 20, f: 3,  f2: 5 },
+  { name: "Lunar Moonphase 41",     sku: "VLT-2604", line: "Classic", isNew: true,  gender: "Women", strap: "Leather", dialColor: "Gold",     movement: "Automatic", water: 3,  f: 6,  f2: 4 },
+  { name: "Aurora Skeleton 42",     sku: "VLT-2605", line: "Classic", isNew: true,  gender: "Men",   strap: "Steel",   dialColor: "Steel",    movement: "Automatic", water: 5,  f: 7,  f2: 4 },
+  { name: "Solaria Rose 36",        sku: "VLT-2606", line: "Classic", isNew: true,  gender: "Women", strap: "Mesh",    dialColor: "Gold",     movement: "Quartz",    water: 3,  f: 8,  f2: 9 },
+  { name: "Meridian GMT 43",        sku: "VLT-2607", line: "Sport",   isNew: true,  gender: "Men",   strap: "Steel",   dialColor: "Midnight", movement: "Quartz",    water: 10, f: 4,  f2: 0 },
+  { name: "Pulse Smart 45",         sku: "VLT-2608", line: "Smart",   isNew: true,  gender: "Men",   strap: "Rubber",  dialColor: "Midnight", movement: "Smart",     water: 3,  f: 10, f2: 1 },
+  { name: "Eclipse Dress 38",       sku: "VLT-1182", line: "Classic", isNew: false, gender: "Women", strap: "Leather", dialColor: "Plum",     movement: "Quartz",    water: 3,  f: 5,  f2: 2 },
+  { name: "Tempo Quartz 36",        sku: "VLT-1183", line: "Smart",   isNew: false, gender: "Women", strap: "Mesh",    dialColor: "Steel",    movement: "Quartz",    water: 3,  f: 1,  f2: 6 },
+  { name: "Nocturne Automatic 40",  sku: "VLT-1184", line: "Classic", isNew: false, gender: "Men",   strap: "Leather", dialColor: "Midnight", movement: "Automatic", water: 5,  f: 2,  f2: 7 },
+  { name: "Regatta Sport 42",       sku: "VLT-1186", line: "Sport",   isNew: false, gender: "Men",   strap: "Rubber",  dialColor: "Plum",     movement: "Quartz",    water: 10, f: 11, f2: 3 },
 ];
 
 export const PRODUCTS: SiteProductCard[] = RAW.map(({ f, f2, ...p }) => ({
@@ -68,6 +73,25 @@ export const PRODUCTS: SiteProductCard[] = RAW.map(({ f, f2, ...p }) => ({
   image: frame(f),
   hoverImage: frame(f2),
 }));
+
+/** Full detail records including 4-image gallery for the PDP. */
+export const PRODUCTS_FULL: SiteProductDetail[] = RAW.map(({ f, f2, ...p }) => ({
+  ...p,
+  image: frame(f),
+  hoverImage: frame(f2),
+  gallery: [frame(f), frame(f2), frame((f + 3) % FRAME_COUNT), frame((f + 5) % FRAME_COUNT)],
+}));
+
+export function getProductDetail(sku: string): SiteProductDetail | undefined {
+  return PRODUCTS_FULL.find((p) => p.sku === sku);
+}
+
+/** Same-line products first, then fill from others; excludes the current SKU. */
+export function getRelated(product: SiteProductDetail, count = 4): SiteProductDetail[] {
+  const sameLine = PRODUCTS_FULL.filter((p) => p.sku !== product.sku && p.line === product.line);
+  const others = PRODUCTS_FULL.filter((p) => p.sku !== product.sku && p.line !== product.line);
+  return [...sameLine, ...others].slice(0, count);
+}
 
 export const NEW_MODELS: SiteProductCard[] = PRODUCTS.filter((p) => p.isNew);
 
