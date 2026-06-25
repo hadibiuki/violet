@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 type Props = { params: Promise<{ locale: string }> };
 
-const WRAP = { maxWidth: 1200, margin: "0 auto", padding: "0 var(--vt-page-pad)" } as const;
+const WRAP = "mx-auto w-full max-w-[1200px] px-5 md:px-10";
 
 function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
@@ -91,15 +91,7 @@ export default async function AboutPage({ params }: Props) {
             filter: "blur(10px)",
           }}
         />
-        <div
-          style={{
-            position: "relative",
-            zIndex: 2,
-            ...WRAP,
-            padding: "70px var(--vt-page-pad) 84px",
-            textAlign: "center",
-          }}
-        >
+        <div className={`relative z-[2] ${WRAP} py-16 text-center md:py-20`}>
           <div
             style={{
               display: "flex",
@@ -122,7 +114,7 @@ export default async function AboutPage({ params }: Props) {
               fontFamily: "var(--vt-font-display)",
               fontWeight: 300,
               letterSpacing: "-.02em",
-              fontSize: "clamp(48px,6vw,84px)",
+              fontSize: "clamp(40px,6vw,84px)",
               lineHeight: 1.04,
               color: "#fff",
               margin: "16px auto 18px",
@@ -140,9 +132,16 @@ export default async function AboutPage({ params }: Props) {
       </header>
 
       {/* Story */}
-      <section style={{ padding: "100px 0" }}>
-        <div style={{ ...WRAP, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
-          <Reveal style={{ position: "relative", aspectRatio: "4/5", borderRadius: "var(--vt-radius-2xl)", overflow: "hidden" }}>
+      <section className="py-16 md:py-24">
+        <div className={`${WRAP} grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16`}>
+          <Reveal
+            style={{
+              position: "relative",
+              aspectRatio: "4/5",
+              borderRadius: "var(--vt-radius-2xl)",
+              overflow: "hidden",
+            }}
+          >
             <img
               src={frame(4, 800)}
               alt="Violet craftsmanship"
@@ -164,7 +163,7 @@ export default async function AboutPage({ params }: Props) {
               style={{
                 fontFamily: "var(--vt-font-display)",
                 fontWeight: 300,
-                fontSize: "clamp(34px,4vw,52px)",
+                fontSize: "clamp(30px,4vw,52px)",
                 color: "var(--vt-color-text-strong)",
                 margin: "16px 0 22px",
                 lineHeight: 1.1,
@@ -186,15 +185,15 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* History */}
-      <section style={{ background: "var(--vt-color-surface)", padding: "100px 0" }}>
-        <div style={WRAP}>
+      <section style={{ background: "var(--vt-color-surface)" }} className="py-16 md:py-24">
+        <div className={WRAP}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <Eyebrow>Our history</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
                 fontWeight: 300,
-                fontSize: "clamp(34px,4vw,52px)",
+                fontSize: "clamp(30px,4vw,52px)",
                 color: "var(--vt-color-text-strong)",
                 margin: "14px 0 0",
                 letterSpacing: "-.02em",
@@ -208,7 +207,12 @@ export default async function AboutPage({ params }: Props) {
               <Reveal
                 key={title}
                 delay={i * 60}
-                style={{ display: "flex", gap: 24, paddingBottom: i < HISTORY.length - 1 ? 36 : 0, position: "relative" }}
+                style={{
+                  display: "flex",
+                  gap: 24,
+                  paddingBottom: i < HISTORY.length - 1 ? 36 : 0,
+                  position: "relative",
+                }}
               >
                 {i < HISTORY.length - 1 && (
                   <span
@@ -229,7 +233,8 @@ export default async function AboutPage({ params }: Props) {
                     height: 24,
                     borderRadius: "50%",
                     marginTop: 2,
-                    background: i === HISTORY.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-surface)",
+                    background:
+                      i === HISTORY.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-surface)",
                     border: `2px solid ${i === HISTORY.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-accent)"}`,
                     display: "grid",
                     placeItems: "center",
@@ -251,15 +256,15 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Quality */}
-      <section style={{ padding: "100px 0" }}>
-        <div style={WRAP}>
+      <section className="py-16 md:py-24">
+        <div className={WRAP}>
           <div style={{ textAlign: "center", marginBottom: 52, maxWidth: 640, marginInline: "auto" }}>
             <Eyebrow>Quality &amp; craftsmanship</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
                 fontWeight: 300,
-                fontSize: "clamp(34px,4vw,52px)",
+                fontSize: "clamp(30px,4vw,52px)",
                 color: "var(--vt-color-text-strong)",
                 margin: "14px 0 14px",
                 letterSpacing: "-.02em",
@@ -272,7 +277,7 @@ export default async function AboutPage({ params }: Props) {
               by hand.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {QUALITY.map(({ title, body }, i) => (
               <Reveal
                 key={title}
@@ -296,23 +301,14 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Stats band */}
-      <section style={{ background: "var(--vt-color-surface)" }}>
-        <div
-          style={{
-            ...WRAP,
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: 24,
-            borderBlock: "1px solid var(--vt-color-divider)",
-            padding: "56px var(--vt-page-pad)",
-          }}
-        >
+      <section style={{ background: "var(--vt-color-surface)", borderBlock: "1px solid var(--vt-color-divider)" }}>
+        <div className={`${WRAP} grid grid-cols-2 gap-6 py-12 lg:grid-cols-4`}>
           {STATS.map(([n, label]) => (
             <div key={label} style={{ textAlign: "center" }}>
               <div
                 style={{
                   fontFamily: "var(--vt-font-display)",
-                  fontSize: "clamp(40px,5vw,60px)",
+                  fontSize: "clamp(36px,5vw,60px)",
                   lineHeight: 1,
                   color: n === "✦" ? "var(--vt-color-accent-strong)" : "var(--vt-color-text-strong)",
                 }}
@@ -331,9 +327,10 @@ export default async function AboutPage({ params }: Props) {
           position: "relative",
           overflow: "hidden",
           color: "#fff",
-          padding: "100px 0",
-          background: "radial-gradient(900px 460px at 50% 0%,#3B0764,transparent 60%),linear-gradient(160deg,#0D0A1E,#231940)",
+          background:
+            "radial-gradient(900px 460px at 50% 0%,#3B0764,transparent 60%),linear-gradient(160deg,#0D0A1E,#231940)",
         }}
+        className="py-16 md:py-24"
       >
         <div
           className="vt-aurora"
@@ -347,14 +344,14 @@ export default async function AboutPage({ params }: Props) {
             filter: "blur(10px)",
           }}
         />
-        <div style={{ position: "relative", zIndex: 2, ...WRAP }}>
+        <div className={`relative z-[2] ${WRAP}`}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <Eyebrow dark>Vision &amp; values</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
                 fontWeight: 300,
-                fontSize: "clamp(34px,4vw,52px)",
+                fontSize: "clamp(30px,4vw,52px)",
                 margin: "14px 0 0",
                 letterSpacing: "-.02em",
               }}
@@ -362,13 +359,27 @@ export default async function AboutPage({ params }: Props) {
               What we stand for
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 32 }}>
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
             {VALUES.map(([title, body], i) => (
-              <Reveal key={title} delay={i * 70} style={{ textAlign: "center", padding: "0 12px" }}>
-                <div style={{ fontFamily: "var(--vt-font-display)", fontSize: 30, color: "var(--vt-gold-300)", marginBottom: 12 }}>
+              <Reveal key={title} delay={i * 70} style={{ textAlign: "center", padding: "0 8px" }}>
+                <div
+                  style={{
+                    fontFamily: "var(--vt-font-display)",
+                    fontSize: 30,
+                    color: "var(--vt-gold-300)",
+                    marginBottom: 12,
+                  }}
+                >
                   ✦
                 </div>
-                <h3 style={{ fontFamily: "var(--vt-font-display)", fontWeight: 400, fontSize: 30, margin: "0 0 12px" }}>
+                <h3
+                  style={{
+                    fontFamily: "var(--vt-font-display)",
+                    fontWeight: 400,
+                    fontSize: 30,
+                    margin: "0 0 12px",
+                  }}
+                >
                   {title}
                 </h3>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: "#C4B5FD", margin: 0 }}>{body}</p>

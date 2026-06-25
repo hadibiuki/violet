@@ -66,11 +66,11 @@ export function ContactForm() {
   if (sent) {
     return (
       <div
+        className="px-4 py-12 md:px-10"
         style={{
           background: "var(--vt-color-surface)",
           border: "1px solid var(--vt-color-border)",
           borderRadius: "var(--vt-radius-xl)",
-          padding: "48px 40px",
           textAlign: "center",
           boxShadow: "var(--vt-shadow-sm)",
         }}
@@ -122,11 +122,11 @@ export function ContactForm() {
     <form
       onSubmit={submit}
       noValidate
+      className="p-4 md:p-9"
       style={{
         background: "var(--vt-color-surface)",
         border: "1px solid var(--vt-color-border)",
         borderRadius: "var(--vt-radius-xl)",
-        padding: 36,
         boxShadow: "var(--vt-shadow-sm)",
         display: "flex",
         flexDirection: "column",

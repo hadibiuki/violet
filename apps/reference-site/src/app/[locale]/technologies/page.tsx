@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 type Props = { params: Promise<{ locale: string }> };
 
-const WRAP = { maxWidth: 1200, margin: "0 auto", padding: "0 var(--vt-page-pad)" } as const;
+const WRAP = "mx-auto w-full max-w-[1200px] px-5 md:px-10";
 
 function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
@@ -76,6 +76,46 @@ const WATER_ROWS = [
   ["20 ATM", "Free & scuba diving", "Sport Diver"],
 ];
 
+function FeaturePoints({ points }: { points: string[] }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {points.map((pt) => (
+        <div
+          key={pt}
+          style={{ display: "flex", alignItems: "flex-start", gap: 12, fontSize: 15.5, color: "var(--vt-color-text)" }}
+        >
+          <span style={{ color: "var(--vt-color-primary)", fontSize: 16, marginTop: 1, flex: "none" }}>✓</span>
+          {pt}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FeatureImage({ frameIdx, title }: { frameIdx: number; title: string }) {
+  return (
+    <Reveal
+      style={{
+        position: "relative",
+        aspectRatio: "4/3",
+        borderRadius: "var(--vt-radius-2xl)",
+        overflow: "hidden",
+      }}
+    >
+      <img src={frame(frameIdx, 800)} alt={title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <div
+        style={{
+          position: "absolute",
+          inset: 16,
+          border: "1px solid rgba(255,255,255,.35)",
+          borderRadius: "var(--vt-radius-xl)",
+          pointerEvents: "none",
+        }}
+      />
+    </Reveal>
+  );
+}
+
 export default async function TechnologiesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -106,7 +146,7 @@ export default async function TechnologiesPage({ params }: Props) {
             filter: "blur(10px)",
           }}
         />
-        <div style={{ position: "relative", zIndex: 2, ...WRAP, padding: "70px var(--vt-page-pad) 84px", textAlign: "center" }}>
+        <div className={`relative z-[2] ${WRAP} py-16 text-center md:py-20`}>
           <div
             style={{
               display: "flex",
@@ -129,7 +169,7 @@ export default async function TechnologiesPage({ params }: Props) {
               fontFamily: "var(--vt-font-display)",
               fontWeight: 300,
               letterSpacing: "-.02em",
-              fontSize: "clamp(48px,6vw,84px)",
+              fontSize: "clamp(40px,6vw,84px)",
               lineHeight: 1.04,
               color: "#fff",
               margin: "16px auto 18px",
@@ -149,143 +189,46 @@ export default async function TechnologiesPage({ params }: Props) {
 
       {/* Alternating feature rows */}
       {FEATURE_ROWS.map(({ eyebrow, title, body, points, frameIdx, flip }) => (
-        <section key={title} style={{ padding: "72px 0" }}>
-          <div
-            style={{
-              ...WRAP,
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 64,
-              alignItems: "center",
-            }}
-          >
-            {flip ? (
-              <>
-                <Reveal>
-                  <Eyebrow>{eyebrow}</Eyebrow>
-                  <h2
-                    style={{
-                      fontFamily: "var(--vt-font-display)",
-                      fontWeight: 300,
-                      fontSize: "clamp(30px,3.4vw,44px)",
-                      color: "var(--vt-color-text-strong)",
-                      margin: "14px 0 18px",
-                      lineHeight: 1.12,
-                      letterSpacing: "-.02em",
-                    }}
-                  >
-                    {title}
-                  </h2>
-                  <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--vt-color-text-muted)", marginBottom: 22 }}>
-                    {body}
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                    {points.map((pt) => (
-                      <div
-                        key={pt}
-                        style={{ display: "flex", alignItems: "flex-start", gap: 12, fontSize: 15.5, color: "var(--vt-color-text)" }}
-                      >
-                        <span style={{ color: "var(--vt-color-primary)", fontSize: 16, marginTop: 1, flex: "none" }}>✓</span>
-                        {pt}
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-                <Reveal
-                  style={{
-                    position: "relative",
-                    aspectRatio: "4/3",
-                    borderRadius: "var(--vt-radius-2xl)",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={frame(frameIdx, 800)}
-                    alt={title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 16,
-                      border: "1px solid rgba(255,255,255,.35)",
-                      borderRadius: "var(--vt-radius-xl)",
-                      pointerEvents: "none",
-                    }}
-                  />
-                </Reveal>
-              </>
-            ) : (
-              <>
-                <Reveal
-                  style={{
-                    position: "relative",
-                    aspectRatio: "4/3",
-                    borderRadius: "var(--vt-radius-2xl)",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={frame(frameIdx, 800)}
-                    alt={title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 16,
-                      border: "1px solid rgba(255,255,255,.35)",
-                      borderRadius: "var(--vt-radius-xl)",
-                      pointerEvents: "none",
-                    }}
-                  />
-                </Reveal>
-                <Reveal>
-                  <Eyebrow>{eyebrow}</Eyebrow>
-                  <h2
-                    style={{
-                      fontFamily: "var(--vt-font-display)",
-                      fontWeight: 300,
-                      fontSize: "clamp(30px,3.4vw,44px)",
-                      color: "var(--vt-color-text-strong)",
-                      margin: "14px 0 18px",
-                      lineHeight: 1.12,
-                      letterSpacing: "-.02em",
-                    }}
-                  >
-                    {title}
-                  </h2>
-                  <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--vt-color-text-muted)", marginBottom: 22 }}>
-                    {body}
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                    {points.map((pt) => (
-                      <div
-                        key={pt}
-                        style={{ display: "flex", alignItems: "flex-start", gap: 12, fontSize: 15.5, color: "var(--vt-color-text)" }}
-                      >
-                        <span style={{ color: "var(--vt-color-primary)", fontSize: 16, marginTop: 1, flex: "none" }}>✓</span>
-                        {pt}
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              </>
-            )}
+        <section key={title} className="py-14 md:py-20">
+          <div className={`${WRAP} grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16`}>
+            {/* On mobile always image first, on desktop respect flip */}
+            <div className={flip ? "lg:order-2" : ""}>
+              <FeatureImage frameIdx={frameIdx} title={title} />
+            </div>
+            <Reveal className={flip ? "lg:order-1" : ""}>
+              <Eyebrow>{eyebrow}</Eyebrow>
+              <h2
+                style={{
+                  fontFamily: "var(--vt-font-display)",
+                  fontWeight: 300,
+                  fontSize: "clamp(28px,3.4vw,44px)",
+                  color: "var(--vt-color-text-strong)",
+                  margin: "14px 0 18px",
+                  lineHeight: 1.12,
+                  letterSpacing: "-.02em",
+                }}
+              >
+                {title}
+              </h2>
+              <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--vt-color-text-muted)", marginBottom: 22 }}>
+                {body}
+              </p>
+              <FeaturePoints points={points} />
+            </Reveal>
           </div>
         </section>
       ))}
 
       {/* Water resistance scale */}
-      <section style={{ padding: "100px 0" }}>
-        <div style={{ ...WRAP, maxWidth: 880 }}>
+      <section className="py-16 md:py-24">
+        <div className={`${WRAP} max-w-[880px]`}>
           <div style={{ textAlign: "center", marginBottom: 44 }}>
             <Eyebrow>Water resistance</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
                 fontWeight: 300,
-                fontSize: "clamp(30px,4vw,46px)",
+                fontSize: "clamp(28px,4vw,46px)",
                 color: "var(--vt-color-text-strong)",
                 margin: "14px 0 0",
                 letterSpacing: "-.02em",
@@ -307,26 +250,32 @@ export default async function TechnologiesPage({ params }: Props) {
                 key={atm}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "120px 1fr 200px",
-                  gap: 20,
+                  gridTemplateColumns: "80px 1fr",
+                  gap: "8px 16px",
                   alignItems: "center",
-                  padding: "18px 24px",
+                  padding: "16px 20px",
                   borderTop: i ? "1px solid var(--vt-color-divider)" : "none",
                   background: i % 2 ? "var(--vt-color-surface-sunken)" : "transparent",
                 }}
+                className="sm:[grid-template-columns:100px_1fr_160px]"
               >
                 <span
                   style={{
                     fontFamily: "var(--vt-font-mono)",
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: 600,
                     color: "var(--vt-color-primary)",
                   }}
                 >
                   {atm}
                 </span>
-                <span style={{ fontSize: 15.5, color: "var(--vt-color-text)" }}>{use}</span>
-                <span style={{ fontSize: 13, color: "var(--vt-color-text-muted)", textAlign: "end" }}>{line}</span>
+                <span style={{ fontSize: 15, color: "var(--vt-color-text)" }}>{use}</span>
+                <span
+                  className="col-span-2 sm:col-span-1 sm:text-end"
+                  style={{ fontSize: 13, color: "var(--vt-color-text-muted)" }}
+                >
+                  {line}
+                </span>
               </div>
             ))}
           </Reveal>
@@ -334,15 +283,15 @@ export default async function TechnologiesPage({ params }: Props) {
       </section>
 
       {/* Feature grid */}
-      <section style={{ background: "var(--vt-color-surface)", padding: "100px 0" }}>
-        <div style={WRAP}>
+      <section style={{ background: "var(--vt-color-surface)" }} className="py-16 md:py-24">
+        <div className={WRAP}>
           <div style={{ textAlign: "center", marginBottom: 52, maxWidth: 600, marginInline: "auto" }}>
             <Eyebrow>More features</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
                 fontWeight: 300,
-                fontSize: "clamp(34px,4vw,52px)",
+                fontSize: "clamp(30px,4vw,52px)",
                 color: "var(--vt-color-text-strong)",
                 margin: "14px 0 0",
                 letterSpacing: "-.02em",
@@ -351,7 +300,7 @@ export default async function TechnologiesPage({ params }: Props) {
               Considered, down to the detail
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURE_GRID.map(({ title, body }, i) => (
               <Reveal
                 key={title}
@@ -380,10 +329,10 @@ export default async function TechnologiesPage({ params }: Props) {
           overflow: "hidden",
           textAlign: "center",
           color: "#fff",
-          padding: "110px 0",
           background:
             "radial-gradient(800px 400px at 50% 0%,#3B0764,transparent 60%),linear-gradient(160deg,#0D0A1E,#231940)",
         }}
+        className="py-20 md:py-28"
       >
         <div
           className="vt-aurora"
@@ -397,13 +346,13 @@ export default async function TechnologiesPage({ params }: Props) {
             filter: "blur(10px)",
           }}
         />
-        <div style={{ position: "relative", zIndex: 2, ...WRAP }}>
+        <div className={`relative z-[2] ${WRAP}`}>
           <Eyebrow dark>See it on the wrist</Eyebrow>
           <h2
             style={{
               fontFamily: "var(--vt-font-display)",
               fontWeight: 300,
-              fontSize: "clamp(38px,5vw,60px)",
+              fontSize: "clamp(32px,5vw,60px)",
               margin: "12px 0 18px",
               letterSpacing: "-.02em",
             }}
