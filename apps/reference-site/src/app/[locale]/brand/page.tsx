@@ -302,7 +302,7 @@ export default async function BrandPage({ params }: Props) {
           </Reveal>
 
           {/* 4 small cells */}
-          <div className="mb-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="mb-5 grid grid-cols-1 gap-4 lg:grid-cols-4">
             <Reveal delay={0}>
               <MarkCell label="Monogram">
                 <BrandMark variant="monogram" tone="light" size="lg" framed />
@@ -327,12 +327,12 @@ export default async function BrandPage({ params }: Props) {
 
           {/* 2 large cells */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <Reveal>
+            <Reveal style={{ height: "100%" }}>
               <MarkCell label="Primary lockup">
                 <BrandMark variant="lockup" tone="light" size="lg" framed tagline />
               </MarkCell>
             </Reveal>
-            <Reveal delay={80}>
+            <Reveal delay={80} style={{ height: "100%" }}>
               <MarkCell label="Horizontal lockup · on ink" dark>
                 <BrandMark variant="horizontal" tone="ink" size="lg" framed />
               </MarkCell>
@@ -610,12 +610,12 @@ export default async function BrandPage({ params }: Props) {
           padding: "104px 0",
         }}
       >
+        {/* backgroundImage: "url(/brand/violet-floral.svg)", */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage: "url(/brand/violet-floral.svg)",
             backgroundRepeat: "repeat",
             backgroundSize: "150px",
             opacity: 0.14,
