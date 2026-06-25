@@ -65,10 +65,7 @@ export function ProductDetail({ product, locale }: Props) {
           {/* Gallery — sticky on desktop */}
           <div
             className="lg:self-start"
-            style={{
-              position: "sticky",
-              top: "calc(var(--vt-header-height,120px) + 16px)",
-            }}
+           
           >
             {/* Main image */}
             <div
@@ -386,7 +383,7 @@ export function ProductDetail({ product, locale }: Props) {
           >
             {t("related.heading")}
           </h2>
-          <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
             {related.map((r) => (
               <ProductCard
                 key={r.sku}
