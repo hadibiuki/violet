@@ -95,7 +95,7 @@ export default async function ContactPage({ params }: Props) {
             background: "radial-gradient(900px 360px at 80% 40%,rgba(230,180,83,.10),transparent 60%)",
           }}
         />
-        <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-5 pb-10 pt-6 md:px-10">
+        <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-4 pb-10 pt-6 md:px-10">
           <div
             style={{
               display: "flex",
@@ -143,7 +143,7 @@ export default async function ContactPage({ params }: Props) {
       </header>
 
       {/* Main content */}
-      <div className="mx-auto w-full max-w-[1280px] px-5 py-14 md:px-10 md:py-20">
+      <div className="mx-auto w-full max-w-[1280px] px-4 py-14 md:px-10 md:py-20">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.4fr_1fr] lg:items-start lg:gap-14">
 
           {/* Form — client island */}

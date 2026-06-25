@@ -35,7 +35,7 @@ export function SiteFooter() {
 
   return (
     <footer
-      className="px-5 pb-[30px] pt-16 md:px-10"
+      className="px-4 pb-[30px] pt-16 md:px-10"
       style={{ background: "var(--vt-ink-950)", color: "#fff" }}
     >
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>

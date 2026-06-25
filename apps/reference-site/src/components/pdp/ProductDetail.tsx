@@ -59,7 +59,7 @@ export function ProductDetail({ product, locale }: Props) {
   return (
     <>
       {/* ── Main two-column layout ── */}
-      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-10">
+      <div className="mx-auto w-full max-w-[1280px] px-4 md:px-10">
         <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-[560px_1fr] lg:gap-14 lg:py-14 lg:items-start">
 
           {/* Gallery — sticky on desktop */}
@@ -336,7 +336,7 @@ export function ProductDetail({ product, locale }: Props) {
       </div>
 
       {/* ── Specifications ── */}
-      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-10">
+      <div className="mx-auto w-full max-w-[1280px] px-4 md:px-10">
         <section
           style={{
             padding: "64px 0",

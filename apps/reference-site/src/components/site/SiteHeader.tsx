@@ -76,7 +76,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "overlay
   return (
     <nav
       ref={navRef}
-      className="px-5 md:px-10"
+      className="px-4 md:px-10"
       style={{
         position: variant === "overlay" ? (scrolled ? "fixed" : "absolute") : "sticky",
         insetBlockStart: 0,
@@ -175,7 +175,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "overlay
         {/* Hamburger — only below lg. */}
         <button
           type="button"
-          className="lg:hidden"
+          className="grid place-items-center lg:hidden"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
@@ -183,8 +183,6 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "overlay
             marginInlineStart: 8,
             width: 38,
             height: 38,
-            display: "grid",
-            placeItems: "center",
             borderRadius: 8,
             border: "none",
             cursor: "pointer",

@@ -60,12 +60,12 @@ export default async function ProductPage({ params, searchParams }: Props) {
           }}
         />
         <div
+          className="mx-auto w-full max-w-[1280px] px-4 md:px-10"
           style={{
             position: "relative",
             zIndex: 2,
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "22px 40px 24px",
+            paddingTop: 22,
+            paddingBottom: 24,
           }}
         >
           <div

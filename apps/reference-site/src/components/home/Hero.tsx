@@ -54,7 +54,7 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-[2] mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-10 px-5 md:px-10 lg:grid-cols-[1.1fr_.9fr]">
+      <div className="relative z-[2] mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-10 px-4 md:px-10 lg:grid-cols-[1.1fr_.9fr]">
         <div style={{ color: "#fff" }}>
           <span
             style={{

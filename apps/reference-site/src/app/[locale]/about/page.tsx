@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 type Props = { params: Promise<{ locale: string }> };
 
-const WRAP = { maxWidth: 1200, margin: "0 auto", padding: "0 40px" } as const;
+const WRAP = { maxWidth: 1200, margin: "0 auto", padding: "0 var(--vt-page-pad)" } as const;
 
 function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
@@ -96,7 +96,7 @@ export default async function AboutPage({ params }: Props) {
             position: "relative",
             zIndex: 2,
             ...WRAP,
-            padding: "70px 40px 84px",
+            padding: "70px var(--vt-page-pad) 84px",
             textAlign: "center",
           }}
         >
@@ -304,7 +304,7 @@ export default async function AboutPage({ params }: Props) {
             gridTemplateColumns: "repeat(4,1fr)",
             gap: 24,
             borderBlock: "1px solid var(--vt-color-divider)",
-            padding: "56px 40px",
+            padding: "56px var(--vt-page-pad)",
           }}
         >
           {STATS.map(([n, label]) => (

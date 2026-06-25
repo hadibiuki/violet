@@ -56,7 +56,7 @@ export default async function ProductsPage({
             background: "radial-gradient(900px 380px at 78% 40%,rgba(230,180,83,.10),transparent 60%)",
           }}
         />
-        <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-5 pb-12 pt-10 md:px-10">
+        <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-4 pb-12 pt-10 md:px-10">
           {/* Breadcrumb */}
           <div
             style={{

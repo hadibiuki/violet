@@ -16,7 +16,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 const INK = "var(--vt-color-brand-ink)";
 const GOLD = "var(--vt-color-brand-gold)";
-const WRAP = "mx-auto w-full max-w-[1280px] px-5 md:px-10";
+const WRAP = "mx-auto w-full max-w-[1280px] px-4 md:px-10";
 
 const VIOLET_STOPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 const GOLD_STOPS = [50, 100, 200, 300, 400, 500, 600] as const;

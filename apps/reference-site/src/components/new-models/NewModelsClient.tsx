@@ -39,7 +39,7 @@ export function NewModelsClient({ products, facets }: Props) {
   const activeCount = QUICK_FACETS.filter((q) => filters[q]).length;
 
   return (
-    <section style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 40px 96px" }}>
+    <section className="mx-auto w-full max-w-[1280px] px-4 pb-24 pt-10 md:px-10">
       {/* Quick filters */}
       <div
         style={{
@@ -140,7 +140,7 @@ export function NewModelsClient({ products, facets }: Props) {
 
       {/* Grid or empty state */}
       {items.length > 0 ? (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((p, i) => (
             <Reveal key={p.sku} delay={(i % 4) * 60}>
               <ProductCard

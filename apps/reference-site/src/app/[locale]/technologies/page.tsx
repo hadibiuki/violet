@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 type Props = { params: Promise<{ locale: string }> };
 
-const WRAP = { maxWidth: 1200, margin: "0 auto", padding: "0 40px" } as const;
+const WRAP = { maxWidth: 1200, margin: "0 auto", padding: "0 var(--vt-page-pad)" } as const;
 
 function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
@@ -106,7 +106,7 @@ export default async function TechnologiesPage({ params }: Props) {
             filter: "blur(10px)",
           }}
         />
-        <div style={{ position: "relative", zIndex: 2, ...WRAP, padding: "70px 40px 84px", textAlign: "center" }}>
+        <div style={{ position: "relative", zIndex: 2, ...WRAP, padding: "70px var(--vt-page-pad) 84px", textAlign: "center" }}>
           <div
             style={{
               display: "flex",

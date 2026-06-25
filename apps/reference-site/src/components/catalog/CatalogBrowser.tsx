@@ -128,7 +128,7 @@ export function CatalogBrowser({ locale }: { locale: string }) {
   );
 
   return (
-    <section className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-10 md:px-10">
+    <section className="mx-auto w-full max-w-[1280px] px-4 pb-24 pt-10 md:px-10">
       {/* Mobile filter trigger — opens the drawer. */}
       <button
         type="button"
@@ -231,7 +231,7 @@ export function CatalogBrowser({ locale }: { locale: string }) {
           {/* Grid or empty state */}
           {items.length > 0 ? (
             <>
-              <div className="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-3">
                 {visible.map((p) => (
                   <ProductCard
                     key={p.sku}

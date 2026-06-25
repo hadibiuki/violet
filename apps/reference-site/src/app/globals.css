@@ -16,6 +16,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * Shared page gutter. 16px on mobile, widening to 40px from the `md` breakpoint
+ * up. Used by inline-styled wrappers that can't express responsive padding via
+ * Tailwind utilities (Tailwind-classed wrappers use px-4 md:px-10 instead).
+ */
+:root {
+  --vt-page-pad: 16px;
+}
+@media (min-width: 768px) {
+  :root {
+    --vt-page-pad: 40px;
+  }
+}
+
 /* ── Home / marketing motion (mirrors the design prototype) ──────────────── */
 
 .vt-float {

@@ -12,7 +12,7 @@ import { FEATURED, LINES, NEW_MODELS, frame } from "../../lib/catalog-data";
 // Centered content column. Horizontal padding tightens on mobile. Layout
 // (columns/spacing) is expressed in Tailwind responsive utilities; token-driven
 // visual styling (color/font) stays inline.
-const WRAP = "mx-auto w-full max-w-[1280px] px-5 md:px-10";
+const WRAP = "mx-auto w-full max-w-[1280px] px-4 md:px-10";
 const eyebrowStyle: CSSProperties = {
   fontSize: 12,
   letterSpacing: ".26em",
@@ -112,7 +112,7 @@ export default async function HomePage({
             link={t("newModels.link")}
             href="/new-models"
           />
-          <div className="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {NEW_MODELS.slice(0, 4).map((p, i) => (
               <Reveal key={p.sku} delay={i * 60}>
                 <ProductCard
@@ -225,7 +225,7 @@ export default async function HomePage({
             link={t("featured.link")}
             href="/products"
           />
-          <div className="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {FEATURED.map((p, i) => (
               <Reveal key={p.sku} delay={i * 60}>
                 <ProductCard

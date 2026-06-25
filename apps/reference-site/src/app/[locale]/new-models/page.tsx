@@ -44,12 +44,12 @@ export default async function NewModelsPage({ params }: Props) {
           }}
         />
         <div
+          className="mx-auto w-full max-w-[1280px] px-4 md:px-10"
           style={{
             position: "relative",
             zIndex: 2,
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "64px 40px 72px",
+            paddingTop: 64,
+            paddingBottom: 72,
           }}
         >
           <div

@@ -54,7 +54,7 @@ export function FeaturedSlider() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-10">
+      <div className="mx-auto w-full max-w-[1280px] px-4 md:px-10">
         <div style={{ marginBottom: 40 }}>
           <span
             style={{
