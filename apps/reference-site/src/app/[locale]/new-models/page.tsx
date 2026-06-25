@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "../../../i18n/navigation";
 import { SiteHeader } from "../../../components/site/SiteHeader";
 import { SiteFooter } from "../../../components/site/SiteFooter";
@@ -16,6 +16,7 @@ type Props = { params: Promise<{ locale: string }> };
 export default async function NewModelsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("NewModels");
 
   return (
     <div>
@@ -63,10 +64,10 @@ export default async function NewModelsPage({ params }: Props) {
             }}
           >
             <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>
-              Home
+              {t("breadcrumb.home")}
             </Link>
             <span style={{ opacity: 0.5 }}>›</span>
-            <b style={{ color: "#fff", fontWeight: 500 }}>New Models</b>
+            <b style={{ color: "#fff", fontWeight: 500 }}>{t("breadcrumb.page")}</b>
           </div>
           <span
             style={{
@@ -77,7 +78,7 @@ export default async function NewModelsPage({ params }: Props) {
               fontWeight: 500,
             }}
           >
-            Just arrived · 2026
+            {t("eyebrow")}
           </span>
           <h1
             style={{
@@ -90,11 +91,10 @@ export default async function NewModelsPage({ params }: Props) {
               margin: "16px 0 18px",
             }}
           >
-            New Models
+            {t("title")}
           </h1>
           <p style={{ fontSize: 19, lineHeight: 1.7, color: "#C4B5FD", maxWidth: 540 }}>
-            The season's latest timepieces — fresh designs, refined movements. Filter by what matters to you and find the
-            one that's yours.
+            {t("subtitle")}
           </p>
         </div>
       </header>

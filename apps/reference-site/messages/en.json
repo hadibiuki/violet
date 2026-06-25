@@ -1,4 +1,4 @@
-{
+﻿{
   "Nav": {
     "home": "Home",
     "newModels": "New Models",
@@ -236,5 +236,181 @@
       "coloursValue": "Midnight · Gold · Steel · Plum"
     },
     "related": { "heading": "You may also like" }
+  },
+  "NewModels": {
+    "breadcrumb": { "home": "Home", "page": "New Models" },
+    "eyebrow": "Just arrived · 2026",
+    "title": "New Models",
+    "subtitle": "The season's latest timepieces — fresh designs, refined movements. Filter by what matters to you and find the one that's yours."
+  },
+  "About": {
+    "breadcrumb": { "home": "Home", "page": "About" },
+    "hero": {
+      "eyebrow": "About Violet",
+      "title": "Timekeeping, refined",
+      "titleEmph": "to its essence",
+      "subtitle": "For those who value time — a brand built on precision, restraint, and a quiet kind of confidence that lasts."
+    },
+    "story": {
+      "eyebrow": "Our story",
+      "title": "A name built on time",
+      "body1": "Violet began with a simple belief: that a watch should be honest. Honest in its engineering, honest in its design, and honest about the person who wears it.",
+      "body2": "Today, over a thousand models carry that idea across borders and languages — each one uniting precision movements with considered, restrained design. Nothing decorative. Nothing wasted."
+    },
+    "history": {
+      "eyebrow": "Our history",
+      "title": "A measured journey",
+      "items": [
+        { "title": "Founded", "body": "Violet is established with a single principle — restraint as luxury." },
+        { "title": "The Classic line", "body": "The first dress collection sets the house signature: balanced cases, clean dials." },
+        { "title": "Going international", "body": "The brand reaches new markets across three languages and two continents." },
+        { "title": "Sport & Smart", "body": "Diver and connected lines extend the family without diluting the identity." },
+        { "title": "2026 · Today", "body": "Over 1000 models, 4000+ photography frames, and one unwavering design language." }
+      ]
+    },
+    "quality": {
+      "eyebrow": "Quality & craftsmanship",
+      "title": "Made to last a lifetime",
+      "subtitle": "Every Violet is the sum of small, exacting decisions — materials chosen for their integrity, finishes earned by hand.",
+      "items": [
+        { "title": "Sapphire-grade glass", "body": "Hardened mineral crystal that resists the scratches of everyday life." },
+        { "title": "316L steel cases", "body": "Surgical-grade stainless steel, finished by hand to a flawless surface." },
+        { "title": "Water resistance", "body": "From 3 to 20 ATM — tested and rated for life, sport, and the deep." },
+        { "title": "Movement accuracy", "body": "Quartz and automatic calibres, each regulated for lasting precision." }
+      ]
+    },
+    "stats": {
+      "models": "Watch models",
+      "frames": "Photography frames",
+      "languages": "Languages",
+      "design": "Timeless by design"
+    },
+    "vision": {
+      "eyebrow": "Vision & values",
+      "title": "What we stand for",
+      "cta": "Explore the collection →",
+      "values": [
+        { "title": "Timeless", "body": "We design for decades, not seasons. A Violet should feel as right in twenty years as it does today." },
+        { "title": "Refined", "body": "Restraint is our luxury. We remove until only the essential — and the beautiful — remains." },
+        { "title": "Authentic", "body": "Honest materials, honest engineering, honest prices. No theatre, no shortcuts." }
+      ]
+    }
+  },
+  "Technologies": {
+    "breadcrumb": { "home": "Home", "page": "Technologies" },
+    "hero": {
+      "eyebrow": "Technologies & Features",
+      "title": "The engineering",
+      "titleEmph": "behind every Violet",
+      "subtitle": "Precision you can feel, materials you can trust, and details designed to endure — long after the trend has passed."
+    },
+    "movements": {
+      "eyebrow": "Movements",
+      "title": "Precision at the core",
+      "body": "Every Violet runs on a calibre chosen for its character — the effortless accuracy of quartz, or the living heartbeat of an automatic.",
+      "points": [
+        "Swiss-style quartz, accurate to seconds per month",
+        "Self-winding automatic movements with a visible rotor",
+        "Each calibre individually regulated before it ships"
+      ]
+    },
+    "materials": {
+      "eyebrow": "Materials",
+      "title": "Built from the right things",
+      "body": "We start with materials that earn their place — surgical-grade steel, sapphire-hard glass, and straps finished by hand.",
+      "points": [
+        "Stainless Steel 316L, hypoallergenic and corrosion-resistant",
+        "Sapphire-grade mineral crystal resists everyday scratches",
+        "Genuine leather, woven mesh, steel and rubber strap options"
+      ]
+    },
+    "water": {
+      "eyebrow": "Water resistance",
+      "title": "Rated for real life",
+      "rows": [
+        { "atm": "3 ATM", "use": "Splashes & rain", "line": "Everyday dress wear" },
+        { "atm": "5 ATM", "use": "Showering & brief swims", "line": "Classic & lifestyle" },
+        { "atm": "10 ATM", "use": "Swimming & snorkelling", "line": "GMT & travel" },
+        { "atm": "20 ATM", "use": "Free & scuba diving", "line": "Sport Diver" }
+      ]
+    },
+    "features": {
+      "eyebrow": "More features",
+      "title": "Considered, down to the detail",
+      "items": [
+        { "title": "Long-life battery", "body": "Up to 3 years on a single cell in quartz calibres." },
+        { "title": "Luminous dials", "body": "Super-LumiNova indices that glow through the night." },
+        { "title": "Smart connectivity", "body": "Hybrid models pair to your phone for notifications & tracking." },
+        { "title": "Balanced cases", "body": "36–45 mm diameters, sized for every wrist." },
+        { "title": "Interchangeable straps", "body": "Quick-release pins — swap leather, steel, mesh or rubber in seconds." },
+        { "title": "2-year warranty", "body": "Every Violet is covered, internationally." }
+      ]
+    },
+    "cta": {
+      "eyebrow": "See it on the wrist",
+      "title": "Find the technology that fits you",
+      "subtitle": "Explore the collection and filter by movement, water resistance, and more.",
+      "button": "Explore the collection →"
+    }
+  }
+,
+  "FAQ": {
+    "breadcrumb": { "home": "Home", "page": "FAQ" },
+    "hero": {
+      "eyebrow": "Help & answers",
+      "title": "Questions, answered",
+      "titleEmph": "plainly",
+      "subtitle": "Everything you might want to know about ordering, owning, and caring for a Violet timepiece."
+    },
+    "categories": [
+      {
+        "key": "orders",
+        "icon": "package",
+        "label": "Orders & Shipping",
+        "items": [
+          { "q": "How long does delivery take?", "a": "In-stock pieces ship within 1–2 business days. Standard delivery arrives in 3–5 business days; express is available at checkout for next-day arrival in most regions. International orders typically clear customs within 7–10 business days." },
+          { "q": "Do you ship internationally?", "a": "Yes. Violet ships to over 60 countries across three of our supported languages — English, Russian, and Arabic. Duties and import taxes are calculated transparently at checkout, so there are no surprises on arrival." },
+          { "q": "Can I track my order?", "a": "Every shipment includes a tracking link sent by email the moment your piece leaves our atelier. You can also view live status from your account under Orders." },
+          { "q": "Is my package insured?", "a": "All orders are fully insured in transit and require a signature on delivery. If anything arrives damaged, contact us within 48 hours and we will arrange a replacement." }
+        ]
+      },
+      {
+        "key": "products",
+        "icon": "shield-check",
+        "label": "Products & Warranty",
+        "items": [
+          { "q": "What warranty comes with a Violet watch?", "a": "Each timepiece carries a 2-year international warranty covering movement and manufacturing defects. The warranty card is included with your watch and is honoured at every authorised Violet service centre." },
+          { "q": "Are the movements quartz or automatic?", "a": "Both. Our Classic and Smart lines use precision quartz calibres, while the Heritage and Sport lines feature self-winding automatic movements. The movement type is listed on every product page." },
+          { "q": "How water resistant are Violet watches?", "a": "Ratings range from 3 ATM for dress models to 20 ATM for our diver line. Each piece is individually tested and rated for life, sport, or the deep — check the specifications tab for the exact rating." },
+          { "q": "Where are Violet watches made?", "a": "Movements are engineered to Japanese precision standards and cases are finished by hand in our atelier. Every watch passes a multi-point inspection before it ships." }
+        ]
+      },
+      {
+        "key": "care",
+        "icon": "sparkles",
+        "label": "Care & Maintenance",
+        "items": [
+          { "q": "How do I care for my watch?", "a": "Wipe the case and bracelet with a soft, dry cloth. Avoid contact with perfumes and solvents, and keep the watch away from strong magnetic fields. For water-resistant models, rinse with fresh water after exposure to salt water." },
+          { "q": "How often should it be serviced?", "a": "Automatic movements benefit from a service every 3–5 years; quartz models every 4–6 years, typically alongside a battery change. Authorised servicing preserves both accuracy and warranty cover." },
+          { "q": "Can I change the strap myself?", "a": "Many Violet straps use quick-release spring bars and can be swapped without tools. For integrated bracelets we recommend a visit to an authorised dealer to avoid scratching the lugs." }
+        ]
+      },
+      {
+        "key": "returns",
+        "icon": "rotate-ccw",
+        "label": "Returns & Support",
+        "items": [
+          { "q": "What is your return policy?", "a": "Unworn pieces in original condition can be returned within 30 days for a full refund. Simply request a return from your account and we will email a prepaid, insured shipping label." },
+          { "q": "How do I find an authorised dealer?", "a": "Use the dealer locator on our Contact page, or reach our concierge directly — we will point you to the nearest authorised Violet boutique or service centre." },
+          { "q": "I need help with an existing order.", "a": "Our support team responds within one business day. Reach us through the Contact page with your order number and we will take it from there." }
+        ]
+      }
+    ],
+    "cta": {
+      "eyebrow": "Still need a hand?",
+      "title": "Our concierge is here for you",
+      "body": "Can't find what you're looking for? Reach our team directly — we usually reply within one business day.",
+      "button": "Contact Violet"
+    }
   }
 }

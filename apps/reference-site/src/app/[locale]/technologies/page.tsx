@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "../../../i18n/navigation";
 import { SiteHeader } from "../../../components/site/SiteHeader";
 import { SiteFooter } from "../../../components/site/SiteFooter";
@@ -32,49 +32,6 @@ function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean
     </span>
   );
 }
-
-const FEATURE_ROWS = [
-  {
-    eyebrow: "Movements",
-    title: "Precision at the core",
-    body: "Every Violet runs on a calibre chosen for its character — the effortless accuracy of quartz, or the living heartbeat of an automatic.",
-    points: [
-      "Swiss-style quartz, accurate to seconds per month",
-      "Self-winding automatic movements with a visible rotor",
-      "Each calibre individually regulated before it ships",
-    ],
-    frameIdx: 4,
-    flip: false,
-  },
-  {
-    eyebrow: "Materials",
-    title: "Built from the right things",
-    body: "We start with materials that earn their place — surgical-grade steel, sapphire-hard glass, and straps finished by hand.",
-    points: [
-      "Stainless Steel 316L, hypoallergenic and corrosion-resistant",
-      "Sapphire-grade mineral crystal resists everyday scratches",
-      "Genuine leather, woven mesh, steel and rubber strap options",
-    ],
-    frameIdx: 7,
-    flip: true,
-  },
-];
-
-const FEATURE_GRID = [
-  { title: "Long-life battery", body: "Up to 3 years on a single cell in quartz calibres." },
-  { title: "Luminous dials", body: "Super-LumiNova indices that glow through the night." },
-  { title: "Smart connectivity", body: "Hybrid models pair to your phone for notifications & tracking." },
-  { title: "Balanced cases", body: "36–45 mm diameters, sized for every wrist." },
-  { title: "Interchangeable straps", body: "Quick-release pins — swap leather, steel, mesh or rubber in seconds." },
-  { title: "2-year warranty", body: "Every Violet is covered, internationally." },
-];
-
-const WATER_ROWS = [
-  ["3 ATM", "Splashes & rain", "Everyday dress wear"],
-  ["5 ATM", "Showering & brief swims", "Classic & lifestyle"],
-  ["10 ATM", "Swimming & snorkelling", "GMT & travel"],
-  ["20 ATM", "Free & scuba diving", "Sport Diver"],
-];
 
 function FeaturePoints({ points }: { points: string[] }) {
   return (
@@ -119,6 +76,29 @@ function FeatureImage({ frameIdx, title }: { frameIdx: number; title: string }) 
 export default async function TechnologiesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("Technologies");
+
+  const waterRows = t.raw("water.rows") as { atm: string; use: string; line: string }[];
+  const featureItems = t.raw("features.items") as { title: string; body: string }[];
+
+  const featureRows = [
+    {
+      eyebrow: t("movements.eyebrow"),
+      title: t("movements.title"),
+      body: t("movements.body"),
+      points: t.raw("movements.points") as string[],
+      frameIdx: 4,
+      flip: false,
+    },
+    {
+      eyebrow: t("materials.eyebrow"),
+      title: t("materials.title"),
+      body: t("materials.body"),
+      points: t.raw("materials.points") as string[],
+      frameIdx: 7,
+      flip: true,
+    },
+  ];
 
   return (
     <div>
@@ -158,12 +138,12 @@ export default async function TechnologiesPage({ params }: Props) {
             }}
           >
             <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>
-              Home
+              {t("breadcrumb.home")}
             </Link>
             <span style={{ opacity: 0.5 }}>›</span>
-            <b style={{ color: "#fff", fontWeight: 500 }}>Technologies</b>
+            <b style={{ color: "#fff", fontWeight: 500 }}>{t("breadcrumb.page")}</b>
           </div>
-          <Eyebrow dark>Technologies &amp; Features</Eyebrow>
+          <Eyebrow dark>{t("hero.eyebrow")}</Eyebrow>
           <h1
             style={{
               fontFamily: "var(--vt-font-display)",
@@ -176,22 +156,20 @@ export default async function TechnologiesPage({ params }: Props) {
               maxWidth: 880,
             }}
           >
-            The engineering
+            {t("hero.title")}
             <br />
-            behind every <em style={{ fontStyle: "italic", color: "#C4B5FD" }}>Violet</em>
+            <em style={{ fontStyle: "italic", color: "#C4B5FD" }}>{t("hero.titleEmph")}</em>
           </h1>
           <p style={{ fontSize: 19, lineHeight: 1.7, color: "#C4B5FD", maxWidth: 600, margin: "0 auto" }}>
-            Precision you can feel, materials you can trust, and details designed to endure — long after the trend has
-            passed.
+            {t("hero.subtitle")}
           </p>
         </div>
       </header>
 
       {/* Alternating feature rows */}
-      {FEATURE_ROWS.map(({ eyebrow, title, body, points, frameIdx, flip }) => (
+      {featureRows.map(({ eyebrow, title, body, points, frameIdx, flip }) => (
         <section key={title} className="py-14 md:py-20">
           <div className={`${WRAP} grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16`}>
-            {/* On mobile always image first, on desktop respect flip */}
             <div className={flip ? "lg:order-2" : ""}>
               <FeatureImage frameIdx={frameIdx} title={title} />
             </div>
@@ -223,7 +201,7 @@ export default async function TechnologiesPage({ params }: Props) {
       <section className="py-16 md:py-24">
         <div className={`${WRAP} max-w-[880px]`}>
           <div style={{ textAlign: "center", marginBottom: 44 }}>
-            <Eyebrow>Water resistance</Eyebrow>
+            <Eyebrow>{t("water.eyebrow")}</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
@@ -234,7 +212,7 @@ export default async function TechnologiesPage({ params }: Props) {
                 letterSpacing: "-.02em",
               }}
             >
-              Rated for real life
+              {t("water.title")}
             </h2>
           </div>
           <Reveal
@@ -245,7 +223,7 @@ export default async function TechnologiesPage({ params }: Props) {
               background: "var(--vt-color-surface)",
             }}
           >
-            {WATER_ROWS.map(([atm, use, line], i) => (
+            {waterRows.map(({ atm, use, line }, i) => (
               <div
                 key={atm}
                 style={{
@@ -286,7 +264,7 @@ export default async function TechnologiesPage({ params }: Props) {
       <section style={{ background: "var(--vt-color-surface)" }} className="py-16 md:py-24">
         <div className={WRAP}>
           <div style={{ textAlign: "center", marginBottom: 52, maxWidth: 600, marginInline: "auto" }}>
-            <Eyebrow>More features</Eyebrow>
+            <Eyebrow>{t("features.eyebrow")}</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
@@ -297,13 +275,13 @@ export default async function TechnologiesPage({ params }: Props) {
                 letterSpacing: "-.02em",
               }}
             >
-              Considered, down to the detail
+              {t("features.title")}
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURE_GRID.map(({ title, body }, i) => (
+            {featureItems.map(({ title, body }, i) => (
               <Reveal
-                key={title}
+                key={i}
                 delay={(i % 3) * 60}
                 style={{
                   background: "var(--vt-color-bg)",
@@ -347,7 +325,7 @@ export default async function TechnologiesPage({ params }: Props) {
           }}
         />
         <div className={`relative z-[2] ${WRAP}`}>
-          <Eyebrow dark>See it on the wrist</Eyebrow>
+          <Eyebrow dark>{t("cta.eyebrow")}</Eyebrow>
           <h2
             style={{
               fontFamily: "var(--vt-font-display)",
@@ -357,14 +335,14 @@ export default async function TechnologiesPage({ params }: Props) {
               letterSpacing: "-.02em",
             }}
           >
-            Find the technology that fits you
+            {t("cta.title")}
           </h2>
           <p style={{ color: "#C4B5FD", fontSize: 18, marginBottom: 32 }}>
-            Explore the collection and filter by movement, water resistance, and more.
+            {t("cta.subtitle")}
           </p>
           <Link href="/products" style={{ textDecoration: "none" }}>
             <Button variant="accent" size="lg">
-              Explore the collection →
+              {t("cta.button")}
             </Button>
           </Link>
         </div>

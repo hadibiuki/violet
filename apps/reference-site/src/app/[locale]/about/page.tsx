@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "../../../i18n/navigation";
 import { SiteHeader } from "../../../components/site/SiteHeader";
 import { SiteFooter } from "../../../components/site/SiteFooter";
@@ -33,37 +33,21 @@ function Eyebrow({ children, dark }: { children: React.ReactNode; dark?: boolean
   );
 }
 
-const HISTORY = [
-  ["Founded", "Violet is established with a single principle — restraint as luxury."],
-  ["The Classic line", "The first dress collection sets the house signature: balanced cases, clean dials."],
-  ["Going international", "The brand reaches new markets across three languages and two continents."],
-  ["Sport & Smart", "Diver and connected lines extend the family without diluting the identity."],
-  ["2026 · Today", "Over 1000 models, 4000+ photography frames, and one unwavering design language."],
-];
-
-const QUALITY = [
-  { title: "Sapphire-grade glass", body: "Hardened mineral crystal that resists the scratches of everyday life." },
-  { title: "316L steel cases", body: "Surgical-grade stainless steel, finished by hand to a flawless surface." },
-  { title: "Water resistance", body: "From 3 to 20 ATM — tested and rated for life, sport, and the deep." },
-  { title: "Movement accuracy", body: "Quartz and automatic calibres, each regulated for lasting precision." },
-];
-
-const VALUES = [
-  ["Timeless", "We design for decades, not seasons. A Violet should feel as right in twenty years as it does today."],
-  ["Refined", "Restraint is our luxury. We remove until only the essential — and the beautiful — remains."],
-  ["Authentic", "Honest materials, honest engineering, honest prices. No theatre, no shortcuts."],
-];
-
-const STATS = [
-  ["1000+", "Watch models"],
-  ["4000+", "Photography frames"],
-  ["3", "Languages"],
-  ["✦", "Timeless by design"],
-];
-
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("About");
+
+  const history = t.raw("history.items") as { title: string; body: string }[];
+  const quality = t.raw("quality.items") as { title: string; body: string }[];
+  const values = t.raw("vision.values") as { title: string; body: string }[];
+
+  const STATS: [string, string][] = [
+    ["1000+", t("stats.models")],
+    ["4000+", t("stats.frames")],
+    ["3", t("stats.languages")],
+    ["✦", t("stats.design")],
+  ];
 
   return (
     <div>
@@ -103,12 +87,12 @@ export default async function AboutPage({ params }: Props) {
             }}
           >
             <Link href="/" style={{ color: "inherit", textDecoration: "none" }}>
-              Home
+              {t("breadcrumb.home")}
             </Link>
             <span style={{ opacity: 0.5 }}>›</span>
-            <b style={{ color: "#fff", fontWeight: 500 }}>About</b>
+            <b style={{ color: "#fff", fontWeight: 500 }}>{t("breadcrumb.page")}</b>
           </div>
-          <Eyebrow dark>About Violet</Eyebrow>
+          <Eyebrow dark>{t("hero.eyebrow")}</Eyebrow>
           <h1
             style={{
               fontFamily: "var(--vt-font-display)",
@@ -121,12 +105,12 @@ export default async function AboutPage({ params }: Props) {
               maxWidth: 900,
             }}
           >
-            Timekeeping, refined
+            {t("hero.title")}
             <br />
-            to its <em style={{ fontStyle: "italic", color: "#C4B5FD" }}>essence</em>
+            <em style={{ fontStyle: "italic", color: "#C4B5FD" }}>{t("hero.titleEmph")}</em>
           </h1>
           <p style={{ fontSize: 19, lineHeight: 1.7, color: "#C4B5FD", maxWidth: 600, margin: "0 auto" }}>
-            For those who value time — a brand built on precision, restraint, and a quiet kind of confidence that lasts.
+            {t("hero.subtitle")}
           </p>
         </div>
       </header>
@@ -158,7 +142,7 @@ export default async function AboutPage({ params }: Props) {
             />
           </Reveal>
           <Reveal>
-            <Eyebrow>Our story</Eyebrow>
+            <Eyebrow>{t("story.eyebrow")}</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
@@ -170,15 +154,13 @@ export default async function AboutPage({ params }: Props) {
                 letterSpacing: "-.02em",
               }}
             >
-              A name built on time
+              {t("story.title")}
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--vt-color-text-muted)", marginBottom: 18 }}>
-              Violet began with a simple belief: that a watch should be honest. Honest in its engineering, honest in its
-              design, and honest about the person who wears it.
+              {t("story.body1")}
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--vt-color-text-muted)" }}>
-              Today, over a thousand models carry that idea across borders and languages — each one uniting precision
-              movements with considered, restrained design. Nothing decorative. Nothing wasted.
+              {t("story.body2")}
             </p>
           </Reveal>
         </div>
@@ -188,7 +170,7 @@ export default async function AboutPage({ params }: Props) {
       <section style={{ background: "var(--vt-color-surface)" }} className="py-16 md:py-24">
         <div className={WRAP}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <Eyebrow>Our history</Eyebrow>
+            <Eyebrow>{t("history.eyebrow")}</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
@@ -199,22 +181,22 @@ export default async function AboutPage({ params }: Props) {
                 letterSpacing: "-.02em",
               }}
             >
-              A measured journey
+              {t("history.title")}
             </h2>
           </div>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            {HISTORY.map(([title, body], i) => (
+            {history.map(({ title, body }, i) => (
               <Reveal
-                key={title}
+                key={i}
                 delay={i * 60}
                 style={{
                   display: "flex",
                   gap: 24,
-                  paddingBottom: i < HISTORY.length - 1 ? 36 : 0,
+                  paddingBottom: i < history.length - 1 ? 36 : 0,
                   position: "relative",
                 }}
               >
-                {i < HISTORY.length - 1 && (
+                {i < history.length - 1 && (
                   <span
                     style={{
                       position: "absolute",
@@ -234,14 +216,14 @@ export default async function AboutPage({ params }: Props) {
                     borderRadius: "50%",
                     marginTop: 2,
                     background:
-                      i === HISTORY.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-surface)",
-                    border: `2px solid ${i === HISTORY.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-accent)"}`,
+                      i === history.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-surface)",
+                    border: `2px solid ${i === history.length - 1 ? "var(--vt-color-primary)" : "var(--vt-color-accent)"}`,
                     display: "grid",
                     placeItems: "center",
                     zIndex: 1,
                   }}
                 >
-                  {i === HISTORY.length - 1 && <span style={{ color: "#fff", fontSize: 11 }}>✦</span>}
+                  {i === history.length - 1 && <span style={{ color: "#fff", fontSize: 11 }}>✦</span>}
                 </span>
                 <div>
                   <h3 style={{ fontSize: 19, fontWeight: 600, color: "var(--vt-color-text-strong)", margin: "0 0 6px" }}>
@@ -259,7 +241,7 @@ export default async function AboutPage({ params }: Props) {
       <section className="py-16 md:py-24">
         <div className={WRAP}>
           <div style={{ textAlign: "center", marginBottom: 52, maxWidth: 640, marginInline: "auto" }}>
-            <Eyebrow>Quality &amp; craftsmanship</Eyebrow>
+            <Eyebrow>{t("quality.eyebrow")}</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
@@ -270,17 +252,16 @@ export default async function AboutPage({ params }: Props) {
                 letterSpacing: "-.02em",
               }}
             >
-              Made to last a lifetime
+              {t("quality.title")}
             </h2>
             <p style={{ fontSize: 17, color: "var(--vt-color-text-muted)", lineHeight: 1.7 }}>
-              Every Violet is the sum of small, exacting decisions — materials chosen for their integrity, finishes earned
-              by hand.
+              {t("quality.subtitle")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {QUALITY.map(({ title, body }, i) => (
+            {quality.map(({ title, body }, i) => (
               <Reveal
-                key={title}
+                key={i}
                 delay={i * 60}
                 style={{
                   background: "var(--vt-color-surface)",
@@ -346,7 +327,7 @@ export default async function AboutPage({ params }: Props) {
         />
         <div className={`relative z-[2] ${WRAP}`}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <Eyebrow dark>Vision &amp; values</Eyebrow>
+            <Eyebrow dark>{t("vision.eyebrow")}</Eyebrow>
             <h2
               style={{
                 fontFamily: "var(--vt-font-display)",
@@ -356,12 +337,12 @@ export default async function AboutPage({ params }: Props) {
                 letterSpacing: "-.02em",
               }}
             >
-              What we stand for
+              {t("vision.title")}
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-            {VALUES.map(([title, body], i) => (
-              <Reveal key={title} delay={i * 70} style={{ textAlign: "center", padding: "0 8px" }}>
+            {values.map(({ title, body }, i) => (
+              <Reveal key={i} delay={i * 70} style={{ textAlign: "center", padding: "0 8px" }}>
                 <div
                   style={{
                     fontFamily: "var(--vt-font-display)",
@@ -389,7 +370,7 @@ export default async function AboutPage({ params }: Props) {
           <div style={{ textAlign: "center", marginTop: 60 }}>
             <Link href="/products" style={{ textDecoration: "none" }}>
               <Button variant="accent" size="lg">
-                Explore the collection →
+                {t("vision.cta")}
               </Button>
             </Link>
           </div>

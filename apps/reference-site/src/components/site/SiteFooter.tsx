@@ -24,7 +24,7 @@ const COLUMNS = [
     links: [
       ["contact", "/contact"],
       ["findDealer", "/contact"],
-      ["faq", "/contact"],
+      ["faq", "/faq"],
     ],
   },
 ] as const;
