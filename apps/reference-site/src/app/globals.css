@@ -116,3 +116,8 @@ body {
   .vt-filter-drawer, .vt-drawer-backdrop { transition: none; }
 }
 
+/* Error pages */
+.vt-error-cta { transition: background .2s, border-color .2s; }
+.vt-error-cta:hover { background: rgba(196,181,253,.08) !important; border-color: rgba(196,181,253,.7) !important; }
+@keyframes vt-sparkle { from { opacity: 0.2; transform: scale(1); } to { opacity: 0.9; transform: scale(1.6); } }
+

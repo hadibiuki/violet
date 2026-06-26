@@ -79,6 +79,9 @@ export function FaqAccordion({
               backdropFilter: "blur(6px)",
             }}
           >
+            <span style={{ display: "flex", width: 15, height: 15, opacity: 0.8 }}>
+              <Icon name={c.icon} />
+            </span>
             {c.label}
           </button>
         ))}
