@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Reference Site — Catalog" description="Filterable product grid for the Violet vitrine — filter rail, sort, active-filter chips, pagination, and skeleton loading." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .vtNavlink { position: relative; }
+  .vtNavlink::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--vt-gold-400); transform: scaleX(0); transform-origin: left; transition: transform .2s var(--vt-ease-emphasized); }
+  .vtNavlink:hover::after { transform: scaleX(1); }
+  .vtCrumb a { transition: color .15s var(--vt-ease-standard); }
+  .vtCrumb a:hover { color: var(--vt-color-primary); }
+  .vtGrid[data-cols="3"] { grid-template-columns: repeat(3,1fr) !important; }
+</style>
+</helmet>
+
+<div>
+  <!-- ============ NAV (frosted light) ============ -->
+  <nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;background:rgba(248,247,255,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--vt-color-divider);">
+    <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" hint-size="150px,40px"></x-import>
+    <div style="display:flex;gap:30px;align-items:center;">
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Home</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">New Models</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:600;color:var(--vt-color-primary);white-space:nowrap;">Products</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Brand</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">About</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Contact</a>
+    </div>
+    <div style="display:flex;gap:2px;font-size:12.5px;">
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-strong);background:var(--vt-color-primary-subtle);">EN</a>
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-muted);">RU</a>
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-muted);">AR</a>
+    </div>
+  </nav>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <header style="max-width:1440px;margin:0 auto;padding:40px 40px 0;">
+    <div class="vtCrumb" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--vt-color-text-muted);margin-bottom:22px;">
+      <a href="#" style="text-decoration:none;">Home</a>
+      <span style="opacity:.5;">›</span>
+      <span style="color:var(--vt-color-text-strong);">All Products</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;">
+      <div>
+        <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">The full collection</span>
+        <h1 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(38px,5vw,60px);color:var(--vt-color-text-strong);margin:8px 0 0;letter-spacing:-.02em;">All Products</h1>
+      </div>
+      <p style="font-size:15px;line-height:1.7;color:var(--vt-color-text-muted);max-width:360px;margin:0;">Over a thousand models of precision engineering. Filter by line, movement, and case size to find the one that's yours.</p>
+    </div>
+  </header>
+
+  <!-- ============ BODY: rail + grid ============ -->
+  <section style="max-width:1440px;margin:0 auto;padding:36px 40px 100px;display:grid;grid-template-columns:264px 1fr;gap:40px;align-items:start;">
+
+    <!-- FILTER RAIL -->
+    <aside style="position:sticky;top:96px;display:flex;flex-direction:column;gap:30px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--vt-color-text-strong);font-weight:600;margin:0;">Filters</h2>
+        <button onClick="{{ clearFilters }}" style="background:none;border:none;cursor:pointer;font:inherit;font-size:13px;color:var(--vt-color-primary);padding:0;">Clear all</button>
+      </div>
+
+      <div>
+        <h3 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-color-text-muted);font-weight:600;margin:0 0 14px;">Line</h3>
+        <div style="display:flex;flex-direction:column;gap:11px;">{{ lineFacets }}</div>
+      </div>
+
+      <div style="height:1px;background:var(--vt-color-divider);"></div>
+
+      <div>
+        <h3 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-color-text-muted);font-weight:600;margin:0 0 14px;">Movement</h3>
+        <div style="display:flex;flex-direction:column;gap:11px;">{{ movementFacets }}</div>
+      </div>
+
+      <div style="height:1px;background:var(--vt-color-divider);"></div>
+
+      <div>
+        <h3 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-color-text-muted);font-weight:600;margin:0 0 14px;">Case size</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">{{ sizeChips }}</div>
+      </div>
+
+      <div style="height:1px;background:var(--vt-color-divider);"></div>
+
+      <div>
+        <h3 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-color-text-muted);font-weight:600;margin:0 0 14px;">Availability</h3>
+        <div style="display:flex;flex-direction:column;gap:11px;">{{ availFacets }}</div>
+      </div>
+    </aside>
+
+    <!-- MAIN COLUMN -->
+    <div>
+      <!-- TOOLBAR -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--vt-color-divider);margin-bottom:8px;">
+        <span style="font-size:14px;color:var(--vt-color-text-muted);">Showing <strong style="color:var(--vt-color-text-strong);font-weight:600;">{{ resultLabel }}</strong> of <strong style="color:var(--vt-color-text-strong);font-weight:600;">1000+</strong> models</span>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.SortDropdown" value="{{ sort }}" options="{{ sortOptions }}" onChange="{{ onSort }}" hint-size="200px,40px"></x-import>
+      </div>
+
+      <!-- ACTIVE FILTER CHIPS -->
+      <sc-if value="{{ hasActive }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:18px 0 4px;">
+          <span style="font-size:13px;color:var(--vt-color-text-muted);margin-inline-end:2px;">Active:</span>
+          {{ activeChips }}
+        </div>
+      </sc-if>
+
+      <!-- GRID -->
+      <div class="vtGrid" data-cols="{{ columns }}" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:28px;">
+        {{ gridCells }}
+      </div>
+
+      <!-- PAGINATION -->
+      <div style="display:flex;justify-content:center;margin-top:56px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Pagination" page="{{ page }}" pageCount="{{ pageCount }}" onChange="{{ onPage }}" hint-size="300px,44px"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--vt-ink-950);color:#fff;padding:64px 40px 30px;">
+    <div style="max-width:1440px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:36px;">
+        <div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" tone="onDark" size="lg" hint-size="160px,44px"></x-import>
+          <p style="color:rgba(255,255,255,.6);font-size:13px;line-height:1.7;margin-top:14px;max-width:280px;">Violet · Watches — an international reference for timeless design, crafted for those who value time.</p>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">EXPLORE</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">New Models</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Products</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Technologies</a>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">BRAND</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">About Violet</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">History</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Quality</a>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">SUPPORT</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Contact</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Find a dealer</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">FAQ</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(230,180,83,.2);padding-top:24px;display:flex;justify-content:space-between;color:rgba(255,255,255,.5);font-size:13px;flex-wrap:wrap;gap:10px;">
+        <span>© 2026 Violet Watches. All rights reserved.</span>
+        <span>English · Русский · العربية</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;columns&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: 4, &quot;options&quot;: [3, 4], &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Layout&quot; },
+  &quot;loading&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;State&quot; }
+}">
+class Component extends DCLogic {
+  state = { page: 1, sort: 'newest', sizes: [], lines: [], movements: [], inStockOnly: false, loading: false };
+
+  img(i, w) {
+    const f = [
+      'photo-1523275335684-37898b6baf30','photo-1547996160-81dfa63595aa',
+      'photo-1524805444758-089113d48a6d','photo-1533139502658-0198f920d8e8',
+      'photo-1612817159949-195b6eb9e31a','photo-1508685096489-7aacd43bd3b1',
+      'photo-1434056886845-dac89ffe9b56','photo-1495856458515-0637185db551',
+      'photo-1539874754764-5a96559165b0','photo-1542496658-e33a6d0d50f6',
+      'photo-1620625515032-6ed0c1790c75','photo-1611591437281-460bfbe1220a',
+    ];
+    return `https://images.unsplash.com/${f[i % f.length]}?auto=format&fit=crop&w=${w || 600}&q=80`;
+  }
+
+  componentDidMount() {
+    if (!window.VioletDesignSystem_7273c4) {
+      this._iv = setInterval(() => {
+        if (window.VioletDesignSystem_7273c4) { clearInterval(this._iv); this.forceUpdate(); }
+      }, 60);
+    }
+  }
+  componentWillUnmount() { if (this._iv) clearInterval(this._iv); }
+
+  catalog() {
+    const F = (i) => this.img(i, 600);
+    return [
+      { name: 'Chronograph Classic 42', sku: 'VLT-2601', line: 'Classic', mov: 'Chronograph', size: 42, badge: 'new',     price: '$1,490', image: F(0),  hoverImage: F(1) },
+      { name: 'Heritage Automatic 40',  sku: 'VLT-2602', line: 'Heritage',mov: 'Automatic',   size: 40, badge: 'new',     price: '$1,290', image: F(2),  hoverImage: F(3) },
+      { name: 'Sport Diver 44',         sku: 'VLT-2603', line: 'Sport',   mov: 'Automatic',   size: 44, badge: 'new',     price: '$1,650', image: F(3),  hoverImage: F(5) },
+      { name: 'Lunar Moonphase 41',     sku: 'VLT-2604', line: 'Classic', mov: 'Automatic',   size: 41, badge: 'new',     price: '$1,980', image: F(6),  hoverImage: F(4) },
+      { name: 'Aurora Skeleton 42',     sku: 'VLT-1180', line: 'Classic', mov: 'Automatic',   size: 42, badge: 'limited', price: '$2,250', image: F(7),  hoverImage: F(4) },
+      { name: 'Meridian GMT 43',        sku: 'VLT-1181', line: 'Sport',   mov: 'GMT',         size: 43, badge: null,      price: '$1,490', image: F(4),  hoverImage: F(0) },
+      { name: 'Eclipse Dress 38',       sku: 'VLT-1182', line: 'Classic', mov: 'Quartz',      size: 38, badge: null,      price: '$980',   image: F(5),  hoverImage: F(2) },
+      { name: 'Tempo Quartz 36',        sku: 'VLT-1183', line: 'Classic', mov: 'Quartz',      size: 36, badge: null,      price: '$640',   image: F(1),  hoverImage: F(6) },
+      { name: 'Nebula Field 40',        sku: 'VLT-1184', line: 'Sport',   mov: 'Automatic',   size: 40, badge: null,      price: '$1,180', image: F(8),  hoverImage: F(9) },
+      { name: 'Solis Smart 44',         sku: 'VLT-1185', line: 'Smart',   mov: 'Quartz',      size: 44, badge: null,      price: '$790',   image: F(9),  hoverImage: F(8), unavailable: true },
+      { name: 'Vesper Chrono 42',       sku: 'VLT-1186', line: 'Sport',   mov: 'Chronograph', size: 42, badge: null,      price: '$1,540', image: F(10), hoverImage: F(11) },
+      { name: 'Astra Connect 41',       sku: 'VLT-1187', line: 'Smart',   mov: 'Quartz',      size: 41, badge: 'limited', price: '$1,050', image: F(11), hoverImage: F(10) },
+    ];
+  }
+
+  toggle(key, val) {
+    this.setState((s) => {
+      const arr = s[key];
+      const next = arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
+      return { [key]: next, page: 1 };
+    });
+  }
+
+  facetRow(NS, key, label, count) {
+    const checked = this.state[key].includes(label);
+    return React.createElement('label', {
+      key: label,
+      style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' },
+    }, [
+      React.createElement(NS.Checkbox, {
+        key: 'cb', label, checked,
+        onChange: () => this.toggle(key, label),
+      }),
+      React.createElement('span', { key: 'ct', style: { fontSize: '12px', color: 'var(--vt-color-text-subtle)', fontFamily: 'var(--vt-font-mono)' } }, count),
+    ]);
+  }
+
+  renderVals() {
+    const NS = window.VioletDesignSystem_7273c4;
+    if (!NS) return {};
+    const loading = this.props.loading ?? this.state.loading;
+    const columns = this.props.columns ?? 4;
+    const perPage = columns === 3 ? 9 : 8;
+
+    const all = this.catalog();
+    // filter
+    let rows = all.filter((p) =>
+      (!this.state.lines.length || this.state.lines.includes(p.line)) &&
+      (!this.state.movements.length || this.state.movements.includes(p.mov)) &&
+      (!this.state.sizes.length || this.state.sizes.includes(p.size)) &&
+      (!this.state.inStockOnly || !p.unavailable)
+    );
+    // sort
+    const s = this.state.sort;
+    if (s === 'az') rows = [...rows].sort((a, b) => a.name.localeCompare(b.name));
+    else if (s === 'za') rows = [...rows].sort((a, b) => b.name.localeCompare(a.name));
+    else if (s === 'price-asc') rows = [...rows].sort((a, b) => this.num(a.price) - this.num(b.price));
+    else if (s === 'price-desc') rows = [...rows].sort((a, b) => this.num(b.price) - this.num(a.price));
+
+    const total = rows.length;
+    const pageCount = Math.max(1, Math.ceil(total / perPage));
+    const page = Math.min(this.state.page, pageCount);
+    const slice = rows.slice((page - 1) * perPage, page * perPage);
+
+    // grid cells — skeletons while loading, else cards
+    let gridCells;
+    if (loading) {
+      gridCells = Array.from({ length: perPage }).map((_, i) =>
+        React.createElement(NS.Skeleton, { key: 'sk' + i, variant: 'card' }));
+    } else if (!slice.length) {
+      gridCells = React.createElement('div', {
+        style: { gridColumn: '1 / -1', textAlign: 'center', padding: '80px 0', color: 'var(--vt-color-text-muted)' },
+      }, [
+        React.createElement('div', { key: 't', style: { fontSize: '17px', color: 'var(--vt-color-text-strong)', marginBottom: '6px' } }, 'No results'),
+        React.createElement('div', { key: 'd', style: { fontSize: '14px', marginBottom: '18px' } }, 'No models match these filters.'),
+        React.createElement(NS.Button, { key: 'b', variant: 'secondary', onClick: () => this.clearAll() }, 'Clear filters'),
+      ]);
+    } else {
+      gridCells = slice.map((p) => React.createElement(NS.ProductCard, {
+        key: p.sku, name: p.name, sku: p.sku, image: p.image, hoverImage: p.hoverImage,
+        badge: p.badge, price: p.price, unavailable: p.unavailable, href: '#',
+      }));
+    }
+
+    // facets
+    const lineFacets = [['Classic', 5], ['Sport', 4], ['Heritage', 1], ['Smart', 2]].map(([l, c]) => this.facetRow(NS, 'lines', l, c));
+    const movementFacets = [['Automatic', 5], ['Chronograph', 2], ['Quartz', 4], ['GMT', 1]].map(([l, c]) => this.facetRow(NS, 'movements', l, c));
+    const availFacets = [
+      React.createElement('label', { key: 'stk', style: { display: 'flex', cursor: 'pointer' } },
+        React.createElement(NS.Checkbox, { label: 'In stock only', checked: this.state.inStockOnly, onChange: () => this.setState((st) => ({ inStockOnly: !st.inStockOnly, page: 1 })) })),
+    ];
+    const sizeChips = [36, 38, 40, 41, 42, 43, 44].map((sz) =>
+      React.createElement(NS.Chip, {
+        key: sz, selected: this.state.sizes.includes(sz),
+        onClick: () => this.toggle('sizes', sz),
+        style: { cursor: 'pointer' },
+      }, sz + ' mm'));
+
+    // active filter chips
+    const active = [];
+    this.state.lines.forEach((l) => active.push({ key: 'lines', val: l, label: l }));
+    this.state.movements.forEach((m) => active.push({ key: 'movements', val: m, label: m }));
+    this.state.sizes.forEach((z) => active.push({ key: 'sizes', val: z, label: z + ' mm' }));
+    if (this.state.inStockOnly) active.push({ key: 'stock', val: true, label: 'In stock' });
+    const activeChips = active.map((a) =>
+      React.createElement(NS.Chip, {
+        key: a.key + a.val, selected: true,
+        onRemove: () => { if (a.key === 'stock') this.setState({ inStockOnly: false, page: 1 }); else this.toggle(a.key, a.val); },
+      }, a.label));
+
+    const start = total ? (page - 1) * perPage + 1 : 0;
+    const end = Math.min(page * perPage, total);
+
+    return {
+      columns, page, pageCount, sort: this.state.sort,
+      resultLabel: total ? `${start}–${end}` : '0',
+      hasActive: active.length > 0,
+      gridCells, lineFacets, movementFacets, availFacets, sizeChips, activeChips,
+      sortOptions: [
+        { value: 'newest', label: 'Newest' },
+        { value: 'az', label: 'Name · A–Z' },
+        { value: 'za', label: 'Name · Z–A' },
+        { value: 'price-asc', label: 'Price · Low to High' },
+        { value: 'price-desc', label: 'Price · High to Low' },
+      ],
+      onSort: (v) => this.setState({ sort: v, page: 1 }),
+      onPage: (p) => { this.setState({ page: p }); },
+      clearFilters: () => this.clearAll(),
+    };
+  }
+
+  num(p) { return parseInt(String(p).replace(/[^0-9]/g, ''), 10) || 0; }
+  clearAll() { this.setState({ lines: [], movements: [], sizes: [], inStockOnly: false, page: 1 }); }
+}
+</script>
+</body>
+</html>

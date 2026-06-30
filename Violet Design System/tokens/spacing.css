@@ -1,0 +1,71 @@
+/* ============================================================
+   VIOLET — Spacing, radius, sizing, borders, elevation, motion, z-index, aspect
+   4px base scale. Component padding lives at 2–6; section rhythm at 16–32.
+   ============================================================ */
+
+:root {
+  /* ---------- SPACING (4px base) ---------- */
+  --vt-space-0: 0px;   --vt-space-1: 4px;   --vt-space-2: 8px;   --vt-space-3: 12px;
+  --vt-space-4: 16px;  --vt-space-5: 20px;  --vt-space-6: 24px;  --vt-space-8: 32px;
+  --vt-space-10: 40px; --vt-space-12: 48px; --vt-space-16: 64px; --vt-space-20: 80px;
+  --vt-space-24: 96px; --vt-space-32: 128px;
+
+  /* ---------- RADIUS ----------
+     inputs/chips sm · buttons md · cards lg · hero/feature xl–2xl · pills/avatars full */
+  --vt-radius-none: 0px; --vt-radius-sm: 6px;  --vt-radius-md: 10px; --vt-radius-lg: 14px;
+  --vt-radius-xl: 20px;  --vt-radius-2xl: 28px; --vt-radius-pill: 9999px;
+
+  /* ---------- SIZING — icons, controls, containers ---------- */
+  --vt-size-icon-sm: 16px; --vt-size-icon-md: 20px; --vt-size-icon-lg: 24px; --vt-size-icon-xl: 32px;
+  --vt-size-control-sm: 32px; --vt-size-control-md: 40px; --vt-size-control-lg: 48px; /* button/input heights */
+  --vt-container-sm: 640px; --vt-container-md: 768px; --vt-container-lg: 1024px;
+  --vt-container-xl: 1280px; --vt-container-2xl: 1440px;
+
+  /* ---------- BREAKPOINTS (grid: desktop 4col / tablet 3 / mobile 2) ---------- */
+  --vt-bp-sm: 640px; --vt-bp-md: 768px; --vt-bp-lg: 1024px; --vt-bp-xl: 1280px;
+
+  /* ---------- BORDER WIDTH ---------- */
+  --vt-border-hairline: 1px; --vt-border-thin: 1.5px; --vt-border-thick: 2px;
+
+  /* ---------- ELEVATION (aubergine-tinted so depth feels on-brand) ---------- */
+  --vt-shadow-xs:  0 1px 2px rgba(39,25,42,.07);
+  --vt-shadow-sm:  0 2px 8px rgba(39,25,42,.09);
+  --vt-shadow-md:  0 2px 16px rgba(39,25,42,.11);   /* product cards at rest */
+  --vt-shadow-lg:  0 8px 32px rgba(39,25,42,.15);   /* card hover */
+  --vt-shadow-xl:  0 16px 48px rgba(39,25,42,.22);  /* popovers, dropdowns */
+  --vt-shadow-2xl: 0 24px 72px rgba(39,25,42,.30);  /* dialogs, drawers */
+  --vt-shadow-focus: 0 0 0 3px rgba(94,60,89,.32);  /* focus ring */
+
+  /* ---------- MOTION ---------- */
+  --vt-duration-fast: 120ms; /* @kind other */
+  --vt-duration-base: 200ms; /* @kind other */
+  --vt-duration-slow: 320ms; /* @kind other */
+  --vt-duration-slower: 600ms; /* @kind other */
+  --vt-ease-standard: cubic-bezier(.2,0,0,1); /* @kind other */
+  --vt-ease-emphasized: cubic-bezier(.3,0,0,1); /* @kind other */
+  --vt-ease-out: cubic-bezier(0,0,.2,1); /* @kind other */
+
+  /* ---------- Z-INDEX / LAYERING ---------- */
+  --vt-z-base: 0; /* @kind other */
+  --vt-z-sticky: 100; /* @kind other */
+  --vt-z-dropdown: 200; /* @kind other */
+  --vt-z-overlay: 300; /* @kind other */
+  --vt-z-modal: 400; /* @kind other */
+  --vt-z-toast: 500; /* @kind other */
+  --vt-z-tooltip: 600; /* @kind other */
+
+  /* ---------- ASPECT ---------- */
+  --vt-aspect-product: 1 / 1; /* @kind other */ /* watch images are square */
+  --vt-aspect-banner: 21 / 9; /* @kind other */ /* hero / campaign banner */
+  --vt-aspect-line: 3 / 4; /* @kind other */ /* collection / line cards */
+}
+
+/* Motion collapses under reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --vt-duration-fast: 0ms; /* @kind other */
+    --vt-duration-base: 0ms; /* @kind other */
+    --vt-duration-slow: 0ms; /* @kind other */
+    --vt-duration-slower: 0ms; /* @kind other */
+  }
+}

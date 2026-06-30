@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Violet · Heritage & Craft</title>
+<meta name="description" content="The Violet story — heritage, craftsmanship, and a vision for timeless design.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.06)}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s var(--vt-ease-standard),transform .6s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+  const wrap = { maxWidth: 1200, margin: '0 auto', padding: '0 40px' };
+
+  function Eyebrow({ children, dark }) {
+    return <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', fontWeight: 500, color: dark ? 'var(--vt-gold-300)' : 'var(--vt-color-accent-strong)' }}>{children}</span>;
+  }
+
+  function AboutHero() {
+    return (
+      <header style={{ position: 'relative', overflow: 'hidden', paddingTop: 132,
+        background: 'radial-gradient(1100px 640px at 72% 24%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+          'radial-gradient(560px 380px at 18% 28%,rgba(168,85,247,.24),transparent 60%),radial-gradient(460px 460px at 84% 70%,rgba(124,58,237,.20),transparent 60%),radial-gradient(360px 360px at 60% 16%,rgba(201,168,106,.12),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'relative', zIndex: 2, ...wrap, padding: '70px 40px 84px', textAlign: 'center' }}>
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', fontSize: 13, color: 'rgba(196,181,253,.8)', marginBottom: 24 }}>
+            <a href="index.html" style={{ color: 'inherit', textDecoration: 'none' }}>Home</a><span style={{ opacity: .5 }}>›</span><b style={{ color: '#fff', fontWeight: 500 }}>About</b>
+          </div>
+          <Eyebrow dark>About Violet</Eyebrow>
+          <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, letterSpacing: '-.02em', fontSize: 'clamp(48px,6vw,84px)', lineHeight: 1.04, color: '#fff', margin: '16px auto 18px', maxWidth: 900 }}>
+            Timekeeping, refined<br />to its <em style={{ fontStyle: 'italic', color: '#C4B5FD' }}>essence</em>
+          </h1>
+          <p style={{ fontSize: 19, lineHeight: 1.7, color: '#C4B5FD', maxWidth: 600, margin: '0 auto' }}>
+            For those who value time — a brand built on precision, restraint, and a quiet kind of confidence that lasts.
+          </p>
+        </div>
+      </header>
+    );
+  }
+
+  function Story() {
+    return (
+      <section style={{ padding: '100px 0' }}>
+        <div style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div className="reveal" style={{ position: 'relative', aspectRatio: '4/5', borderRadius: 'var(--vt-radius-2xl)', overflow: 'hidden' }}>
+            <img src={D.frame(4, 800)} alt="Violet craftsmanship" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ position: 'absolute', inset: 16, border: '1px solid rgba(255,255,255,.4)', borderRadius: 'var(--vt-radius-xl)', pointerEvents: 'none' }} />
+          </div>
+          <div className="reveal">
+            <Eyebrow>Our story</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', color: 'var(--vt-color-text-strong)', margin: '16px 0 22px', lineHeight: 1.1, letterSpacing: '-.02em' }}>A name built on time</h2>
+            <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--vt-color-text-muted)', marginBottom: 18 }}>
+              Violet began with a simple belief: that a watch should be honest. Honest in its engineering, honest in its design, and honest about the person who wears it.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--vt-color-text-muted)' }}>
+              Today, over a thousand models carry that idea across borders and languages — each one uniting precision movements with considered, restrained design. Nothing decorative. Nothing wasted.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function History() {
+    const events = [
+      ['Founded', 'Violet is established with a single principle — restraint as luxury.'],
+      ['The Classic line', 'The first dress collection sets the house signature: balanced cases, clean dials.'],
+      ['Going international', 'The brand reaches new markets across three languages and two continents.'],
+      ['Sport & Smart', 'Diver and connected lines extend the family without diluting the identity.'],
+      ['2026 · Today', 'Over 1000 models, 4000+ photography frames, and one unwavering design language.'],
+    ];
+    return (
+      <section style={{ background: 'var(--vt-color-surface)', padding: '100px 0' }}>
+        <div style={wrap}>
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <Eyebrow>Our history</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', color: 'var(--vt-color-text-strong)', margin: '14px 0 0', letterSpacing: '-.02em' }}>A measured journey</h2>
+          </div>
+          <div style={{ maxWidth: 760, margin: '0 auto' }}>
+            {events.map(([title, body], i) => (
+              <div key={title} className="reveal" style={{ display: 'flex', gap: 24, paddingBottom: i < events.length - 1 ? 36 : 0, position: 'relative', transitionDelay: `${i * 60}ms` }}>
+                {i < events.length - 1 && <span style={{ position: 'absolute', insetInlineStart: 11, top: 26, bottom: 0, width: 2, background: 'var(--vt-color-divider)' }} />}
+                <span style={{ flex: 'none', width: 24, height: 24, borderRadius: '50%', marginTop: 2, background: i === events.length - 1 ? 'var(--vt-color-primary)' : 'var(--vt-color-surface)', border: `2px solid ${i === events.length - 1 ? 'var(--vt-color-primary)' : 'var(--vt-color-accent)'}`, display: 'grid', placeItems: 'center', zIndex: 1 }}>
+                  {i === events.length - 1 && <span style={{ color: '#fff', fontSize: 11 }}>✦</span>}
+                </span>
+                <div>
+                  <h3 style={{ fontSize: 19, fontWeight: 600, color: 'var(--vt-color-text-strong)', margin: '0 0 6px' }}>{title}</h3>
+                  <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--vt-color-text-muted)', margin: 0 }}>{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function Quality() {
+    const points = [
+      ['gem', 'Sapphire-grade glass', 'Hardened mineral crystal that resists the scratches of everyday life.'],
+      ['cog', '316L steel cases', 'Surgical-grade stainless steel, finished by hand to a flawless surface.'],
+      ['droplets', 'Water resistance', 'From 3 to 20 ATM — tested and rated for life, sport, and the deep.'],
+      ['shield-check', 'Movement accuracy', 'Quartz and automatic calibres, each regulated for lasting precision.'],
+    ];
+    return (
+      <section style={{ padding: '100px 0' }}>
+        <div style={wrap}>
+          <div style={{ textAlign: 'center', marginBottom: 52, maxWidth: 640, marginInline: 'auto' }}>
+            <Eyebrow>Quality &amp; craftsmanship</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', color: 'var(--vt-color-text-strong)', margin: '14px 0 14px', letterSpacing: '-.02em' }}>Made to last a lifetime</h2>
+            <p style={{ fontSize: 17, color: 'var(--vt-color-text-muted)', lineHeight: 1.7 }}>Every Violet is the sum of small, exacting decisions — materials chosen for their integrity, finishes earned by hand.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+            {points.map(([icon, title, body], i) => (
+              <div key={title} className="reveal" style={{ background: 'var(--vt-color-surface)', border: '1px solid var(--vt-color-border)', borderRadius: 'var(--vt-radius-lg)', padding: 28, boxShadow: 'var(--vt-shadow-sm)', transitionDelay: `${i * 60}ms` }}>
+                <div style={{ width: 48, height: 48, borderRadius: 'var(--vt-radius-md)', background: 'var(--vt-color-primary-subtle)', color: 'var(--vt-color-primary)', display: 'grid', placeItems: 'center', marginBottom: 18 }}>
+                  <i data-lucide={icon} style={{ width: 22, height: 22 }}></i>
+                </div>
+                <h3 style={{ fontSize: 17, fontWeight: 600, color: 'var(--vt-color-text-strong)', margin: '0 0 8px' }}>{title}</h3>
+                <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--vt-color-text-muted)', margin: 0 }}>{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function Vision() {
+    const values = [
+      ['Timeless', 'We design for decades, not seasons. A Violet should feel as right in twenty years as it does today.'],
+      ['Refined', 'Restraint is our luxury. We remove until only the essential — and the beautiful — remains.'],
+      ['Authentic', 'Honest materials, honest engineering, honest prices. No theatre, no shortcuts.'],
+    ];
+    return (
+      <section style={{ position: 'relative', overflow: 'hidden', color: '#fff', padding: '100px 0',
+        background: 'radial-gradient(900px 460px at 50% 0%,#3B0764,transparent 60%),linear-gradient(160deg,#0D0A1E,#231940)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+          'radial-gradient(520px 360px at 22% 30%,rgba(168,85,247,.20),transparent 60%),radial-gradient(440px 440px at 80% 72%,rgba(124,58,237,.18),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'relative', zIndex: 2, ...wrap }}>
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <Eyebrow dark>Vision &amp; values</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', margin: '14px 0 0', letterSpacing: '-.02em' }}>What we stand for</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 32 }}>
+            {values.map(([title, body], i) => (
+              <div key={title} className="reveal" style={{ textAlign: 'center', padding: '0 12px', transitionDelay: `${i * 70}ms` }}>
+                <div style={{ fontFamily: 'var(--vt-font-display)', fontSize: 30, color: 'var(--vt-gold-300)', marginBottom: 12 }}>✦</div>
+                <h3 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 400, fontSize: 30, margin: '0 0 12px' }}>{title}</h3>
+                <p style={{ fontSize: 16, lineHeight: 1.8, color: '#C4B5FD', margin: 0 }}>{body}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 60 }}>
+            <a href="products.html" style={{ textDecoration: 'none' }}>
+              <Button variant="accent" size="lg" trailingIcon={<span>→</span>}>Explore the collection</Button>
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function StatBand() {
+    const stats = [['1000+', 'Watch models'], ['4000+', 'Photography frames'], ['3', 'Languages'], ['✦', 'Timeless by design']];
+    return (
+      <section style={{ background: 'var(--vt-color-surface)' }}>
+        <div style={{ ...wrap, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24, borderBlock: '1px solid var(--vt-color-divider)', padding: '56px 40px' }}>
+          {stats.map(([n, l]) => (
+            <div key={l} style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: 'var(--vt-font-display)', fontSize: 'clamp(40px,5vw,60px)', lineHeight: 1, color: n === '✦' ? 'var(--vt-color-accent-strong)' : 'var(--vt-color-text-strong)' }}>{n}</div>
+              <div style={{ marginTop: 8, fontSize: 13, color: 'var(--vt-color-text-muted)' }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  function About() {
+    React.useEffect(() => {
+      if (window.lucide) lucide.createIcons();
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    });
+    return (
+      <div>
+        <SiteHeader active="about" variant="overlay" />
+        <AboutHero />
+        <Story />
+        <History />
+        <Quality />
+        <StatBand />
+        <Vision />
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<About />);
+</script>
+</body>
+</html>

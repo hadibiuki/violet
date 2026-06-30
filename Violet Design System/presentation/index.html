@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violet — Design System & Product Preview</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  deck-stage:not(:defined){visibility:hidden}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0D0A1E}
+  section{font-family:var(--vt-font-sans);color:var(--vt-color-text);overflow:hidden}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:72px 88px}
+
+  /* registers */
+  .light{background:var(--vt-color-bg)}
+  .dark{background:radial-gradient(1100px 680px at 72% 28%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a);color:#fff}
+  .dark .eyebrow{color:var(--vt-gold-300)}
+  .surface{background:var(--vt-color-surface)}
+
+  .eyebrow{font-size:15px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500}
+  .display{font-family:var(--vt-font-display);font-weight:300;letter-spacing:-.02em;line-height:1.02}
+  h1.display{font-size:88px}
+  h2.display{font-size:60px}
+  .lead{font-size:22px;line-height:1.6;color:var(--vt-color-text-muted);max-width:760px}
+  .dark .lead{color:#C4B5FD}
+
+  /* brand lockup */
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup .tile{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;color:#fff;font-family:var(--vt-font-display);font-size:34px;
+       background:linear-gradient(135deg,var(--vt-violet-400),var(--vt-violet-600));box-shadow:0 8px 26px rgba(124,58,237,.5)}
+  .lockup b{font-weight:600;letter-spacing:.2em;font-size:26px}
+
+  /* aurora deco */
+  .aurora{position:absolute;inset:-10%;pointer-events:none;background:
+     radial-gradient(560px 380px at 18% 28%,rgba(168,85,247,.26),transparent 60%),
+     radial-gradient(460px 460px at 84% 72%,rgba(124,58,237,.22),transparent 60%),
+     radial-gradient(360px 360px at 60% 18%,rgba(201,168,106,.12),transparent 60%);filter:blur(8px)}
+
+  /* browser frame */
+  .browser{border-radius:16px;overflow:hidden;background:var(--vt-color-surface);box-shadow:0 30px 80px rgba(13,10,30,.5);border:1px solid rgba(255,255,255,.08)}
+  .browser .bar{height:42px;display:flex;align-items:center;gap:8px;padding:0 16px;background:var(--vt-ink-100);border-bottom:1px solid var(--vt-color-divider)}
+  .browser .bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .browser .url{margin-inline-start:14px;flex:1;height:24px;border-radius:6px;background:var(--vt-color-surface);border:1px solid var(--vt-color-border);
+       display:flex;align-items:center;padding:0 12px;font-size:12px;color:var(--vt-color-text-muted);font-family:var(--vt-font-mono);max-width:420px}
+  .browser .shot{display:block;width:100%}
+
+  .col2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .pcard{background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:18px;padding:34px;box-shadow:var(--vt-shadow-sm)}
+  .pcard .tag{font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--vt-color-primary);text-transform:uppercase}
+  .pcard h3{font-family:var(--vt-font-display);font-weight:400;font-size:34px;color:var(--vt-color-text-strong);margin:8px 0 6px}
+  .pcard .meta{font-size:14px;color:var(--vt-color-text-muted);margin-bottom:18px}
+  .pcard ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .pcard li{display:flex;gap:12px;align-items:flex-start;font-size:16px;color:var(--vt-color-text)}
+  .pcard li .dot{width:6px;height:6px;border-radius:50%;background:var(--vt-color-accent-strong);margin-top:8px;flex:none}
+
+  .num{font-family:var(--vt-font-display);font-weight:300;font-size:120px;line-height:1;color:var(--vt-gold-300)}
+
+  /* shot slide layout */
+  .shotslide{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:center;height:100%}
+  .shotslide .cap .eyebrow{margin-bottom:14px;display:block}
+  .shotslide .cap h2{font-family:var(--vt-font-display);font-weight:300;font-size:46px;color:var(--vt-color-text-strong);letter-spacing:-.02em;line-height:1.06;margin-bottom:16px}
+  .shotslide .cap p{font-size:16.5px;line-height:1.6;color:var(--vt-color-text-muted)}
+  .shotslide .cap .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .shotslide .cap .chip{font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--vt-color-primary-subtle);color:var(--vt-color-primary)}
+
+  /* foundations */
+  .swrow{display:flex;border-radius:12px;overflow:hidden;box-shadow:var(--vt-shadow-sm)}
+  .swrow .s{flex:1;height:70px}
+  .ftype{display:flex;flex-direction:column;gap:18px}
+  .footer-tag{position:absolute;bottom:40px;inset-inline-start:88px;font-size:13px;color:var(--vt-color-text-subtle);letter-spacing:.04em}
+  .dark .footer-tag{color:rgba(196,181,253,.6)}
+  .footer-tag .dotsep{color:var(--vt-color-accent-strong)}
+</style>
+</head>
+<body>
+<deck-stage width="1280" height="720">
+
+  <!-- 1 · COVER -->
+  <section class="dark" data-label="Cover">
+    <div class="aurora"></div>
+    <div class="pad" style="justify-content:space-between;position:relative;z-index:2">
+      <div class="lockup"><span class="tile">V</span><b>VIOLET</b></div>
+      <div>
+        <span class="eyebrow">Brand · Watches — Design System &amp; Product Preview</span>
+        <h1 class="display" style="color:#fff;margin:20px 0 22px">Timeless,<br>reimagined for <em style="font-style:italic;color:#C4B5FD">now</em></h1>
+        <p class="lead">One brand, two products — an international reference site and a wholesale order app, built on a single shared design language.</p>
+      </div>
+      <div class="footer-tag" style="position:static;inset:auto">2026 Season <span class="dotsep">✦</span> Stakeholder preview</div>
+    </div>
+  </section>
+
+  <!-- 2 · TWO PRODUCTS -->
+  <section class="light" data-label="Two products">
+    <div class="pad">
+      <span class="eyebrow">One brand, two temperaments</span>
+      <h2 class="display" style="color:var(--vt-color-text-strong);margin:14px 0 6px">Two products, one language</h2>
+      <p class="lead" style="margin-bottom:34px">The site breathes — luxury, big imagery, serif moments. The app is calm and quick — function first. Same tokens, different density.</p>
+      <div class="col2" style="flex:1">
+        <div class="pcard">
+          <span class="tag">A — Reference Site</span>
+          <h3>The international vitrine</h3>
+          <div class="meta">EN · RU · AR (RTL) — distributors, partners, public</div>
+          <ul>
+            <li><span class="dot"></span>1000+ models, 4000+ photography frames</li>
+            <li><span class="dot"></span>Editorial hero, catalog with filters, product detail</li>
+            <li><span class="dot"></span>Language selector on every screen</li>
+          </ul>
+        </div>
+        <div class="pcard">
+          <span class="tag">B — B2B Order App</span>
+          <h3>Wholesale ordering</h3>
+          <div class="meta">Persian (Farsi) · fully RTL — dealers, sales, admins</div>
+          <ul>
+            <li><span class="dot"></span>Wholesale pricing, MOQ, live stock</li>
+            <li><span class="dot"></span>Cart → order → tracked status pipeline</li>
+            <li><span class="dot"></span>Dashboard, invoices, admin management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · SECTION A -->
+  <section class="dark" data-label="Section · Site">
+    <div class="aurora"></div>
+    <div class="pad" style="justify-content:center;position:relative;z-index:2">
+      <span class="num">01</span>
+      <span class="eyebrow" style="margin-top:20px">Product A · EN / RU / AR</span>
+      <h2 class="display" style="color:#fff;margin-top:12px">The Reference Site</h2>
+      <p class="lead" style="margin-top:18px">The public brand showcase — where the watch is always the hero.</p>
+    </div>
+  </section>
+
+  <!-- 4 · HOME -->
+  <section class="light" data-label="Site · Home">
+    <div class="pad shotslide">
+      <div class="cap">
+        <span class="eyebrow">Home</span>
+        <h2>A celestial<br>first impression</h2>
+        <p>A deep, aurora-lit hero with the floating timepiece, then airy sections for new models, collections, and featured pieces.</p>
+        <div class="chips"><span class="chip">Cormorant display</span><span class="chip">Gold accent</span><span class="chip">Sticky nav</span></div>
+      </div>
+      <div class="browser">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="url">violet.com</span></div>
+        <img class="shot" src="../assets/shots/site-home.png" alt="Violet reference site — home">
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · CATALOG -->
+  <section class="light" data-label="Site · Catalog">
+    <div class="pad shotslide">
+      <div class="cap">
+        <span class="eyebrow">Catalog</span>
+        <h2>Browse a<br>thousand models</h2>
+        <p>A filter rail (collection, availability, movement), live result count and chips, sort, and a calm product grid that never reflows as images load.</p>
+        <div class="chips"><span class="chip">AJAX filters</span><span class="chip">Square cards</span><span class="chip">Hover lift</span></div>
+      </div>
+      <div class="browser">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="url">violet.com/products</span></div>
+        <img class="shot" src="../assets/shots/site-catalog.png" alt="Violet reference site — catalog">
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · PDP -->
+  <section class="light" data-label="Site · Product">
+    <div class="pad shotslide">
+      <div class="cap">
+        <span class="eyebrow">Product detail</span>
+        <h2>Every spec,<br>beautifully told</h2>
+        <p>Sticky gallery with thumbnails and colour variants, key highlights, a full spec table, and a download-catalogue CTA — restrained and premium.</p>
+        <div class="chips"><span class="chip">Gallery zoom</span><span class="chip">Colour swatches</span><span class="chip">Spec table</span></div>
+      </div>
+      <div class="browser">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="url">violet.com/products/vlt-2601</span></div>
+        <img class="shot" src="../assets/shots/site-pdp.png" alt="Violet reference site — product detail">
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · SECTION B -->
+  <section class="dark" data-label="Section · App">
+    <div class="aurora"></div>
+    <div class="pad" style="justify-content:center;position:relative;z-index:2">
+      <span class="num">02</span>
+      <span class="eyebrow" style="margin-top:20px">Product B · Persian · RTL</span>
+      <h2 class="display" style="color:#fff;margin-top:12px">B2B Order App</h2>
+      <p class="lead" style="margin-top:18px">A calm, task-first portal for dealers — designed right-to-left from the start.</p>
+    </div>
+  </section>
+
+  <!-- 8 · LOGIN -->
+  <section class="light" data-label="App · Login">
+    <div class="pad shotslide">
+      <div class="cap">
+        <span class="eyebrow">ورود · Login</span>
+        <h2>A branded<br>front door</h2>
+        <p>The same celestial register greets dealers, beside a clear Persian sign-in. RTL, Vazirmatn type, logical layout throughout.</p>
+        <div class="chips"><span class="chip">Vazirmatn</span><span class="chip">RTL-first</span><span class="chip">Bidi-safe</span></div>
+      </div>
+      <div class="browser">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="url">app.violet.com</span></div>
+        <img class="shot" src="../assets/shots/b2b-login.png" alt="Violet B2B app — login">
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · DASHBOARD -->
+  <section class="light" data-label="App · Dashboard">
+    <div class="pad shotslide">
+      <div class="cap">
+        <span class="eyebrow">داشبورد · Dashboard</span>
+        <h2>The day's<br>order at a glance</h2>
+        <p>Stat tiles, a recent-orders table with status pills, and the wholesale catalog — همکار prices in تومان, MOQ, and live stock.</p>
+        <div class="chips"><span class="chip">Persian digits</span><span class="chip">Status pills</span><span class="chip">MOQ</span></div>
+      </div>
+      <div class="browser">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="url">app.violet.com/dashboard</span></div>
+        <img class="shot" src="../assets/shots/b2b-dashboard.png" alt="Violet B2B app — dashboard">
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · ORDER -->
+  <section class="light" data-label="App · Order tracking">
+    <div class="pad shotslide">
+      <div class="cap">
+        <span class="eyebrow">پیگیری · Order tracking</span>
+        <h2>Follow every<br>order, step by step</h2>
+        <p>A vertical status timeline — Submitted → Reviewing → Approved → Shipped → Completed — with line items and a clear order summary.</p>
+        <div class="chips"><span class="chip">Pipeline</span><span class="chip">Line items</span><span class="chip">Invoice</span></div>
+      </div>
+      <div class="browser">
+        <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="url">app.violet.com/orders/ORD-4821</span></div>
+        <img class="shot" src="../assets/shots/b2b-order.png" alt="Violet B2B app — order tracking">
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · FOUNDATIONS -->
+  <section class="surface" data-label="Foundations">
+    <div class="pad">
+      <span class="eyebrow">Built on a system</span>
+      <h2 class="display" style="color:var(--vt-color-text-strong);margin:14px 0 30px">One palette, one type voice</h2>
+      <div class="col2" style="flex:1;align-items:start">
+        <div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--vt-color-text-muted);text-transform:uppercase;margin-bottom:14px">Colour · 60 / 30 / 10</div>
+          <div class="swrow" style="margin-bottom:10px">
+            <div class="s" style="background:var(--vt-violet-400)"></div>
+            <div class="s" style="background:var(--vt-violet-600)"></div>
+            <div class="s" style="background:var(--vt-violet-800)"></div>
+            <div class="s" style="background:var(--vt-ink-900)"></div>
+            <div class="s" style="background:var(--vt-gold-400)"></div>
+          </div>
+          <div class="swrow">
+            <div class="s" style="height:46px;background:var(--vt-ink-50);border:1px solid var(--vt-color-border)"></div>
+            <div class="s" style="height:46px;background:var(--vt-ink-100)"></div>
+            <div class="s" style="height:46px;background:var(--vt-ink-200)"></div>
+            <div class="s" style="height:46px;background:var(--vt-ink-300)"></div>
+            <div class="s" style="height:46px;background:var(--vt-ink-500)"></div>
+          </div>
+          <p style="font-size:15px;color:var(--vt-color-text-muted);margin-top:16px;line-height:1.6">Violet-tinted neutrals carry the screen; brand violet earns ~10%; champagne gold is a fraction of that.</p>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--vt-color-text-muted);text-transform:uppercase;margin-bottom:14px">Type</div>
+          <div class="ftype">
+            <div style="font-family:var(--vt-font-display);font-weight:300;font-size:46px;color:var(--vt-color-text-strong);letter-spacing:-.02em;line-height:1">Cormorant Garamond <span style="font-size:15px;font-family:var(--vt-font-sans);color:var(--vt-color-text-muted)">— display</span></div>
+            <div style="font-size:24px;color:var(--vt-color-text-strong)">Inter — interface (EN / RU)</div>
+            <div style="font-size:24px;color:var(--vt-color-text-strong)" dir="rtl">Vazirmatn — فارسی · رابط کاربری</div>
+            <div style="font-family:var(--vt-font-mono);font-size:18px;color:var(--vt-color-text-muted)">JetBrains Mono — VLT-2601</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · CLOSING -->
+  <section class="dark" data-label="Next steps">
+    <div class="aurora"></div>
+    <div class="pad" style="justify-content:space-between;position:relative;z-index:2">
+      <div class="lockup"><span class="tile">V</span><b>VIOLET</b></div>
+      <div>
+        <span class="eyebrow">Where we are</span>
+        <h2 class="display" style="color:#fff;margin:14px 0 24px">A complete design system,<br>both products previewed</h2>
+        <div class="col2" style="max-width:980px">
+          <p class="lead">Tokens, components, and two click-through product kits are built and verified. The system speaks one brand across LTR and RTL.</p>
+          <p class="lead">Next: real product photography &amp; logo, native Figma library from the shared tokens, then build-out of admin and remaining flows.</p>
+        </div>
+      </div>
+      <div class="footer-tag" style="position:static;inset:auto">© 2026 Violet Watches <span class="dotsep">✦</span> English · Русский · العربية</div>
+    </div>
+  </section>
+
+</deck-stage>
+<script src="deck-stage.js"></script>
+</body>
+</html>

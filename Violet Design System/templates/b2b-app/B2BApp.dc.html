@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="B2B App — Full Order App" description="Complete RTL Persian wholesale dealer app: login, dashboard, catalog+filters, product detail, cart, checkout, orders & tracking, invoices, profile, support." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<script src="./b2b-data.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-fa); -webkit-font-smoothing: antialiased; }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-thumb { background: var(--vt-color-border-strong); border-radius: 9px; border: 2px solid var(--vt-color-bg); }
+  .vtNavItem { background: transparent; transition: background .15s; }
+  .vtNavItem:hover { background: var(--vt-color-surface-sunken); }
+  .vtNavItem[data-active="true"] { background: var(--vt-color-primary-subtle) !important; color: var(--vt-color-primary) !important; font-weight: 600; }
+  .vtRow:hover { background: var(--vt-color-surface-sunken); }
+  .vtCard { transition: box-shadow .2s, transform .2s; }
+  .vtCard:hover { box-shadow: var(--vt-shadow-lg); transform: translateY(-3px); }
+  .vtCard:hover .vtCardImg { transform: scale(1.06); }
+  .vtChip { cursor: pointer; transition: all .15s; }
+  .vtChip[data-active="true"] { background: var(--vt-color-primary) !important; color: #fff !important; border-color: var(--vt-color-primary) !important; }
+  .vtLink:hover { text-decoration: underline; }
+  [data-density="compact"] #vtMain { padding: 18px 20px 50px !important; }
+  @keyframes vtToastIn { from { opacity: 0; transform: translateY(12px) translateX(-50%); } to { opacity: 1; transform: translateY(0) translateX(-50%); } }
+  .vtScreen { opacity: 1; }
+  @keyframes vtAurora { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(6%,-4%) scale(1.15); } }
+  .vtStock[data-state="ok"] { background: var(--vt-color-success-bg); color: var(--vt-color-success); }
+  .vtStock[data-state="low"] { background: var(--vt-color-warning-bg); color: var(--vt-color-warning); }
+  .vtStock[data-state="out"] { background: var(--vt-color-danger-bg); color: var(--vt-color-danger); }
+  .vtCard[data-out="true"] { opacity: .62; }
+  .vtPay[data-paid="true"] { background: var(--vt-color-success-bg); color: var(--vt-color-success); }
+  .vtPay[data-paid="false"] { background: var(--vt-color-warning-bg); color: var(--vt-color-warning); }
+  .vtBubble { display: flex; flex-direction: column; align-items: flex-end; }
+  .vtBubble[data-me="true"] { align-items: flex-start; }
+  .vtBubbleIn { background: var(--vt-color-surface-sunken); color: var(--vt-color-text); }
+  .vtBubble[data-me="true"] .vtBubbleIn { background: var(--vt-color-primary); color: #fff; }
+</style>
+</helmet>
+
+<div dir="rtl" lang="fa" data-theme="{{ theme }}" data-density="{{ density }}" style="height:100vh;background:var(--vt-color-bg);font-family:var(--vt-font-fa);overflow:hidden;">
+
+  <!-- ============================ PRE-AUTH ============================ -->
+  <sc-if value="{{ preAuth }}" hint-placeholder-val="{{ false }}">
+  <div style="display:grid;grid-template-columns:1.05fr 1fr;height:100vh;">
+    <!-- celestial brand panel -->
+    <div style="position:relative;overflow:hidden;background:radial-gradient(1100px 700px at 72% 38%,#45304B 0%,transparent 58%),linear-gradient(160deg,#180F19,#27192A 55%,#342032);display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:48px;">
+      <div style="position:absolute;inset:-20%;background:radial-gradient(620px 420px at 22% 30%,rgba(230,180,83,.12),transparent 60%),radial-gradient(520px 520px at 80% 70%,rgba(126,88,122,.30),transparent 60%),radial-gradient(420px 420px at 60% 22%,rgba(230,180,83,.08),transparent 60%);filter:blur(10px);pointer-events:none;"></div>
+      <div aria-hidden="true" style="position:absolute;inset:0;background-image:url(../../assets/brand/violet-floral.svg);background-repeat:repeat;background-size:140px;opacity:.09;pointer-events:none;"></div>
+      <div style="position:relative;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" tone="onDark" hint-size="150px,42px"></x-import>
+      </div>
+      <div style="position:relative;">
+        <div style="font-size:13px;letter-spacing:.24em;color:var(--vt-gold-300);font-family:var(--vt-font-mono);margin-bottom:18px;">B2B · WHOLESALE PORTAL</div>
+        <div style="font-size:34px;line-height:1.5;font-weight:800;color:#fff;max-width:420px;margin-inline:auto;">پورتال سفارش عمدهٔ نمایندگان ویولت</div>
+        <div style="margin-top:16px;font-size:15px;line-height:2;color:rgba(226,220,255,.72);max-width:400px;margin-inline:auto;">ثبت و پیگیری سفارش، مشاهدهٔ قیمت همکار و موجودی لحظه‌ای، و دریافت فاکتورها — همه در یک‌جا.</div>
+      </div>
+      <div style="position:relative;font-size:12.5px;color:rgba(196,181,253,.55);">ویولت ✦ ساعت‌سازی، بازتعریف‌شده</div>
+    </div>
+    <!-- form panel -->
+    <div style="display:flex;align-items:center;justify-content:center;padding:40px;background:var(--vt-color-surface);">
+      <div style="width:100%;max-width:380px;">
+        <!-- LOGIN -->
+        <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+        <div class="vtScreen">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:28px;color:var(--vt-color-text-strong);margin:0 0 6px;text-align:center;">ورود به حساب</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 28px;text-align:center;">با نام کاربری و رمز عبور نمایندگی وارد شوید.</p>
+          <div style="margin-bottom:18px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="نام کاربری" icon="user" defaultValue="saatpars" hint-size="100%,66px"></x-import></div>
+          <div style="margin-bottom:14px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="رمز عبور" icon="lock" type="password" defaultValue="123456" hint-size="100%,66px"></x-import></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+            <x-import component-from-global-scope="VioletDesignSystem_7273c4.Checkbox" label="مرا به خاطر بسپار" checked="{{ true }}" hint-size="150px,24px"></x-import>
+            <a class="vtLink" onClick="{{ goForgot }}" style="font-size:13px;color:var(--vt-color-primary);cursor:pointer;">فراموشی رمز؟</a>
+          </div>
+          <div style="display:block;width:100%;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="md" onClick="{{ login }}" style="display:flex;width:100%;justify-content:center;" hint-size="100%,40px">ورود به حساب</x-import></div>
+          <p style="text-align:center;font-size:12.5px;color:var(--vt-color-text-subtle);margin-top:20px;line-height:1.9;">حساب کاربری توسط مدیر فروش ایجاد می‌شود.<br>برای دریافت دسترسی با ما تماس بگیرید.</p>
+        </div>
+        </sc-if>
+        <!-- FORGOT -->
+        <sc-if value="{{ isForgot }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <a class="vtLink" onClick="{{ goLogin }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--vt-color-text-muted);cursor:pointer;margin-bottom:20px;"><i data-lucide="arrow-right" style="width:15px;height:15px;"></i>بازگشت به ورود</a>
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:26px;color:var(--vt-color-text-strong);margin:0 0 6px;">بازیابی رمز عبور</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 24px;line-height:1.8;">ایمیل یا شمارهٔ موبایل حساب را وارد کنید؛ لینک بازیابی برایتان ارسال می‌شود.</p>
+          <div style="display:flex;align-items:center;gap:10px;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-sm);padding:11px 14px;margin-bottom:18px;background:var(--vt-color-surface);">
+            <i data-lucide="mail" style="width:17px;height:17px;color:var(--vt-color-text-muted);"></i>
+            <input placeholder="ایمیل یا موبایل" style="border:none;outline:none;background:transparent;flex:1;font:14px var(--vt-font-fa);color:var(--vt-color-text);text-align:start;">
+          </div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="lg" onClick="{{ goLogin }}" style="width:100%;justify-content:center;" hint-size="100%,48px">ارسال لینک بازیابی</x-import>
+        </div>
+        </sc-if>
+        <!-- PENDING -->
+        <sc-if value="{{ isPending }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen" style="text-align:center;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--vt-color-warning-bg);color:var(--vt-color-warning);display:grid;place-items:center;margin:0 auto 20px;"><i data-lucide="clock" style="width:30px;height:30px;"></i></div>
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:24px;color:var(--vt-color-text-strong);margin:0 0 10px;">در انتظار تأیید حساب</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;line-height:2;margin:0 0 24px;">حساب شما ایجاد شده و در انتظار تأیید مدیر فروش است. پس از تأیید، امکان ثبت سفارش فعال می‌شود.</p>
+          <a class="vtLink" onClick="{{ goLogin }}" style="font-size:14px;color:var(--vt-color-primary);cursor:pointer;">بازگشت به صفحهٔ ورود</a>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============================ APP SHELL ============================ -->
+  <sc-if value="{{ authed }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid;grid-template-columns:248px 1fr;height:100vh;">
+
+    <!-- SIDEBAR -->
+    <aside style="background:var(--vt-color-surface);border-inline-end:1px solid var(--vt-color-border);display:flex;flex-direction:column;padding:20px 16px;overflow-y:auto;">
+      <div style="padding:4px 8px 20px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" hint-size="140px,40px"></x-import>
+      </div>
+      <nav style="display:flex;flex-direction:column;gap:3px;">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="7">
+          <a class="vtNavItem" data-active="{{ n.active }}" onClick="{{ n.go }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--vt-radius-md);text-decoration:none;font-size:14px;color:var(--vt-color-text);cursor:pointer;">
+            <i data-lucide="{{ n.icon }}" style="width:18px;height:18px;flex:none;"></i>
+            <span style="flex:1;">{{ n.label }}</span>
+            <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--vt-color-primary);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;">{{ n.badge }}</span></sc-if>
+          </a>
+        </sc-for>
+      </nav>
+      <div style="margin-top:auto;padding:14px;border-radius:var(--vt-radius-lg);background:var(--vt-color-surface-sunken);font-size:12.5px;color:var(--vt-color-text-muted);line-height:1.9;">
+        <div style="display:flex;align-items:center;gap:6px;color:var(--vt-color-accent-strong);font-weight:600;margin-bottom:4px;"><i data-lucide="sparkles" style="width:14px;height:14px;"></i>{{ dealer.tier }}</div>
+        نمایندگی <b style="color:var(--vt-color-text-strong);">{{ dealer.company }}</b><br>کد فروشنده <bdi style="font-family:var(--vt-font-mono);">{{ dealer.code }}</bdi>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div style="display:flex;flex-direction:column;overflow:hidden;">
+      <header style="height:64px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--vt-color-surface);border-bottom:1px solid var(--vt-color-border);z-index:5;">
+        <div style="display:flex;align-items:center;gap:10px;background:var(--vt-color-surface-sunken);border-radius:var(--vt-radius-sm);padding:9px 14px;width:340px;max-width:38vw;">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--vt-color-text-muted);"></i>
+          <input value="{{ search }}" onInput="{{ onSearch }}" onFocus="{{ goCatalog }}" placeholder="جستجوی مدل یا کد…" style="border:none;background:transparent;outline:none;font:14px var(--vt-font-fa);color:var(--vt-color-text);flex:1;text-align:start;">
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button onClick="{{ goCart }}" style="position:relative;width:40px;height:40px;display:grid;place-items:center;border-radius:var(--vt-radius-md);border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);cursor:pointer;">
+            <i data-lucide="shopping-bag" style="width:18px;height:18px;color:var(--vt-color-text);"></i>
+            <sc-if value="{{ cartCount }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:-6px;inset-inline-start:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--vt-color-primary);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;">{{ cartCountFa }}</span></sc-if>
+          </button>
+          <button onClick="{{ goSupport }}" style="width:40px;height:40px;display:grid;place-items:center;border-radius:var(--vt-radius-md);border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);cursor:pointer;"><i data-lucide="bell" style="width:18px;height:18px;color:var(--vt-color-text);"></i></button>
+          <div onClick="{{ goProfile }}" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding-inline-start:6px;border-inline-start:1px solid var(--vt-color-divider);">
+            <x-import component-from-global-scope="VioletDesignSystem_7273c4.Avatar" name="{{ dealer.name }}" hint-size="36px,36px"></x-import>
+            <div style="font-size:13px;line-height:1.3;"><b style="color:var(--vt-color-text-strong);">{{ dealer.name }}</b><br><span style="color:var(--vt-color-text-muted);">{{ dealer.role }}</span></div>
+          </div>
+        </div>
+      </header>
+
+      <main id="vtMain" style="flex:1;overflow-y:auto;padding:28px 28px 60px;">
+
+        <!-- ========== DASHBOARD ========== -->
+        <sc-if value="{{ showDashboard }}" hint-placeholder-val="{{ true }}">
+        <div class="vtScreen">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:27px;color:var(--vt-color-text-strong);margin:0 0 4px;">داشبورد</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 22px;">خوش آمدید، {{ dealer.name }} — خلاصهٔ فعالیت {{ dealer.company }}</p>
+
+          <div style="display:flex;align-items:center;gap:12px;background:var(--vt-color-info-bg);border:1px solid var(--vt-color-info);border-radius:var(--vt-radius-lg);padding:14px 18px;margin-bottom:24px;color:var(--vt-color-info);">
+            <i data-lucide="info" style="width:19px;height:19px;flex:none;"></i>
+            <span style="font-size:13.5px;flex:1;color:var(--vt-color-text);">سفارش <b>ORD-4815</b> تأیید شد و در حال آماده‌سازی است.</span>
+            <a class="vtLink" onClick="{{ openOrder4815 }}" style="font-size:13px;color:var(--vt-color-info);cursor:pointer;font-weight:600;">پیگیری ←</a>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:20px;box-shadow:var(--vt-shadow-xs);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                  <span style="font-size:13px;color:var(--vt-color-text-muted);">{{ s.label }}</span>
+                  <span style="width:34px;height:34px;border-radius:var(--vt-radius-md);background:var(--vt-color-primary-subtle);color:var(--vt-color-primary);display:grid;place-items:center;"><i data-lucide="{{ s.icon }}" style="width:17px;height:17px;"></i></span>
+                </div>
+                <div style="font-family:var(--vt-font-fa-display);font-size:29px;font-weight:900;color:var(--vt-color-text-strong);margin-top:10px;">{{ s.value }}</div>
+                <div style="font-size:12.5px;margin-top:4px;color:var(--vt-color-text-muted);">{{ s.delta }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;margin-bottom:28px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--vt-color-divider);">
+              <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:17px;color:var(--vt-color-text-strong);margin:0;">سفارش‌های اخیر</h2>
+              <a class="vtLink" onClick="{{ goOrders }}" style="font-size:13px;color:var(--vt-color-primary);cursor:pointer;font-weight:500;">مشاهدهٔ همه</a>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+              <thead><tr style="color:var(--vt-color-text-muted);font-size:12px;">
+                <th style="text-align:start;font-weight:500;padding:10px 20px;">شماره سفارش</th><th style="text-align:start;font-weight:500;padding:10px 20px;">تاریخ</th><th style="text-align:start;font-weight:500;padding:10px 20px;">اقلام</th><th style="text-align:start;font-weight:500;padding:10px 20px;">مبلغ</th><th style="text-align:start;font-weight:500;padding:10px 20px;">وضعیت</th><th style="padding:10px 20px;"></th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ recentOrders }}" as="o" hint-placeholder-count="5">
+                  <tr class="vtRow" onClick="{{ o.go }}" style="border-top:1px solid var(--vt-color-divider);cursor:pointer;">
+                    <td style="padding:13px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-strong);"><bdi>{{ o.id }}</bdi></td>
+                    <td style="padding:13px 20px;color:var(--vt-color-text-muted);">{{ o.date }}</td>
+                    <td style="padding:13px 20px;color:var(--vt-color-text);">{{ o.itemsText }}</td>
+                    <td style="padding:13px 20px;color:var(--vt-color-text-strong);font-weight:500;">{{ o.total }}</td>
+                    <td style="padding:13px 20px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.OrderStatusPill" status="{{ o.status }}" label="{{ o.statusLabel }}" hint-size="92px,26px"></x-import></td>
+                    <td style="padding:13px 20px;color:var(--vt-color-primary);"><i data-lucide="chevron-left" style="width:16px;height:16px;"></i></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;">
+            <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:19px;color:var(--vt-color-text-strong);margin:0;">پیشنهاد ویژهٔ همکار</h2>
+            <a class="vtLink" onClick="{{ goCatalog }}" style="font-size:13px;color:var(--vt-color-primary);cursor:pointer;">مشاهدهٔ کاتالوگ</a>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
+            <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+              <div class="vtCard" onClick="{{ p.open }}" style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;cursor:pointer;">
+                <div style="position:relative;aspect-ratio:1/1;overflow:hidden;background:linear-gradient(160deg,var(--vt-ink-100),var(--vt-violet-50));">
+                  <img class="vtCardImg" src="{{ p.image }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;">
+                  <sc-if value="{{ p.isNew }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:10px;inset-inline-start:10px;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:4px 9px;border-radius:var(--vt-radius-pill);background:var(--vt-color-accent);color:var(--vt-color-on-accent);">جدید</span></sc-if>
+                </div>
+                <div style="padding:13px;">
+                  <h3 style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);margin:0;"><bdi>{{ p.name }}</bdi></h3>
+                  <div style="font-family:var(--vt-font-mono);font-size:11.5px;color:var(--vt-color-text-muted);margin-top:3px;"><bdi>{{ p.sku }}</bdi></div>
+                  <div style="margin-top:9px;font-size:15px;font-weight:700;color:var(--vt-color-primary);">{{ p.price }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== CATALOG ========== -->
+        <sc-if value="{{ showCatalog }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen" style="display:grid;grid-template-columns:240px 1fr;gap:26px;align-items:start;">
+          <!-- filter rail -->
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:20px;position:sticky;top:0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0;">فیلترها</h3>
+              <a class="vtLink" onClick="{{ clearFilters }}" style="font-size:12.5px;color:var(--vt-color-primary);cursor:pointer;">پاک کردن</a>
+            </div>
+            <sc-for list="{{ filterGroups }}" as="g" hint-placeholder-count="4">
+              <div style="margin-bottom:18px;">
+                <div style="font-size:12.5px;font-weight:600;color:var(--vt-color-text-muted);margin-bottom:9px;">{{ g.label }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;">
+                  <sc-for list="{{ g.options }}" as="o" hint-placeholder-count="4">
+                    <span class="vtChip" data-active="{{ o.active }}" onClick="{{ o.pick }}" style="font-size:12.5px;padding:6px 12px;border-radius:var(--vt-radius-pill);border:1px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);">{{ o.label }}</span>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--vt-color-text);cursor:pointer;margin-top:4px;"><input type="checkbox" checked="{{ filters.stock }}" onChange="{{ toggleStock }}" style="accent-color:var(--vt-color-primary);">فقط کالاهای موجود</label>
+          </div>
+          <!-- grid -->
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+              <div>
+                <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:24px;color:var(--vt-color-text-strong);margin:0;">کاتالوگ عمده</h1>
+                <p style="color:var(--vt-color-text-muted);font-size:13px;margin:4px 0 0;">{{ resultCount }} مدل · قیمت‌ها ویژهٔ همکار</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:9px;background:var(--vt-color-surface);border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-sm);padding:9px 13px;width:240px;max-width:48vw;">
+                  <i data-lucide="search" style="width:16px;height:16px;color:var(--vt-color-text-muted);"></i>
+                  <input value="{{ search }}" onInput="{{ onSearch }}" placeholder="جستجوی مدل یا کد…" style="border:none;background:transparent;outline:none;font:14px var(--vt-font-fa);color:var(--vt-color-text);flex:1;text-align:start;">
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:13px;color:var(--vt-color-text-muted);">مرتب‌سازی:</span>
+                  <div style="display:flex;gap:4px;background:var(--vt-color-surface-sunken);border-radius:var(--vt-radius-md);padding:3px;">
+                    <sc-for list="{{ sortOptions }}" as="s" hint-placeholder-count="4">
+                      <span class="vtChip" data-active="{{ s.active }}" onClick="{{ s.pick }}" style="font-size:12.5px;padding:6px 11px;border-radius:var(--vt-radius-sm);color:var(--vt-color-text);border:1px solid transparent;">{{ s.label }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+              <sc-for list="{{ catalog }}" as="p" hint-placeholder-count="9">
+                <div class="vtCard" style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;display:flex;flex-direction:column;" data-out="{{ p.outStock }}">
+                  <div onClick="{{ p.open }}" style="position:relative;aspect-ratio:1/1;overflow:hidden;cursor:pointer;background:linear-gradient(160deg,var(--vt-ink-100),var(--vt-violet-50));">
+                    <img class="vtCardImg" src="{{ p.image }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;">
+                    <sc-if value="{{ p.isNew }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;inset-inline-start:10px;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:4px 9px;border-radius:var(--vt-radius-pill);background:var(--vt-color-accent);color:var(--vt-color-on-accent);">جدید</span></sc-if>
+                    <span class="vtStock" data-state="{{ p.stockState }}" style="position:absolute;top:10px;inset-inline-end:10px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:var(--vt-radius-pill);">{{ p.stockText }}</span>
+                  </div>
+                  <div style="padding:14px;display:flex;flex-direction:column;flex:1;">
+                    <h3 onClick="{{ p.open }}" style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);margin:0;cursor:pointer;"><bdi>{{ p.name }}</bdi></h3>
+                    <div style="font-family:var(--vt-font-mono);font-size:11.5px;color:var(--vt-color-text-muted);margin-top:3px;"><bdi>{{ p.sku }}</bdi></div>
+                    <div style="margin-top:10px;font-size:16px;font-weight:700;color:var(--vt-color-primary);">{{ p.price }}</div>
+                    <div style="font-size:11.5px;color:var(--vt-color-text-muted);margin-top:2px;">{{ p.moqText }}</div>
+                    <div style="margin-top:13px;">
+                      <sc-if value="{{ p.inStock }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="sm" onClick="{{ p.add }}" style="width:100%;justify-content:center;" hint-size="100%,34px">افزودن به سبد</x-import></sc-if>
+                      <sc-if value="{{ p.outStock }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" size="sm" disabled="{{ true }}" style="width:100%;justify-content:center;" hint-size="100%,34px">ناموجود</x-import></sc-if>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+            <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:70px 20px;background:var(--vt-color-surface);border:1px dashed var(--vt-color-border-strong);border-radius:var(--vt-radius-lg);">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--vt-color-surface-sunken);display:grid;place-items:center;margin:0 auto 16px;color:var(--vt-color-text-muted);"><i data-lucide="search-x" style="width:26px;height:26px;"></i></div>
+              <div style="font-size:16px;font-weight:600;color:var(--vt-color-text-strong);margin-bottom:6px;">موردی یافت نشد</div>
+              <p style="font-size:13.5px;color:var(--vt-color-text-muted);margin:0 0 18px;">با حذف برخی فیلترها دوباره تلاش کنید.</p>
+              <button onClick="{{ clearFilters }}" style="border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);font:600 13px var(--vt-font-fa);padding:9px 18px;border-radius:var(--vt-radius-md);cursor:pointer;">پاک کردن فیلترها</button>
+            </div>
+            </sc-if>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== PRODUCT DETAIL ========== -->
+        <sc-if value="{{ showProduct }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--vt-color-text-muted);margin-bottom:20px;">
+            <a class="vtLink" onClick="{{ goCatalog }}" style="color:var(--vt-color-text-muted);cursor:pointer;">کاتالوگ</a>
+            <i data-lucide="chevron-left" style="width:14px;height:14px;"></i>
+            <span style="color:var(--vt-color-text);"><bdi>{{ product.name }}</bdi></span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;">
+            <!-- gallery -->
+            <div style="position:sticky;top:0;">
+              <div style="position:relative;aspect-ratio:1/1;border-radius:var(--vt-radius-xl);overflow:hidden;background:linear-gradient(160deg,var(--vt-ink-100),var(--vt-violet-50));border:1px solid var(--vt-color-border);">
+                <img src="{{ product.mainImg }}" alt="" style="width:100%;height:100%;object-fit:cover;">
+                <div style="position:absolute;inset:16px;border:1px solid rgba(201,168,106,.5);border-radius:var(--vt-radius-lg);pointer-events:none;"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;">
+                <sc-for list="{{ product.thumbs }}" as="t" hint-placeholder-count="4">
+                  <div onClick="{{ t.pick }}" data-active="{{ t.active }}" class="vtChip" style="aspect-ratio:1/1;border-radius:var(--vt-radius-md);overflow:hidden;border:2px solid var(--vt-color-border);"><img src="{{ t.src }}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+                </sc-for>
+              </div>
+            </div>
+            <!-- info -->
+            <div>
+              <sc-if value="{{ product.isNew }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--vt-color-accent-strong);">جدید · فصل ۱۴۰۵</span></sc-if>
+              <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:30px;color:var(--vt-color-text-strong);margin:8px 0 6px;"><bdi>{{ product.name }}</bdi></h1>
+              <div style="font-family:var(--vt-font-mono);font-size:13px;color:var(--vt-color-text-muted);"><bdi>{{ product.sku }}</bdi></div>
+              <p style="font-size:14.5px;line-height:2;color:var(--vt-color-text-muted);margin:16px 0 22px;">{{ product.desc }}</p>
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:20px;margin-bottom:22px;">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                  <span style="font-size:13px;color:var(--vt-color-text-muted);">قیمت همکار (هر عدد)</span>
+                  <span style="font-family:var(--vt-font-fa-display);font-size:24px;font-weight:900;color:var(--vt-color-primary);">{{ product.price }}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--vt-color-text-muted);">
+                  <i data-lucide="package-check" style="width:16px;height:16px;color:var(--vt-color-success);"></i>{{ product.stockLine }} · {{ product.moqText }}
+                </div>
+                <div style="height:1px;background:var(--vt-color-divider);margin:18px 0;"></div>
+                <sc-if value="{{ product.inStock }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                  <div>
+                    <div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">تعداد</div>
+                    <x-import component-from-global-scope="VioletDesignSystem_7273c4.QuantityStepper" value="{{ pdpQty }}" onChange="{{ product.setQty }}" moq="{{ product.moq }}" min="{{ product.moq }}" hint-size="140px,44px"></x-import>
+                  </div>
+                  <div style="flex:1;min-width:120px;">
+                    <div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">جمع این قلم</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--vt-color-text-strong);">{{ product.lineTotal }}</div>
+                  </div>
+                </div>
+                <div style="margin-top:18px;">
+                  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="lg" onClick="{{ product.add }}" style="width:100%;justify-content:center;" hint-size="100%,48px">افزودن به سبد</x-import>
+                </div>
+                </sc-if>
+                <sc-if value="{{ product.outOfStock }}" hint-placeholder-val="{{ false }}"></sc-if>
+              </div>
+              <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:17px;color:var(--vt-color-text-strong);margin:0 0 12px;">مشخصات فنی</h2>
+              <x-import component-from-global-scope="VioletDesignSystem_7273c4.SpecTable" rows="{{ product.specRows }}" hint-size="100%,280px"></x-import>
+            </div>
+          </div>
+          <!-- similar -->
+          <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:19px;color:var(--vt-color-text-strong);margin:40px 0 16px;">محصولات مشابه</h2>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
+            <sc-for list="{{ similar }}" as="p" hint-placeholder-count="4">
+              <div class="vtCard" onClick="{{ p.open }}" style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;cursor:pointer;">
+                <div style="position:relative;aspect-ratio:1/1;overflow:hidden;background:linear-gradient(160deg,var(--vt-ink-100),var(--vt-violet-50));"><img class="vtCardImg" src="{{ p.image }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;"></div>
+                <div style="padding:13px;"><h3 style="font-size:13.5px;font-weight:600;color:var(--vt-color-text-strong);margin:0;"><bdi>{{ p.name }}</bdi></h3><div style="margin-top:8px;font-size:14px;font-weight:700;color:var(--vt-color-primary);">{{ p.price }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== CART ========== -->
+        <sc-if value="{{ showCart }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 20px;">سبد درخواست</h1>
+          <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <sc-if value="{{ cartBelowMoq }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;background:var(--vt-color-warning-bg);border:1px solid var(--vt-color-warning);border-radius:var(--vt-radius-md);padding:12px 16px;color:var(--vt-color-warning);font-size:13px;"><i data-lucide="alert-triangle" style="width:17px;height:17px;flex:none;"></i><span style="color:var(--vt-color-text);">برخی اقلام کمتر از حداقل سفارش هستند. پیش از ثبت، تعداد را اصلاح کنید.</span></div>
+              </sc-if>
+              <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+                <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:14px;display:flex;gap:16px;align-items:center;">
+                  <div onClick="{{ l.open }}" style="width:84px;height:84px;border-radius:var(--vt-radius-md);overflow:hidden;flex:none;cursor:pointer;background:var(--vt-color-surface-sunken);"><img src="{{ l.image }}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div style="flex:1;min-width:0;">
+                    <h3 onClick="{{ l.open }}" style="font-size:14.5px;font-weight:600;color:var(--vt-color-text-strong);margin:0;cursor:pointer;"><bdi>{{ l.name }}</bdi></h3>
+                    <div style="font-family:var(--vt-font-mono);font-size:11.5px;color:var(--vt-color-text-muted);margin-top:3px;"><bdi>{{ l.sku }}</bdi></div>
+                    <div style="font-size:12.5px;color:var(--vt-color-text-muted);margin-top:6px;">{{ l.unit }} × هر عدد</div>
+                    <sc-if value="{{ l.belowMoq }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px;color:var(--vt-color-danger);margin-top:4px;">حداقل سفارش {{ l.moq }} عدد است</div></sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+                    <x-import component-from-global-scope="VioletDesignSystem_7273c4.QuantityStepper" value="{{ l.qty }}" onChange="{{ l.setQty }}" moq="{{ l.moq }}" hint-size="130px,40px"></x-import>
+                    <div style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);">{{ l.lineTotal }}</div>
+                    <button onClick="{{ l.remove }}" style="border:none;background:transparent;color:var(--vt-color-text-muted);cursor:pointer;display:flex;align-items:center;gap:5px;font:500 12px var(--vt-font-fa);" style-hover="color:var(--vt-color-danger);"><i data-lucide="trash-2" style="width:14px;height:14px;"></i>حذف</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <!-- summary -->
+            <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;position:sticky;top:0;">
+              <h3 style="font-size:16px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 16px;">خلاصهٔ سفارش</h3>
+              <div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--vt-color-text-muted);margin-bottom:10px;">تعداد مدل<span style="color:var(--vt-color-text);">{{ cartModels }} مدل</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--vt-color-text-muted);margin-bottom:10px;">مجموع تعداد<span style="color:var(--vt-color-text);">{{ cartUnits }} عدد</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--vt-color-text-muted);margin-bottom:14px;">تخفیف حجمی<span style="color:var(--vt-color-text-subtle);">— غیرفعال</span></div>
+              <div style="height:1px;background:var(--vt-color-divider);margin-bottom:14px;"></div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;"><span style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);">جمع کل</span><span style="font-family:var(--vt-font-fa-display);font-size:20px;font-weight:900;color:var(--vt-color-primary);">{{ cartSubtotal }}</span></div>
+              <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" onClick="{{ goCheckout }}" style="width:100%;justify-content:center;" hint-size="100%,44px">ادامه و ثبت سفارش</x-import>
+              <a class="vtLink" onClick="{{ goCatalog }}" style="display:block;text-align:center;font-size:13px;color:var(--vt-color-text-muted);cursor:pointer;margin-top:14px;">افزودن محصول دیگر</a>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:80px 20px;background:var(--vt-color-surface);border:1px dashed var(--vt-color-border-strong);border-radius:var(--vt-radius-lg);">
+            <div style="width:60px;height:60px;border-radius:50%;background:var(--vt-color-surface-sunken);display:grid;place-items:center;margin:0 auto 18px;color:var(--vt-color-text-muted);"><i data-lucide="shopping-bag" style="width:28px;height:28px;"></i></div>
+            <div style="font-size:17px;font-weight:600;color:var(--vt-color-text-strong);margin-bottom:6px;">سبد درخواست شما خالی است</div>
+            <p style="font-size:13.5px;color:var(--vt-color-text-muted);margin:0 0 20px;">برای ثبت سفارش، ابتدا از کاتالوگ محصول اضافه کنید.</p>
+            <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" onClick="{{ goCatalog }}" hint-size="150px,44px">مشاهدهٔ کاتالوگ</x-import>
+          </div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <!-- ========== CHECKOUT (CREATE ORDER) ========== -->
+        <sc-if value="{{ showCheckout }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <a class="vtLink" onClick="{{ goCart }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--vt-color-text-muted);cursor:pointer;margin-bottom:14px;"><i data-lucide="arrow-right" style="width:15px;height:15px;"></i>بازگشت به سبد</a>
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 20px;">ثبت سفارش</h1>
+          <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;">
+            <div style="display:flex;flex-direction:column;gap:20px;">
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;">
+                <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 14px;">روش ارسال</h3>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <sc-for list="{{ shipOptions }}" as="s" hint-placeholder-count="3">
+                    <label class="vtChip" data-active="{{ s.active }}" onClick="{{ s.pick }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-md);cursor:pointer;">
+                      <span style="width:38px;height:38px;border-radius:var(--vt-radius-md);background:var(--vt-color-surface-sunken);color:var(--vt-color-primary);display:grid;place-items:center;flex:none;"><i data-lucide="{{ s.icon }}" style="width:18px;height:18px;"></i></span>
+                      <span style="flex:1;"><b style="font-size:14px;color:var(--vt-color-text-strong);">{{ s.label }}</b><br><span style="font-size:12px;color:var(--vt-color-text-muted);">{{ s.sub }}</span></span>
+                      <span style="width:18px;height:18px;border-radius:50%;border:2px solid var(--vt-color-border-strong);flex:none;display:grid;place-items:center;"><sc-if value="{{ s.active }}" hint-placeholder-val="{{ false }}"><span style="width:9px;height:9px;border-radius:50%;background:var(--vt-color-primary);"></span></sc-if></span>
+                    </label>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;">
+                <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 14px;">آدرس تحویل</h3>
+                <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:var(--vt-radius-md);background:var(--vt-color-surface-sunken);">
+                  <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--vt-color-primary);margin-top:2px;flex:none;"></i>
+                  <div style="font-size:13.5px;line-height:1.9;color:var(--vt-color-text);"><b style="color:var(--vt-color-text-strong);">{{ dealer.company }}</b><br>{{ dealer.address }}<br><span style="color:var(--vt-color-text-muted);">{{ dealer.phone }}</span></div>
+                </div>
+              </div>
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;">
+                <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 12px;">یادداشت سفارش</h3>
+                <textarea placeholder="درخواست خاصی دارید؟ (اختیاری)" style="width:100%;box-sizing:border-box;min-height:84px;resize:vertical;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-sm);padding:12px;font:14px var(--vt-font-fa);color:var(--vt-color-text);background:var(--vt-color-surface);outline:none;text-align:start;"></textarea>
+              </div>
+            </div>
+            <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;position:sticky;top:0;">
+              <h3 style="font-size:16px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 14px;">خلاصهٔ نهایی</h3>
+              <div style="display:flex;flex-direction:column;gap:10px;max-height:230px;overflow-y:auto;margin-bottom:14px;">
+                <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+                  <div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;"><span style="color:var(--vt-color-text);"><bdi>{{ l.name }}</bdi> <span style="color:var(--vt-color-text-muted);">×{{ l.qty }}</span></span><span style="color:var(--vt-color-text-strong);white-space:nowrap;">{{ l.lineTotal }}</span></div>
+                </sc-for>
+              </div>
+              <div style="height:1px;background:var(--vt-color-divider);margin-bottom:12px;"></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--vt-color-text-muted);margin-bottom:8px;">مجموع اقلام<span>{{ cartUnits }} عدد</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--vt-color-text-muted);margin-bottom:14px;">هزینهٔ ارسال<span>پس از تأیید</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;"><span style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);">مبلغ کل</span><span style="font-family:var(--vt-font-fa-display);font-size:19px;font-weight:900;color:var(--vt-color-primary);">{{ cartSubtotal }}</span></div>
+              <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="lg" onClick="{{ submitOrder }}" style="width:100%;justify-content:center;" hint-size="100%,48px">ثبت نهایی سفارش</x-import>
+              <p style="font-size:11.5px;color:var(--vt-color-text-subtle);text-align:center;margin:12px 0 0;line-height:1.8;">با ثبت سفارش، پیش‌فاکتور صادر و برای بررسی به تیم فروش ارسال می‌شود.</p>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== MY ORDERS ========== -->
+        <sc-if value="{{ showOrders }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 4px;">سفارش‌های من</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 18px;">پیگیری وضعیت و تاریخچهٔ سفارش‌های {{ dealer.company }}</p>
+
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:9px;background:var(--vt-color-surface);border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-sm);padding:9px 13px;width:260px;max-width:60vw;">
+              <i data-lucide="search" style="width:16px;height:16px;color:var(--vt-color-text-muted);"></i>
+              <input value="{{ orderSearch }}" onInput="{{ onOrderSearch }}" placeholder="جستجوی شماره سفارش…" style="border:none;background:transparent;outline:none;font:14px var(--vt-font-fa);color:var(--vt-color-text);flex:1;text-align:start;">
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-inline-start:auto;">
+              <span style="font-size:13px;color:var(--vt-color-text-muted);">مرتب‌سازی:</span>
+              <div style="display:flex;gap:4px;background:var(--vt-color-surface-sunken);border-radius:var(--vt-radius-md);padding:3px;">
+                <sc-for list="{{ orderSortOptions }}" as="s" hint-placeholder-count="4">
+                  <span class="vtChip" data-active="{{ s.active }}" onClick="{{ s.pick }}" style="font-size:12.5px;padding:6px 11px;border-radius:var(--vt-radius-sm);color:var(--vt-color-text);border:1px solid transparent;">{{ s.label }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;">
+            <sc-for list="{{ orderStatusOptions }}" as="o" hint-placeholder-count="5">
+              <span class="vtChip" data-active="{{ o.active }}" onClick="{{ o.pick }}" style="font-size:12.5px;padding:6px 13px;border-radius:var(--vt-radius-pill);border:1px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);">{{ o.label }}</span>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ ordersHasResults }}" hint-placeholder-val="{{ true }}">
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+            <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+              <thead><tr style="color:var(--vt-color-text-muted);font-size:12px;background:var(--vt-color-surface-sunken);">
+                <th style="text-align:start;font-weight:500;padding:13px 20px;">شماره سفارش</th><th style="text-align:start;font-weight:500;padding:13px 20px;">تاریخ</th><th style="text-align:start;font-weight:500;padding:13px 20px;">اقلام</th><th style="text-align:start;font-weight:500;padding:13px 20px;">مبلغ</th><th style="text-align:start;font-weight:500;padding:13px 20px;">وضعیت</th><th style="padding:13px 20px;"></th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ orders }}" as="o" hint-placeholder-count="5">
+                  <tr class="vtRow" onClick="{{ o.go }}" style="border-top:1px solid var(--vt-color-divider);cursor:pointer;">
+                    <td style="padding:15px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-strong);"><bdi>{{ o.id }}</bdi></td>
+                    <td style="padding:15px 20px;color:var(--vt-color-text-muted);">{{ o.date }}</td>
+                    <td style="padding:15px 20px;color:var(--vt-color-text);">{{ o.itemsText }}</td>
+                    <td style="padding:15px 20px;color:var(--vt-color-text-strong);font-weight:500;">{{ o.total }}</td>
+                    <td style="padding:15px 20px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.OrderStatusPill" status="{{ o.status }}" label="{{ o.statusLabel }}" hint-size="92px,26px"></x-import></td>
+                    <td style="padding:15px 20px;color:var(--vt-color-primary);"><span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:500;">پیگیری<i data-lucide="chevron-left" style="width:15px;height:15px;"></i></span></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          </sc-if>
+          <sc-if value="{{ ordersEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:60px 20px;background:var(--vt-color-surface);border:1px dashed var(--vt-color-border-strong);border-radius:var(--vt-radius-lg);">
+            <div style="width:54px;height:54px;border-radius:50%;background:var(--vt-color-surface-sunken);display:grid;place-items:center;margin:0 auto 14px;color:var(--vt-color-text-muted);"><i data-lucide="search-x" style="width:25px;height:25px;"></i></div>
+            <div style="font-size:15px;font-weight:600;color:var(--vt-color-text-strong);margin-bottom:5px;">سفارشی یافت نشد</div>
+            <p style="font-size:13px;color:var(--vt-color-text-muted);margin:0 0 16px;">عبارت جستجو یا فیلتر وضعیت را تغییر دهید.</p>
+            <button onClick="{{ clearOrderFilters }}" style="border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);font:600 13px var(--vt-font-fa);padding:9px 18px;border-radius:var(--vt-radius-md);cursor:pointer;">پاک کردن فیلترها</button>
+          </div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <!-- ========== ORDER DETAIL / TRACKING ========== -->
+        <sc-if value="{{ showOrder }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <a class="vtLink" onClick="{{ goOrders }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--vt-color-text-muted);cursor:pointer;margin-bottom:14px;"><i data-lucide="arrow-right" style="width:15px;height:15px;"></i>بازگشت به سفارش‌ها</a>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:22px;">
+            <div>
+              <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0;">سفارش <bdi style="font-family:var(--vt-font-mono);">{{ order.id }}</bdi></h1>
+              <p style="color:var(--vt-color-text-muted);font-size:13.5px;margin:6px 0 0;">ثبت‌شده در {{ order.date }} · {{ order.units }} عدد</p>
+            </div>
+            <x-import component-from-global-scope="VioletDesignSystem_7273c4.OrderStatusPill" status="{{ order.status }}" label="{{ order.statusLabel }}" withIcon="{{ true }}" hint-size="120px,32px"></x-import>
+          </div>
+          <div style="display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start;">
+            <!-- timeline + shipping -->
+            <div style="display:flex;flex-direction:column;gap:18px;">
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;">
+                <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 16px;">روند سفارش</h3>
+                <x-import component-from-global-scope="VioletDesignSystem_7273c4.OrderTimeline" current="{{ order.current }}" rejected="{{ order.rejected }}" times="{{ order.times }}" labels="{{ order.labels }}" hint-size="100%,330px"></x-import>
+              </div>
+              <sc-if value="{{ order.rejected }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--vt-color-danger-bg);border:1px solid var(--vt-color-danger);border-radius:var(--vt-radius-lg);padding:16px 18px;">
+                <div style="display:flex;align-items:center;gap:8px;color:var(--vt-color-danger);font-weight:700;font-size:14px;margin-bottom:8px;"><i data-lucide="x-circle" style="width:17px;height:17px;"></i>سفارش رد شد</div>
+                <p style="font-size:13px;line-height:1.9;color:var(--vt-color-text);margin:0 0 12px;">{{ order.rejectReason }}</p>
+                <button onClick="{{ goSupport }}" style="border:1.5px solid var(--vt-color-danger);background:transparent;color:var(--vt-color-danger);font:600 12.5px var(--vt-font-fa);padding:8px 16px;border-radius:var(--vt-radius-md);cursor:pointer;">تماس با تیم فروش</button>
+              </div>
+              </sc-if>
+              <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:20px;">
+                <h3 style="font-size:14px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 12px;">اطلاعات ارسال</h3>
+                <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--vt-color-text-muted);margin-bottom:9px;">روش ارسال<span style="color:var(--vt-color-text);">{{ order.ship }}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--vt-color-text-muted);">کد رهگیری<bdi style="color:var(--vt-color-text);font-family:var(--vt-font-mono);">{{ order.track }}</bdi></div>
+              </div>
+            </div>
+            <!-- items + summary -->
+            <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+              <div style="padding:16px 20px;border-bottom:1px solid var(--vt-color-divider);display:flex;justify-content:space-between;align-items:center;">
+                <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0;">اقلام سفارش</h3>
+                <button onClick="{{ goInvoices }}" disabled="{{ order.docDisabled }}" style="display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);font:600 12.5px var(--vt-font-fa);padding:8px 14px;border-radius:var(--vt-radius-md);cursor:pointer;"><i data-lucide="download" style="width:15px;height:15px;"></i>پیش‌فاکتور</button>
+              </div>
+              <div style="padding:8px 0;">
+                <sc-for list="{{ order.lines }}" as="l" hint-placeholder-count="3">
+                  <div onClick="{{ l.open }}" class="vtRow" style="display:flex;align-items:center;gap:14px;padding:13px 20px;cursor:pointer;">
+                    <div style="width:54px;height:54px;border-radius:var(--vt-radius-md);overflow:hidden;flex:none;background:var(--vt-color-surface-sunken);"><img src="{{ l.image }}" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+                    <div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);"><bdi>{{ l.name }}</bdi></div><div style="font-family:var(--vt-font-mono);font-size:11px;color:var(--vt-color-text-muted);margin-top:2px;"><bdi>{{ l.sku }}</bdi></div></div>
+                    <div style="text-align:start;font-size:13px;color:var(--vt-color-text-muted);">{{ l.qty }} عدد × {{ l.unit }}</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--vt-color-text-strong);white-space:nowrap;">{{ l.lineTotal }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="padding:16px 20px;border-top:1px solid var(--vt-color-divider);background:var(--vt-color-surface-sunken);display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);">مبلغ کل سفارش</span>
+                <span style="font-family:var(--vt-font-fa-display);font-size:21px;font-weight:900;color:var(--vt-color-primary);">{{ order.total }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== INVOICES ========== -->
+        <sc-if value="{{ showInvoices }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 4px;">فاکتورها و اسناد</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 22px;">پیش‌فاکتورها و فاکتورهای رسمی سفارش‌های شما</p>
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+            <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+              <thead><tr style="color:var(--vt-color-text-muted);font-size:12px;background:var(--vt-color-surface-sunken);">
+                <th style="text-align:start;font-weight:500;padding:13px 20px;">شماره سند</th><th style="text-align:start;font-weight:500;padding:13px 20px;">سفارش</th><th style="text-align:start;font-weight:500;padding:13px 20px;">نوع</th><th style="text-align:start;font-weight:500;padding:13px 20px;">تاریخ</th><th style="text-align:start;font-weight:500;padding:13px 20px;">مبلغ</th><th style="text-align:start;font-weight:500;padding:13px 20px;">وضعیت</th><th style="padding:13px 20px;"></th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ invoices }}" as="i" hint-placeholder-count="4">
+                  <tr class="vtRow" style="border-top:1px solid var(--vt-color-divider);">
+                    <td style="padding:15px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-strong);"><bdi>{{ i.id }}</bdi></td>
+                    <td style="padding:15px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-muted);"><bdi>{{ i.order }}</bdi></td>
+                    <td style="padding:15px 20px;color:var(--vt-color-text);">{{ i.type }}</td>
+                    <td style="padding:15px 20px;color:var(--vt-color-text-muted);">{{ i.date }}</td>
+                    <td style="padding:15px 20px;color:var(--vt-color-text-strong);font-weight:500;">{{ i.amount }}</td>
+                    <td style="padding:15px 20px;"><span class="vtPay" data-paid="{{ i.paid }}" style="font-size:12px;font-weight:600;padding:4px 11px;border-radius:var(--vt-radius-pill);">{{ i.payLabel }}</span></td>
+                    <td style="padding:15px 20px;"><button style="display:inline-flex;align-items:center;gap:5px;border:1px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);font:600 12px var(--vt-font-fa);padding:7px 13px;border-radius:var(--vt-radius-sm);cursor:pointer;"><i data-lucide="download" style="width:14px;height:14px;"></i>دانلود</button></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== PROFILE / SETTINGS ========== -->
+        <sc-if value="{{ showProfile }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen" style="max-width:760px;">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 22px;">حساب کاربری</h1>
+          <div style="display:flex;align-items:center;gap:18px;background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;margin-bottom:20px;">
+            <x-import component-from-global-scope="VioletDesignSystem_7273c4.Avatar" name="{{ dealer.name }}" size="lg" hint-size="48px,48px"></x-import>
+            <div style="flex:1;"><div style="font-size:18px;font-weight:700;color:var(--vt-color-text-strong);">{{ dealer.name }}</div><div style="font-size:13px;color:var(--vt-color-text-muted);margin-top:3px;">{{ dealer.role }} · {{ dealer.company }}</div></div>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--vt-color-accent-strong);background:var(--vt-color-surface-sunken);padding:7px 14px;border-radius:var(--vt-radius-pill);"><i data-lucide="sparkles" style="width:14px;height:14px;"></i>{{ dealer.tier }}</span>
+          </div>
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;margin-bottom:20px;">
+            <h3 style="font-size:15px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 16px;">اطلاعات نمایندگی</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div><div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">نام نمایندگی</div><div style="font-size:14px;color:var(--vt-color-text-strong);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-sm);padding:11px 13px;">{{ dealer.company }}</div></div>
+              <div><div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">کد فروشنده</div><div style="font-size:14px;color:var(--vt-color-text-strong);font-family:var(--vt-font-mono);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-sm);padding:11px 13px;"><bdi>{{ dealer.code }}</bdi></div></div>
+              <div><div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">شمارهٔ تماس</div><div style="font-size:14px;color:var(--vt-color-text-strong);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-sm);padding:11px 13px;">{{ dealer.phone }}</div></div>
+              <div><div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">ایمیل</div><div style="font-size:14px;color:var(--vt-color-text-strong);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-sm);padding:11px 13px;"><bdi>{{ dealer.email }}</bdi></div></div>
+              <div style="grid-column:1 / -1;"><div style="font-size:12px;color:var(--vt-color-text-muted);margin-bottom:6px;">آدرس</div><div style="font-size:14px;color:var(--vt-color-text-strong);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-sm);padding:11px 13px;">{{ dealer.address }}</div></div>
+            </div>
+            <div style="margin-top:18px;display:flex;gap:10px;">
+              <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="sm" hint-size="120px,32px">ذخیرهٔ تغییرات</x-import>
+              <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" size="sm" hint-size="120px,32px">تغییر رمز عبور</x-import>
+            </div>
+          </div>
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);">خروج از حساب</div><div style="font-size:12.5px;color:var(--vt-color-text-muted);margin-top:3px;">از این دستگاه خارج می‌شوید.</div></div>
+            <button onClick="{{ logout }}" style="display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--vt-color-danger);background:transparent;color:var(--vt-color-danger);font:600 13px var(--vt-font-fa);padding:10px 18px;border-radius:var(--vt-radius-md);cursor:pointer;"><i data-lucide="log-out" style="width:16px;height:16px;"></i>خروج</button>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ========== SUPPORT / MESSAGES ========== -->
+        <sc-if value="{{ showSupport }}" hint-placeholder-val="{{ false }}">
+        <div class="vtScreen" style="max-width:760px;">
+          <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 4px;">پشتیبانی</h1>
+          <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 22px;">گفتگو با تیم فروش ویولت</p>
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;display:flex;flex-direction:column;height:520px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--vt-color-divider);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--vt-color-primary-subtle);color:var(--vt-color-primary);display:grid;place-items:center;"><i data-lucide="headphones" style="width:19px;height:19px;"></i></div>
+              <div><div style="font-size:14px;font-weight:700;color:var(--vt-color-text-strong);">تیم فروش ویولت</div><div style="font-size:12px;color:var(--vt-color-success);display:flex;align-items:center;gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--vt-color-success);"></span>آنلاین</div></div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;">
+              <sc-for list="{{ messages }}" as="m" hint-placeholder-count="3">
+                <div class="vtBubble" data-me="{{ m.me }}">
+                  <div class="vtBubbleIn" style="max-width:74%;padding:11px 15px;border-radius:var(--vt-radius-lg);font-size:13.5px;line-height:1.8;">{{ m.text }}</div>
+                  <div style="font-size:11px;color:var(--vt-color-text-subtle);margin-top:4px;padding:0 4px;">{{ m.time }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="padding:14px 16px;border-top:1px solid var(--vt-color-divider);display:flex;gap:10px;align-items:center;">
+              <input value="{{ draft }}" onInput="{{ onDraft }}" placeholder="پیام خود را بنویسید…" style="flex:1;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-pill);padding:11px 18px;font:14px var(--vt-font-fa);color:var(--vt-color-text);background:var(--vt-color-surface);outline:none;text-align:start;">
+              <button onClick="{{ sendMessage }}" style="width:44px;height:44px;flex:none;border:none;border-radius:50%;background:var(--vt-color-primary);color:#fff;cursor:pointer;display:grid;place-items:center;"><i data-lucide="send" style="width:18px;height:18px;"></i></button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+
+      </main>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:28px;inset-inline-start:50%;transform:translateX(-50%);z-index:50;background:var(--vt-color-text-strong);color:var(--vt-color-surface);font-size:13.5px;font-weight:500;padding:13px 22px;border-radius:var(--vt-radius-pill);box-shadow:var(--vt-shadow-xl);display:flex;align-items:center;gap:9px;animation:vtToastIn .3s ease;">
+    <i data-lucide="check-circle" style="width:17px;height:17px;color:var(--vt-green-400,#4ade80);"></i>{{ toast }}
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:760},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;compact&quot;,&quot;tsType&quot;:&quot;'comfortable' | 'compact'&quot;},&quot;signedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = {
+    authed: true, authView: 'login', route: 'dashboard',
+    cart: [{ id: 'p1', qty: 20, note: '' }, { id: 'p6', qty: 20, note: '' }],
+    product: 'p1', order: 'ORD-4821',
+    filters: { cat: 'all', gender: 'all', strap: 'all', movement: 'all', stock: false },
+    sort: 'new', search: '',
+    orderSearch: '', orderStatus: 'all', orderSort: 'new',
+    pdpQty: 10, pdpImg: 0,
+    shipMethod: 'express', draft: '', extraMsgs: [],
+    toast: null,
+  };
+
+  componentDidMount() {
+    if (this.props.signedIn === false) this.setState({ authed: false });
+    if (!window.VTB) { const w = setInterval(() => { if (window.VTB) { clearInterval(w); this.forceUpdate(); } }, 60); }
+    this._icons();
+  }
+  componentDidUpdate() { this._icons(); }
+  componentWillUnmount() { clearTimeout(this._it); clearTimeout(this._tt); }
+  _icons() { clearTimeout(this._it); const tick = () => { if (window.lucide) window.lucide.createIcons(); else this._it = setTimeout(tick, 80); }; this._it = setTimeout(tick, 30); }
+
+  D() { return window.VTB; }
+  toast(m) { this.setState({ toast: m }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: null }), 2600); }
+  goto(route) { this.setState({ route }); const m = document.querySelector('#vtMain'); if (m) m.scrollTop = 0; }
+  login() { this.setState({ authed: true, route: 'dashboard' }); }
+  logout() { this.setState({ authed: false, authView: 'login' }); }
+  openProduct(id) { const p = this.D().byId(id); this.setState({ product: id, route: 'product', pdpQty: p.moq, pdpImg: 0 }); const m = document.querySelector('#vtMain'); if (m) m.scrollTop = 0; }
+  openOrder(id) { this.setState({ order: id, route: 'order' }); const m = document.querySelector('#vtMain'); if (m) m.scrollTop = 0; }
+  addToCart(id, qty) {
+    const p = this.D().byId(id); const q = qty || p.moq;
+    this.setState((s) => { const cart = s.cart.slice(); const i = cart.findIndex((l) => l.id === id);
+      if (i >= 0) cart[i] = { ...cart[i], qty: cart[i].qty + q }; else cart.push({ id, qty: q, note: '' }); return { cart }; });
+    this.toast('«' + p.name + '» به سبد افزوده شد');
+  }
+  setLineQty(id, qty) { this.setState((s) => ({ cart: s.cart.map((l) => l.id === id ? { ...l, qty } : l) })); }
+  removeLine(id) { this.setState((s) => ({ cart: s.cart.filter((l) => l.id !== id) })); }
+  submitOrder() { if (!this.state.cart.length) return; this.toast('سفارش با موفقیت ثبت شد ✦'); this.setState({ cart: [], route: 'orders' }); }
+  setFilter(k, v) { this.setState((s) => ({ filters: { ...s.filters, [k]: v } })); }
+  sendMessage() { const t = (this.state.draft || '').trim(); if (!t) return; this.setState((s) => ({ extraMsgs: s.extraMsgs.concat([{ from: 'me', time: 'هم‌اکنون', text: t }]), draft: '' })); }
+
+  renderVals() {
+    const D = this.D(); const S = this.state;
+    if (!D) return { theme: this.props.theme || 'light', density: this.props.density || 'comfortable', preAuth: false, authed: true, showDashboard: true };
+    const fa = D.fa, toman = D.toman;
+    const go = (r) => () => this.goto(r);
+
+    // nav
+    const cartCount = S.cart.reduce((s, l) => s + 1, 0);
+    const nav = [
+      { key: 'dashboard', label: 'داشبورد', icon: 'layout-dashboard' },
+      { key: 'catalog', label: 'کاتالوگ محصولات', icon: 'watch' },
+      { key: 'cart', label: 'سبد خرید', icon: 'shopping-bag', badge: S.cart.length ? fa(S.cart.length) : null },
+      { key: 'orders', label: 'سفارش‌های من', icon: 'package' },
+      { key: 'invoices', label: 'فاکتورها', icon: 'file-text' },
+      { key: 'support', label: 'پشتیبانی', icon: 'headphones' },
+      { key: 'profile', label: 'حساب کاربری', icon: 'user' },
+    ];
+    const routeGroup = { product: 'catalog', order: 'orders', checkout: 'cart' }[S.route] || S.route;
+    const navItems = nav.map((n) => ({ ...n, active: routeGroup === n.key, go: go(n.key) }));
+
+    // catalog filtering
+    const fl = S.filters; const q = (S.search || '').trim().toLowerCase();
+    let list = D.products.filter((p) =>
+      (fl.cat === 'all' || p.cat === fl.cat) && (fl.gender === 'all' || p.gender === fl.gender) &&
+      (fl.strap === 'all' || p.strap === fl.strap) && (fl.movement === 'all' || p.movement === fl.movement) &&
+      (!fl.stock || p.stock > 0) &&
+      (!q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q)));
+    const sorters = { new: (a, b) => (b.new - a.new), cheap: (a, b) => a.price - b.price, exp: (a, b) => b.price - a.price, az: (a, b) => a.name.localeCompare(b.name) };
+    list = list.slice().sort(sorters[S.sort] || sorters.new);
+    const stockVM = (p) => p.stock === 0 ? { stockText: 'ناموجود', stockState: 'out' }
+      : p.stock < 25 ? { stockText: fa(p.stock) + ' باقی‌مانده', stockState: 'low' }
+      : { stockText: 'موجود', stockState: 'ok' };
+    const cardVM = (p) => ({ id: p.id, name: p.name, sku: p.sku, image: D.frame(p.f, 500), price: toman(p.price),
+      moqText: 'حداقل ' + fa(p.moq) + ' عدد', isNew: !!p.new, inStock: p.stock > 0, outStock: p.stock === 0,
+      opacity: p.stock === 0 ? 0.62 : 1, ...stockVM(p), open: () => this.openProduct(p.id), add: () => this.addToCart(p.id) });
+    const catalog = list.map(cardVM);
+
+    const opt = (k, val, label) => ({ label, active: fl[k] === val, pick: () => this.setFilter(k, val) });
+    const filterGroups = [
+      { label: 'دسته‌بندی', options: [opt('cat','all','همه'),opt('cat','classic','کلاسیک'),opt('cat','sport','اسپرت'),opt('cat','dress','مجلسی')] },
+      { label: 'جنسیت', options: [opt('gender','all','همه'),opt('gender','men','مردانه'),opt('gender','women','زنانه'),opt('gender','unisex','یونیسکس')] },
+      { label: 'بند', options: [opt('strap','all','همه'),opt('strap','steel','فلزی'),opt('strap','leather','چرمی'),opt('strap','rubber','لاستیکی')] },
+      { label: 'مکانیزم', options: [opt('movement','all','همه'),opt('movement','quartz','کوارتز'),opt('movement','automatic','اتوماتیک')] },
+    ];
+    const sopt = (val, label) => ({ label, active: S.sort === val, pick: () => this.setState({ sort: val }) });
+    const sortOptions = [sopt('new','جدیدترین'),sopt('cheap','ارزان‌ترین'),sopt('exp','گران‌ترین'),sopt('az','الفبا')];
+
+    // product detail
+    const p = D.byId(S.product) || D.products[0];
+    const gallery = [0, 1, 2, 3].map((k) => D.frame(p.f + k, 800));
+    const similar = D.products.filter((x) => x.cat === p.cat && x.id !== p.id).slice(0, 4).map(cardVM);
+    const product = { id: p.id, name: p.name, sku: p.sku, desc: p.desc, price: toman(p.price),
+      moq: p.moq, moqText: 'حداقل سفارش ' + fa(p.moq) + ' عدد', inStock: p.stock > 0,
+      stockLine: p.stock > 0 ? fa(p.stock) + ' عدد موجود در انبار' : 'در حال حاضر ناموجود',
+      specRows: D.specRows(p), gallery, mainImg: gallery[S.pdpImg] || gallery[0],
+      isNew: !!p.new, lineTotal: toman(p.price * S.pdpQty),
+      add: () => this.addToCart(p.id, S.pdpQty), setQty: (n) => this.setState({ pdpQty: n }),
+      thumbs: gallery.map((g, i) => ({ src: g, active: i === S.pdpImg, pick: () => this.setState({ pdpImg: i }) })) };
+
+    // cart
+    const cartLines = S.cart.map((l) => { const pr = D.byId(l.id); return {
+      id: l.id, name: pr.name, sku: pr.sku, image: D.frame(pr.f, 200), unit: toman(pr.price), qty: l.qty, moq: pr.moq,
+      belowMoq: l.qty < pr.moq, lineTotal: toman(pr.price * l.qty),
+      setQty: (n) => this.setLineQty(l.id, n), remove: () => this.removeLine(l.id), open: () => this.openProduct(l.id) }; });
+    const subtotalN = S.cart.reduce((s, l) => s + D.byId(l.id).price * l.qty, 0);
+    const cartUnits = S.cart.reduce((s, l) => s + l.qty, 0);
+    const anyBelow = cartLines.some((l) => l.belowMoq);
+
+    // orders
+    const ordVM = (o, i) => ({ id: o.id, date: o.date, status: o.status, statusLabel: D.statusFa[o.status],
+      total: toman(D.orderTotal(o)), units: fa(D.orderUnits(o)),
+      itemsText: fa(o.lines.length) + ' مدل · ' + fa(D.orderUnits(o)) + ' عدد',
+      _idx: i, _totalN: D.orderTotal(o),
+      go: () => this.openOrder(o.id) });
+    const ordersAll = D.orders.map(ordVM);
+    const recentOrders = ordersAll.slice(0, 5);
+    // My Orders: search + status filter + sort
+    const oq = (S.orderSearch || '').trim().toLowerCase();
+    let ordersList = ordersAll.filter((o) => (S.orderStatus === 'all' || o.status === S.orderStatus) && (!oq || o.id.toLowerCase().includes(oq)));
+    const oSorters = { new: (a, b) => a._idx - b._idx, old: (a, b) => b._idx - a._idx, high: (a, b) => b._totalN - a._totalN, low: (a, b) => a._totalN - b._totalN };
+    ordersList = ordersList.slice().sort(oSorters[S.orderSort] || oSorters.new);
+    const oStatusKeys = D.stageOrder.concat(['rejected']);
+    const orderStatusOptions = [{ k: 'all', label: 'همه' }].concat(oStatusKeys.map((k) => ({ k, label: D.statusFa[k] })))
+      .map((x) => ({ label: x.label, active: S.orderStatus === x.k, pick: () => this.setState({ orderStatus: x.k }) }));
+    const oSopt = (k, label) => ({ label, active: S.orderSort === k, pick: () => this.setState({ orderSort: k }) });
+    const orderSortOptions = [oSopt('new', 'جدیدترین'), oSopt('old', 'قدیمی‌ترین'), oSopt('high', 'بیشترین مبلغ'), oSopt('low', 'کمترین مبلغ')];
+
+    const oo = D.orders.find((x) => x.id === S.order) || D.orders[0];
+    const orderLines = oo.lines.map((l) => { const pr = D.byId(l.id); return {
+      name: pr.name, sku: pr.sku, image: D.frame(pr.f, 200), qty: fa(l.qty), unit: toman(pr.price), lineTotal: toman(pr.price * l.qty), open: () => this.openProduct(l.id) }; });
+    const order = { id: oo.id, date: oo.date, status: oo.status, statusLabel: D.statusFa[oo.status],
+      rejected: oo.status === 'rejected', current: oo.status === 'rejected' ? 'reviewing' : oo.status,
+      times: oo.times, labels: D.statusFa, lines: orderLines, total: toman(D.orderTotal(oo)), units: fa(D.orderUnits(oo)),
+      ship: oo.ship, track: oo.track, rejectReason: oo.rejectReason,
+      canDoc: ['approved', 'shipped', 'completed'].includes(oo.status),
+      docDisabled: !['approved', 'shipped', 'completed'].includes(oo.status) };
+
+    // invoices
+    const invoices = D.invoices.map((i) => ({ id: i.id, order: i.order, date: i.date, type: i.type, amount: toman(i.amount),
+      paid: i.paid, payLabel: i.paid ? 'پرداخت‌شده' : 'در انتظار پرداخت',
+      payBg: i.paid ? 'var(--vt-color-success-bg)' : 'var(--vt-color-warning-bg)', payColor: i.paid ? 'var(--vt-color-success)' : 'var(--vt-color-warning)' }));
+
+    // stats
+    const openOrders = D.orders.filter((o) => !['completed', 'rejected'].includes(o.status)).length;
+    const pending = D.orders.filter((o) => ['submitted', 'reviewing'].includes(o.status)).length;
+    const monthSpend = D.orders.reduce((s, o) => s + D.orderTotal(o), 0);
+    const openInv = D.invoices.filter((i) => !i.paid).length;
+    const stats = [
+      { label: 'سفارش‌های باز', value: fa(openOrders), delta: 'در جریان پردازش', icon: 'package' },
+      { label: 'در انتظار تأیید', value: fa(pending), delta: 'نیازمند بررسی مدیر', icon: 'clock' },
+      { label: 'جمع خرید', value: (monthSpend / 1e9).toFixed(1).replace('.', '٫').replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]) + ' میلیارد', delta: 'مجموع سفارش‌ها', icon: 'trending-up' },
+      { label: 'فاکتورهای باز', value: fa(openInv), delta: 'در انتظار پرداخت', icon: 'file-text' },
+    ];
+    const featured = D.products.filter((x) => x.new).slice(0, 4).map(cardVM);
+
+    // support
+    const messages = D.messages.concat(S.extraMsgs).map((m) => ({ text: m.text, time: m.time, me: m.from === 'me' }));
+
+    const shipOptions = [
+      { key: 'express', label: 'باربری پیشتاز', sub: 'تحویل ۲ تا ۳ روز کاری', icon: 'truck' },
+      { key: 'post', label: 'پست پیشتاز', sub: 'تحویل ۴ تا ۷ روز کاری', icon: 'mail' },
+      { key: 'pickup', label: 'تحویل حضوری', sub: 'دریافت از انبار مرکزی', icon: 'store' },
+    ].map((o) => ({ ...o, active: S.shipMethod === o.key, pick: () => this.setState({ shipMethod: o.key }) }));
+
+    return {
+      theme: this.props.theme || 'light', density: this.props.density || 'comfortable',
+      dealer: D.dealer,
+      preAuth: !S.authed, authed: S.authed,
+      isLogin: S.authView === 'login', isForgot: S.authView === 'forgot', isPending: S.authView === 'pending',
+      goLogin: () => this.setState({ authView: 'login' }), goForgot: () => this.setState({ authView: 'forgot' }), login: () => this.login(),
+      navItems, search: S.search, onSearch: (e) => this.setState({ search: e.target.value, route: 'catalog' }),
+      cartCount: cartCount > 0, cartCountFa: fa(cartCount),
+      goCart: go('cart'), goSupport: go('support'), goProfile: go('profile'), goCatalog: go('catalog'), goOrders: go('orders'), goInvoices: go('invoices'),
+      openOrder4815: () => this.openOrder('ORD-4815'),
+      showDashboard: S.route === 'dashboard', showCatalog: S.route === 'catalog', showProduct: S.route === 'product',
+      showCart: S.route === 'cart', showCheckout: S.route === 'checkout', showOrders: S.route === 'orders',
+      showOrder: S.route === 'order', showInvoices: S.route === 'invoices', showProfile: S.route === 'profile', showSupport: S.route === 'support',
+      stats, recentOrders, featured,
+      catalog, filterGroups, sortOptions, filters: S.filters, toggleStock: (e) => this.setFilter('stock', e.target.checked),
+      clearFilters: () => this.setState({ filters: { cat: 'all', gender: 'all', strap: 'all', movement: 'all', stock: false }, search: '' }),
+      resultCount: fa(list.length), hasResults: list.length > 0, noResults: list.length === 0,
+      product, similar, pdpQty: S.pdpQty,
+      cartLines, cartEmpty: S.cart.length === 0, cartHasItems: S.cart.length > 0,
+      cartSubtotal: toman(subtotalN), cartUnits: fa(cartUnits), cartModels: fa(S.cart.length), cartBelowMoq: anyBelow,
+      goCheckout: () => { if (!anyBelow && S.cart.length) this.goto('checkout'); },
+      shipOptions, submitOrder: () => this.submitOrder(),
+      orders: ordersList, order, invoices,
+      orderSearch: S.orderSearch, onOrderSearch: (e) => this.setState({ orderSearch: e.target.value }),
+      orderStatusOptions, orderSortOptions,
+      ordersHasResults: ordersList.length > 0, ordersEmpty: ordersList.length === 0,
+      clearOrderFilters: () => this.setState({ orderSearch: '', orderStatus: 'all', orderSort: 'new' }),
+      messages, draft: S.draft, onDraft: (e) => this.setState({ draft: e.target.value }), sendMessage: () => this.sendMessage(),
+      logout: () => this.logout(),
+      toast: S.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

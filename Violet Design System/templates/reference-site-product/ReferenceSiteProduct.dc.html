@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Reference Site — Product Detail" description="PDP for the Violet vitrine — sticky gallery with thumbnails, buy column, spec tabs, and related models." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .vtNavlink { position: relative; }
+  .vtNavlink::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--vt-gold-400); transform: scaleX(0); transform-origin: left; transition: transform .2s var(--vt-ease-emphasized); }
+  .vtNavlink:hover::after { transform: scaleX(1); }
+  .vtThumb { transition: border-color .15s var(--vt-ease-standard), transform .15s var(--vt-ease-standard); }
+  .vtThumb:hover { transform: translateY(-2px); }
+  .vtMainImg { transition: opacity .6s var(--vt-ease-standard); }
+</style>
+</helmet>
+
+<div>
+  <!-- ============ NAV (frosted light) ============ -->
+  <nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;background:rgba(248,247,255,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--vt-color-divider);">
+    <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" hint-size="150px,40px"></x-import>
+    <div style="display:flex;gap:30px;align-items:center;">
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Home</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">New Models</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:600;color:var(--vt-color-primary);white-space:nowrap;">Products</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Brand</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">About</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Contact</a>
+    </div>
+    <div style="display:flex;gap:2px;font-size:12.5px;">
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-strong);background:var(--vt-color-primary-subtle);">EN</a>
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-muted);">RU</a>
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-muted);">AR</a>
+    </div>
+  </nav>
+
+  <!-- ============ BREADCRUMB ============ -->
+  <div style="max-width:1280px;margin:0 auto;padding:28px 40px 0;">
+    <x-import component-from-global-scope="VioletDesignSystem_7273c4.Breadcrumb" items="{{ crumbs }}" hint-size="360px,20px"></x-import>
+  </div>
+
+  <!-- ============ MAIN: gallery + buy column ============ -->
+  <section style="max-width:1280px;margin:0 auto;padding:28px 40px 84px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start;">
+
+    <!-- STICKY GALLERY -->
+    <div style="position:sticky;top:96px;display:grid;grid-template-columns:76px 1fr;gap:18px;">
+      <div style="display:flex;flex-direction:column;gap:12px;">{{ thumbs }}</div>
+      <div style="position:relative;aspect-ratio:1/1;border-radius:var(--vt-radius-2xl);overflow:hidden;background:var(--vt-color-surface);border:1px solid var(--vt-color-border);">
+        <img class="vtMainImg" alt="{{ name }}" src="{{ activeImage }}" style="width:100%;height:100%;object-fit:cover;">
+        <div style="position:absolute;inset:16px;border:1px solid rgba(201,168,106,.55);border-radius:var(--vt-radius-xl);pointer-events:none;"></div>
+        <div style="position:absolute;top:18px;inset-inline-start:18px;">
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Badge" variant="limited" hint-size="80px,24px">Limited</x-import>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUY COLUMN -->
+    <div>
+      <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">Classic line</span>
+      <h1 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(36px,4.5vw,56px);color:var(--vt-color-text-strong);margin:10px 0 8px;letter-spacing:-.02em;line-height:1.04;">Aurora Skeleton 42</h1>
+      <div style="font-family:var(--vt-font-mono);font-size:14px;color:var(--vt-color-text-muted);letter-spacing:.04em;">VLT-1180</div>
+
+      <div style="display:flex;align-items:baseline;gap:12px;margin:26px 0 0;">
+        <span style="font-family:var(--vt-font-display);font-size:38px;font-weight:400;color:var(--vt-color-text-strong);">$2,250</span>
+        <span style="font-size:14px;color:var(--vt-color-text-subtle);">Recommended retail</span>
+      </div>
+
+      <p style="font-size:16px;line-height:1.8;color:var(--vt-color-text-muted);margin:24px 0 0;max-width:480px;">An open-worked automatic that reveals its movement through a sapphire dial — precision made visible. Hand-finished bridges, a 42-hour reserve, and a case engineered to keep pace with you.</p>
+
+      <!-- KEY SPEC HIGHLIGHTS -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:32px 0;">
+        <div style="border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-md);padding:16px 14px;background:var(--vt-color-surface);">
+          <div style="font-family:var(--vt-font-mono);font-size:18px;color:var(--vt-color-text-strong);">42 mm</div>
+          <div style="font-size:12px;color:var(--vt-color-text-subtle);margin-top:4px;">Case size</div>
+        </div>
+        <div style="border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-md);padding:16px 14px;background:var(--vt-color-surface);">
+          <div style="font-family:var(--vt-font-mono);font-size:18px;color:var(--vt-color-text-strong);">5 ATM</div>
+          <div style="font-size:12px;color:var(--vt-color-text-subtle);margin-top:4px;">Water resist</div>
+        </div>
+        <div style="border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-md);padding:16px 14px;background:var(--vt-color-surface);">
+          <div style="font-family:var(--vt-font-mono);font-size:18px;color:var(--vt-color-text-strong);">42 h</div>
+          <div style="font-size:12px;color:var(--vt-color-text-subtle);margin-top:4px;">Reserve</div>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" size="lg" hint-size="180px,48px">Find a dealer →</x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" size="lg" hint-size="190px,48px">Download spec sheet</x-import>
+      </div>
+
+      <!-- TRUST ROW -->
+      <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;padding-top:26px;border-top:1px solid var(--vt-color-divider);">
+        <div style="font-size:13px;color:var(--vt-color-text-muted);"><span style="color:var(--vt-gold-500);">✦</span> 2-year international warranty</div>
+        <div style="font-size:13px;color:var(--vt-color-text-muted);"><span style="color:var(--vt-gold-500);">✦</span> Swiss-grade movement</div>
+        <div style="font-size:13px;color:var(--vt-color-text-muted);"><span style="color:var(--vt-gold-500);">✦</span> Authenticity guaranteed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DETAIL TABS ============ -->
+  <section style="background:var(--vt-color-surface);border-top:1px solid var(--vt-color-divider);border-bottom:1px solid var(--vt-color-divider);">
+    <div style="max-width:1280px;margin:0 auto;padding:56px 40px 64px;">
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.Tabs" tabs="{{ tabs }}" value="{{ tab }}" onChange="{{ onTab }}" hint-size="100%,44px"></x-import>
+      <div style="margin-top:32px;max-width:760px;">{{ tabPanel }}</div>
+    </div>
+  </section>
+
+  <!-- ============ RELATED ============ -->
+  <section style="max-width:1280px;margin:0 auto;padding:90px 40px 100px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:24px;flex-wrap:wrap;">
+      <div>
+        <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">You may also like</span>
+        <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(30px,4vw,44px);color:var(--vt-color-text-strong);margin:6px 0 0;letter-spacing:-.02em;">Related Models</h2>
+      </div>
+      <a href="#" style="font-size:14px;font-weight:500;color:var(--vt-color-primary);text-decoration:none;display:inline-flex;gap:8px;align-items:center;">View the Classic line <span>→</span></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">{{ relatedCards }}</div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--vt-ink-950);color:#fff;padding:64px 40px 30px;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:36px;">
+        <div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" tone="onDark" size="lg" hint-size="160px,44px"></x-import>
+          <p style="color:rgba(255,255,255,.6);font-size:13px;line-height:1.7;margin-top:14px;max-width:280px;">Violet · Watches — an international reference for timeless design, crafted for those who value time.</p>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">EXPLORE</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">New Models</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Products</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Technologies</a>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">BRAND</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">About Violet</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">History</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Quality</a>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">SUPPORT</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Contact</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Find a dealer</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">FAQ</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(230,180,83,.2);padding-top:24px;display:flex;justify-content:space-between;color:rgba(255,255,255,.5);font-size:13px;flex-wrap:wrap;gap:10px;">
+        <span>© 2026 Violet Watches. All rights reserved.</span>
+        <span>English · Русский · العربية</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { active: 0, tab: 'specs' };
+
+  img(i, w) {
+    const f = [
+      'photo-1523275335684-37898b6baf30','photo-1547996160-81dfa63595aa',
+      'photo-1495856458515-0637185db551','photo-1434056886845-dac89ffe9b56',
+      'photo-1533139502658-0198f920d8e8','photo-1508685096489-7aacd43bd3b1',
+      'photo-1524805444758-089113d48a6d','photo-1612817159949-195b6eb9e31a',
+    ];
+    return `https://images.unsplash.com/${f[i % f.length]}?auto=format&fit=crop&w=${w || 800}&q=80`;
+  }
+
+  componentDidMount() {
+    if (!window.VioletDesignSystem_7273c4) {
+      this._iv = setInterval(() => {
+        if (window.VioletDesignSystem_7273c4) { clearInterval(this._iv); this.forceUpdate(); }
+      }, 60);
+    }
+  }
+  componentWillUnmount() { if (this._iv) clearInterval(this._iv); }
+
+  renderVals() {
+    const NS = window.VioletDesignSystem_7273c4;
+    if (!NS) return {};
+
+    const gallery = [0, 1, 2, 3];
+    const activeImage = this.img(gallery[this.state.active], 900);
+
+    const thumbs = gallery.map((g, i) => {
+      const sel = i === this.state.active;
+      return React.createElement('button', {
+        key: i, className: 'vtThumb',
+        onClick: () => this.setState({ active: i }),
+        style: {
+          padding: 0, cursor: 'pointer', aspectRatio: '1/1', borderRadius: 'var(--vt-radius-md)',
+          overflow: 'hidden', background: 'var(--vt-color-surface)',
+          border: sel ? '2px solid var(--vt-color-primary)' : '1px solid var(--vt-color-border)',
+        },
+      }, React.createElement('img', {
+        src: this.img(g, 200), alt: 'View ' + (i + 1),
+        style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: sel ? 1 : 0.7 },
+      }));
+    });
+
+    // tab panels
+    let tabPanel;
+    if (this.state.tab === 'specs') {
+      tabPanel = React.createElement(NS.SpecTable, {
+        rows: [
+          ['Case material', 'Stainless Steel 316L'],
+          ['Case diameter', '42 mm'],
+          ['Movement', 'Automatic skeleton'],
+          ['Power reserve', '42 hours'],
+          ['Water resistance', '5 ATM (50 m)'],
+          ['Crystal', 'Anti-reflective sapphire'],
+          ['Dial', 'Open-worked, rhodium bridges'],
+          ['Strap', 'Calf leather, deployant clasp'],
+          ['Warranty', '2-year international'],
+        ],
+      });
+    } else if (this.state.tab === 'features') {
+      const items = [
+        ['Open-worked dial', 'A sapphire dial reveals the hand-finished movement and its rhodium-treated bridges.'],
+        ['Automatic calibre', 'Self-winding with a 42-hour reserve — precision that keeps pace with you.'],
+        ['Engineered case', 'A 42 mm 316L steel case, brushed and polished by hand to a quiet shine.'],
+      ];
+      tabPanel = React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '22px' } },
+        items.map(([t, d], i) => React.createElement('div', { key: i },
+          React.createElement('h3', { style: { fontSize: '17px', fontWeight: 600, color: 'var(--vt-color-text-strong)', margin: '0 0 6px' } }, t),
+          React.createElement('p', { style: { fontSize: '15px', lineHeight: 1.7, color: 'var(--vt-color-text-muted)', margin: 0 } }, d))));
+    } else {
+      tabPanel = React.createElement('div', { style: { fontSize: '15px', lineHeight: 1.8, color: 'var(--vt-color-text-muted)' } },
+        React.createElement('p', { style: { margin: '0 0 14px' } }, 'Wipe the case and strap with a soft, dry cloth after wear. Keep away from magnets, solvents, and extreme temperatures.'),
+        React.createElement('p', { style: { margin: 0 } }, 'Service your automatic movement every 4–5 years at an authorised Violet service centre to preserve accuracy and water resistance.'));
+    }
+
+    const F = (i) => this.img(i, 600);
+    const related = [
+      { name: 'Lunar Moonphase 41', sku: 'VLT-2604', badge: 'new', price: '$1,980', image: F(7), hoverImage: F(4) },
+      { name: 'Eclipse Dress 38', sku: 'VLT-1182', badge: null, price: '$980', image: F(5), hoverImage: F(6) },
+      { name: 'Meridian GMT 43', sku: 'VLT-1181', badge: null, price: '$1,490', image: F(4), hoverImage: F(0) },
+      { name: 'Heritage Automatic 40', sku: 'VLT-2602', badge: 'new', price: '$1,290', image: F(6), hoverImage: F(3) },
+    ];
+    const relatedCards = related.map((p) => React.createElement(NS.ProductCard, {
+      key: p.sku, name: p.name, sku: p.sku, image: p.image, hoverImage: p.hoverImage,
+      badge: p.badge, price: p.price, href: '#',
+    }));
+
+    return {
+      name: 'Aurora Skeleton 42',
+      activeImage, thumbs, relatedCards, tabPanel,
+      crumbs: [
+        { label: 'Home', href: '#' },
+        { label: 'Products', href: '#' },
+        { label: 'Classic', href: '#' },
+        { label: 'Aurora Skeleton 42' },
+      ],
+      tabs: [
+        { value: 'specs', label: 'Specifications' },
+        { value: 'features', label: 'Features' },
+        { value: 'care', label: 'Care' },
+      ],
+      tab: this.state.tab,
+      onTab: (v) => this.setState({ tab: v }),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Reference Site — Dark Mode" description="Dark-mode storefront proving every component flips on [data-theme=\"dark\"] — violet-tinted ink surfaces, gold accents, nav, grid, spec table & stats. Light/dark is tweakable." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-sans); -webkit-font-smoothing: antialiased; transition: background .3s var(--vt-ease-standard); }
+  a { color: inherit; }
+  .vtNavlink { position: relative; }
+  .vtNavlink::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--vt-gold-400); transform: scaleX(0); transform-origin: left; transition: transform .2s var(--vt-ease-emphasized); }
+  .vtNavlink:hover::after { transform: scaleX(1); }
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" style="background:var(--vt-color-bg);color:var(--vt-color-text);min-height:100vh;">
+  <!-- ============ NAV ============ -->
+  <nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;background:var(--vt-color-surface);border-bottom:1px solid var(--vt-color-border);">
+    <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" tone="{{ markTone }}" hint-size="150px,40px"></x-import>
+    <div style="display:flex;gap:30px;align-items:center;">
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Home</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">New Models</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:600;color:var(--vt-color-primary);white-space:nowrap;">Products</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Brand</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">About</a>
+    </div>
+    <button onClick="{{ toggleTheme }}" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:inherit;font-size:13px;font-weight:500;color:var(--vt-color-text);background:var(--vt-color-surface-sunken);border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-pill, 999px);padding:7px 16px;">{{ themeLabel }}</button>
+  </nav>
+
+  <!-- ============ HEADER ============ -->
+  <header style="max-width:1440px;margin:0 auto;padding:56px 40px 0;">
+    <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">After dark</span>
+    <h1 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(40px,5.5vw,68px);color:var(--vt-color-text-strong);margin:10px 0 14px;letter-spacing:-.02em;line-height:1.04;">The collection, after dark</h1>
+    <p style="font-size:17px;line-height:1.8;color:var(--vt-color-text-muted);max-width:520px;margin:0;">Every surface, border, and shadow is token-driven — so the entire vitrine flips to a violet-tinted dark register with one attribute. Gold stays the single indulgence.</p>
+  </header>
+
+  <!-- ============ STAT ROW ============ -->
+  <section style="max-width:1440px;margin:0 auto;padding:48px 40px 0;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--vt-color-divider);border-bottom:1px solid var(--vt-color-divider);padding:40px 0;">
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.StatTile" value="1000+" label="Watch models" display="{{ true }}" hint-size="100%,90px"></x-import>
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.StatTile" value="6" label="Elevation steps" display="{{ true }}" hint-size="100%,90px"></x-import>
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.StatTile" value="230" label="Design tokens" display="{{ true }}" hint-size="100%,90px"></x-import>
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.StatTile" value="✦" label="One attribute to flip" display="{{ true }}" hint-size="100%,90px"></x-import>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT GRID ============ -->
+  <section style="max-width:1440px;margin:0 auto;padding:64px 40px 0;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:24px;flex-wrap:wrap;">
+      <div>
+        <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">Just arrived</span>
+        <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(28px,4vw,44px);color:var(--vt-color-text-strong);margin:6px 0 0;letter-spacing:-.02em;">New Models</h2>
+      </div>
+      <a href="#" style="font-size:14px;font-weight:500;color:var(--vt-color-primary);text-decoration:none;display:inline-flex;gap:8px;align-items:center;">View all <span>→</span></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">{{ cards }}</div>
+  </section>
+
+  <!-- ============ SPEC SPLIT ============ -->
+  <section style="max-width:1440px;margin:0 auto;padding:80px 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;">
+    <div style="position:relative;aspect-ratio:1/1;border-radius:var(--vt-radius-2xl);overflow:hidden;border:1px solid var(--vt-color-border);">
+      <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Aurora Skeleton" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:16px;border:1px solid rgba(201,168,106,.55);border-radius:var(--vt-radius-xl);pointer-events:none;"></div>
+    </div>
+    <div>
+      <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">Specifications</span>
+      <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(26px,3.5vw,42px);color:var(--vt-color-text-strong);margin:8px 0 4px;letter-spacing:-.02em;">Aurora Skeleton 42</h2>
+      <div style="font-family:var(--vt-font-mono);font-size:14px;color:var(--vt-color-text-muted);">VLT-1180</div>
+      <div style="margin-top:22px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.SpecTable" rows="{{ specRows }}" hint-size="100%,360px"></x-import>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center;margin-top:26px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" hint-size="160px,44px">Find a dealer →</x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" hint-size="150px,44px">Spec sheet</x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--vt-color-surface);color:var(--vt-color-text);border-top:1px solid var(--vt-color-border);padding:48px 40px;">
+    <div style="max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" tone="{{ markTone }}" hint-size="150px,40px"></x-import>
+      <span style="color:var(--vt-color-text-subtle);font-size:13px;">© 2026 Violet Watches · Same tokens, after dark</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;theme&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;dark&quot;, &quot;options&quot;: [&quot;dark&quot;, &quot;light&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot; }
+}">
+class Component extends DCLogic {
+  state = { theme: null };
+
+  img(i, w) {
+    const f = [
+      'photo-1523275335684-37898b6baf30','photo-1547996160-81dfa63595aa',
+      'photo-1524805444758-089113d48a6d','photo-1533139502658-0198f920d8e8',
+      'photo-1612817159949-195b6eb9e31a','photo-1508685096489-7aacd43bd3b1',
+      'photo-1434056886845-dac89ffe9b56','photo-1495856458515-0637185db551',
+    ];
+    return `https://images.unsplash.com/${f[i % f.length]}?auto=format&fit=crop&w=${w || 600}&q=80`;
+  }
+
+  componentDidMount() {
+    if (!window.VioletDesignSystem_7273c4) {
+      this._iv = setInterval(() => {
+        if (window.VioletDesignSystem_7273c4) { clearInterval(this._iv); this.forceUpdate(); }
+      }, 60);
+    }
+  }
+  componentWillUnmount() { if (this._iv) clearInterval(this._iv); }
+
+  renderVals() {
+    const NS = window.VioletDesignSystem_7273c4;
+    const theme = this.state.theme ?? this.props.theme ?? 'dark';
+    const isDark = theme === 'dark';
+
+    const base = {
+      theme,
+      markTone: isDark ? 'onDark' : 'default',
+      themeLabel: isDark ? '☾  Dark' : '☀  Light',
+      toggleTheme: () => this.setState({ theme: isDark ? 'light' : 'dark' }),
+    };
+    if (!NS) return base;
+
+    const F = (i) => this.img(i, 600);
+    const models = [
+      { name: 'Chronograph Classic 42', sku: 'VLT-2601', badge: 'new', price: '$1,490', image: F(0), hoverImage: F(1) },
+      { name: 'Heritage Automatic 40', sku: 'VLT-2602', badge: 'new', price: '$1,290', image: F(2), hoverImage: F(3) },
+      { name: 'Aurora Skeleton 42', sku: 'VLT-1180', badge: 'limited', price: '$2,250', image: F(7), hoverImage: F(4) },
+      { name: 'Lunar Moonphase 41', sku: 'VLT-2604', badge: 'new', price: '$1,980', image: F(6), hoverImage: F(4) },
+    ];
+    const cards = models.map((p) => React.createElement(NS.ProductCard, {
+      key: p.sku, name: p.name, sku: p.sku, image: p.image, hoverImage: p.hoverImage,
+      badge: p.badge, price: p.price, href: '#',
+    }));
+
+    return Object.assign(base, {
+      cards,
+      specRows: [
+        ['Case material', 'Stainless Steel 316L'],
+        ['Case diameter', '42 mm'],
+        ['Movement', 'Automatic skeleton'],
+        ['Power reserve', '42 hours'],
+        ['Water resistance', '5 ATM (50 m)'],
+        ['Crystal', 'Anti-reflective sapphire'],
+        ['Warranty', '2-year international'],
+      ],
+    });
+  }
+}
+</script>
+</body>
+</html>

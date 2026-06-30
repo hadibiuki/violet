@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Technologies & Features · Violet</title>
+<meta name="description" content="The engineering behind every Violet — movements, materials, and the details that endure.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.06)}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s var(--vt-ease-standard),transform .6s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+  const wrap = { maxWidth: 1200, margin: '0 auto', padding: '0 40px' };
+
+  function Eyebrow({ children, dark }) {
+    return <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', fontWeight: 500, color: dark ? 'var(--vt-gold-300)' : 'var(--vt-color-accent-strong)' }}>{children}</span>;
+  }
+
+  function Hero() {
+    return (
+      <header style={{ position: 'relative', overflow: 'hidden', paddingTop: 132,
+        background: 'radial-gradient(1100px 640px at 72% 24%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+          'radial-gradient(560px 380px at 18% 28%,rgba(168,85,247,.24),transparent 60%),radial-gradient(460px 460px at 84% 70%,rgba(124,58,237,.20),transparent 60%),radial-gradient(360px 360px at 60% 16%,rgba(201,168,106,.12),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'relative', zIndex: 2, ...wrap, padding: '70px 40px 84px', textAlign: 'center' }}>
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', fontSize: 13, color: 'rgba(196,181,253,.8)', marginBottom: 24 }}>
+            <a href="index.html" style={{ color: 'inherit', textDecoration: 'none' }}>Home</a><span style={{ opacity: .5 }}>›</span><b style={{ color: '#fff', fontWeight: 500 }}>Technologies</b>
+          </div>
+          <Eyebrow dark>Technologies &amp; Features</Eyebrow>
+          <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, letterSpacing: '-.02em', fontSize: 'clamp(48px,6vw,84px)', lineHeight: 1.04, color: '#fff', margin: '16px auto 18px', maxWidth: 880 }}>
+            The engineering<br />behind every <em style={{ fontStyle: 'italic', color: '#C4B5FD' }}>Violet</em>
+          </h1>
+          <p style={{ fontSize: 19, lineHeight: 1.7, color: '#C4B5FD', maxWidth: 600, margin: '0 auto' }}>
+            Precision you can feel, materials you can trust, and details designed to endure — long after the trend has passed.
+          </p>
+        </div>
+      </header>
+    );
+  }
+
+  // alternating image + text feature rows
+  function FeatureRow({ eyebrow, title, body, points, frame, flip }) {
+    const media = (
+      <div className="reveal" style={{ position: 'relative', aspectRatio: '4/3', borderRadius: 'var(--vt-radius-2xl)', overflow: 'hidden', gridColumn: flip ? 2 : 1 }}>
+        <img src={D.frame(frame, 800)} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <div style={{ position: 'absolute', inset: 16, border: '1px solid rgba(255,255,255,.35)', borderRadius: 'var(--vt-radius-xl)', pointerEvents: 'none' }} />
+      </div>
+    );
+    const text = (
+      <div className="reveal" style={{ gridColumn: flip ? 1 : 2, gridRow: 1 }}>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(30px,3.4vw,44px)', color: 'var(--vt-color-text-strong)', margin: '14px 0 18px', lineHeight: 1.12, letterSpacing: '-.02em' }}>{title}</h2>
+        <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--vt-color-text-muted)', marginBottom: 22 }}>{body}</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {points.map((pt) => (
+            <div key={pt} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, fontSize: 15.5, color: 'var(--vt-color-text)' }}>
+              <i data-lucide="check" style={{ width: 18, height: 18, color: 'var(--vt-color-primary)', marginTop: 2, flex: 'none' }}></i>{pt}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+    return (
+      <section style={{ padding: '72px 0' }}>
+        <div style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          {flip ? <>{text}{media}</> : <>{media}{text}</>}
+        </div>
+      </section>
+    );
+  }
+
+  function FeatureGrid() {
+    const feats = [
+      ['battery-medium', 'Long-life battery', 'Up to 3 years on a single cell in quartz calibres.'],
+      ['sun', 'Luminous dials', 'Super-LumiNova indices that glow through the night.'],
+      ['link', 'Smart connectivity', 'Hybrid models pair to your phone for notifications & tracking.'],
+      ['ruler', 'Balanced cases', '36–45 mm diameters, sized for every wrist.'],
+      ['recycle', 'Interchangeable straps', 'Quick-release pins — swap leather, steel, mesh or rubber in seconds.'],
+      ['award', '2-year warranty', 'Every Violet is covered, internationally.'],
+    ];
+    return (
+      <section style={{ background: 'var(--vt-color-surface)', padding: '100px 0' }}>
+        <div style={wrap}>
+          <div style={{ textAlign: 'center', marginBottom: 52, maxWidth: 600, marginInline: 'auto' }}>
+            <Eyebrow>More features</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', color: 'var(--vt-color-text-strong)', margin: '14px 0 0', letterSpacing: '-.02em' }}>Considered, down to the detail</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
+            {feats.map(([icon, title, body], i) => (
+              <div key={title} className="reveal" style={{ background: 'var(--vt-color-bg)', border: '1px solid var(--vt-color-border)', borderRadius: 'var(--vt-radius-lg)', padding: 28, transitionDelay: `${(i % 3) * 60}ms` }}>
+                <div style={{ width: 48, height: 48, borderRadius: 'var(--vt-radius-md)', background: 'var(--vt-color-primary-subtle)', color: 'var(--vt-color-primary)', display: 'grid', placeItems: 'center', marginBottom: 18 }}>
+                  <i data-lucide={icon} style={{ width: 22, height: 22 }}></i>
+                </div>
+                <h3 style={{ fontSize: 17, fontWeight: 600, color: 'var(--vt-color-text-strong)', margin: '0 0 8px' }}>{title}</h3>
+                <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--vt-color-text-muted)', margin: 0 }}>{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function WaterScale() {
+    const rows = [['3 ATM', 'Splashes & rain', 'Everyday dress wear'], ['5 ATM', 'Showering & brief swims', 'Classic & lifestyle'], ['10 ATM', 'Swimming & snorkelling', 'GMT & travel'], ['20 ATM', 'Free & scuba diving', 'Sport Diver']];
+    return (
+      <section style={{ padding: '100px 0' }}>
+        <div style={{ ...wrap, maxWidth: 880 }}>
+          <div style={{ textAlign: 'center', marginBottom: 44 }}>
+            <Eyebrow>Water resistance</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(30px,4vw,46px)', color: 'var(--vt-color-text-strong)', margin: '14px 0 0', letterSpacing: '-.02em' }}>Rated for real life</h2>
+          </div>
+          <div className="reveal" style={{ border: '1px solid var(--vt-color-border)', borderRadius: 'var(--vt-radius-lg)', overflow: 'hidden', background: 'var(--vt-color-surface)' }}>
+            {rows.map(([atm, use, line], i) => (
+              <div key={atm} style={{ display: 'grid', gridTemplateColumns: '120px 1fr 200px', gap: 20, alignItems: 'center', padding: '18px 24px', borderTop: i ? '1px solid var(--vt-color-divider)' : 'none', background: i % 2 ? 'var(--vt-color-surface-sunken)' : 'transparent' }}>
+                <span style={{ fontFamily: 'var(--vt-font-mono)', fontSize: 18, fontWeight: 600, color: 'var(--vt-color-primary)' }}>{atm}</span>
+                <span style={{ fontSize: 15.5, color: 'var(--vt-color-text)' }}>{use}</span>
+                <span style={{ fontSize: 13, color: 'var(--vt-color-text-muted)', textAlign: 'end' }}>{line}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function CTA() {
+    return (
+      <section style={{ position: 'relative', overflow: 'hidden', textAlign: 'center', color: '#fff', padding: '110px 0',
+        background: 'radial-gradient(800px 400px at 50% 0%,#3B0764,transparent 60%),linear-gradient(160deg,#0D0A1E,#231940)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+          'radial-gradient(520px 360px at 28% 30%,rgba(168,85,247,.20),transparent 60%),radial-gradient(440px 440px at 78% 72%,rgba(124,58,237,.18),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'relative', zIndex: 2, ...wrap }}>
+          <Eyebrow dark>See it on the wrist</Eyebrow>
+          <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(38px,5vw,60px)', margin: '12px 0 18px', letterSpacing: '-.02em' }}>Find the technology that fits you</h2>
+          <p style={{ color: '#C4B5FD', fontSize: 18, marginBottom: 32 }}>Explore the collection and filter by movement, water resistance, and more.</p>
+          <a href="products.html" style={{ textDecoration: 'none' }}>
+            <Button variant="accent" size="lg" trailingIcon={<span>→</span>}>Explore the collection</Button>
+          </a>
+        </div>
+      </section>
+    );
+  }
+
+  function Technologies() {
+    React.useEffect(() => {
+      if (window.lucide) lucide.createIcons();
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    });
+    return (
+      <div>
+        <SiteHeader active="tech" variant="overlay" />
+        <Hero />
+        <FeatureRow eyebrow="Movements" title="Precision at the core" frame={4}
+          body="Every Violet runs on a calibre chosen for its character — the effortless accuracy of quartz, or the living heartbeat of an automatic."
+          points={['Swiss-style quartz, accurate to seconds per month', 'Self-winding automatic movements with a visible rotor', 'Each calibre individually regulated before it ships']} />
+        <FeatureRow eyebrow="Materials" title="Built from the right things" frame={7} flip
+          body="We start with materials that earn their place — surgical-grade steel, sapphire-hard glass, and straps finished by hand."
+          points={['Stainless Steel 316L, hypoallergenic and corrosion-resistant', 'Sapphire-grade mineral crystal resists everyday scratches', 'Genuine leather, woven mesh, steel and rubber strap options']} />
+        <WaterScale />
+        <FeatureGrid />
+        <CTA />
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<Technologies />);
+</script>
+</body>
+</html>

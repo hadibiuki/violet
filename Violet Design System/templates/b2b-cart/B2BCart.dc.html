@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="B2B App — Cart & Proforma" description="RTL Persian wholesale cart and proforma invoice — wires CartLineItem (MOQ stepper, remove) and InvoiceRow (header/line/total) into a real ordering flow." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-fa); -webkit-font-smoothing: antialiased; }
+</style>
+</helmet>
+
+<div dir="rtl" lang="fa" style="min-height:100vh;background:var(--vt-color-bg);font-family:var(--vt-font-fa);">
+  <!-- ============ TOP BAR ============ -->
+  <header style="height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--vt-color-surface);border-bottom:1px solid var(--vt-color-border);">
+    <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" hint-size="140px,40px"></x-import>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.Avatar" name="رضا کریمی" hint-size="36px,36px"></x-import>
+      <div style="font-size:13px;line-height:1.3;"><b style="color:var(--vt-color-text-strong);">رضا کریمی</b><br><span style="color:var(--vt-color-text-muted);">ساعت پارس</span></div>
+    </div>
+  </header>
+
+  <main style="max-width:1180px;margin:0 auto;padding:32px 28px 80px;">
+    <a href="#" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--vt-color-text-muted);text-decoration:none;margin-bottom:14px;"><span style="display:inline-block;transform:scaleX(-1);">←</span> بازگشت به کاتالوگ</a>
+    <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:27px;color:var(--vt-color-text-strong);margin:0 0 24px;">سبد سفارش</h1>
+
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;">
+      <!-- CART LINES -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.CartLineItem" name="{{ l.name }}" sku="{{ l.sku }}" image="{{ l.image }}" price="{{ l.price }}" qty="{{ l.qty }}" moq="{{ l.moq }}" currency="{{ toman }}" onQty="{{ l.onQty }}" onRemove="{{ l.onRemove }}" hint-size="100%,110px"></x-import>
+        </sc-for>
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:60px 20px;background:var(--vt-color-surface);border:1px dashed var(--vt-color-border-strong);border-radius:var(--vt-radius-lg);">
+            <div style="font-size:16px;font-weight:600;color:var(--vt-color-text-strong);margin-bottom:6px;">سبد شما خالی است</div>
+            <p style="font-size:13.5px;color:var(--vt-color-text-muted);margin:0;">برای ثبت سفارش، از کاتالوگ محصول اضافه کنید.</p>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- SUMMARY -->
+      <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;position:sticky;top:88px;box-shadow:var(--vt-shadow-sm);">
+        <h2 style="font-size:16px;font-weight:700;color:var(--vt-color-text-strong);margin:0 0 16px;">خلاصهٔ سفارش</h2>
+        <div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--vt-color-text-muted);margin-bottom:10px;">تعداد مدل<span style="color:var(--vt-color-text);">{{ modelCount }}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--vt-color-text-muted);margin-bottom:10px;">مجموع تعداد<span style="color:var(--vt-color-text);">{{ unitCount }}</span></div>
+        <div style="margin:14px 0;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Divider" hint-size="100%,1px"></x-import></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;"><span style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);">جمع کل</span><span style="font-family:var(--vt-font-fa-display);font-size:21px;font-weight:900;color:var(--vt-color-primary);">{{ grandTotal }}</span></div>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" onClick="{{ openConfirm }}" style="width:100%;justify-content:center;" hint-size="100%,44px">صدور پیش‌فاکتور</x-import>
+        <p style="font-size:11.5px;color:var(--vt-color-text-subtle);text-align:center;margin:12px 0 0;line-height:1.8;">با صدور پیش‌فاکتور، سند زیر برای بررسی به مدیر فروش ارسال می‌شود.</p>
+      </div>
+    </div>
+
+    <!-- ============ PROFORMA INVOICE ============ -->
+    <section style="margin-top:48px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;">
+        <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:19px;color:var(--vt-color-text-strong);margin:0;">پیش‌فاکتور <bdi style="font-family:var(--vt-font-mono);font-size:14px;color:var(--vt-color-text-muted);">PRF-5821</bdi></h2>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" size="sm" leading-icon="{{ downloadIcon }}" onClick="{{ download }}" hint-size="150px,34px">دریافت PDF</x-import>
+      </div>
+      <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.InvoiceRow" header="{{ true }}" hint-size="100%,44px"></x-import>
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.InvoiceRow" description="{{ l.name }}" sku="{{ l.sku }}" qty="{{ l.qty }}" unitPrice="{{ l.price }}" amount="{{ l.amount }}" currency="{{ toman }}" hint-size="100%,52px"></x-import>
+        </sc-for>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.InvoiceRow" total="{{ true }}" description="مبلغ کل (پیش از مالیات)" amount="{{ subtotal }}" currency="{{ toman }}" hint-size="100%,56px"></x-import>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ CONFIRM MODAL ============ -->
+  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Modal" open="{{ confirmOpen }}" onClose="{{ closeConfirm }}" title="صدور پیش‌فاکتور" description="{{ confirmDesc }}" footer="{{ confirmFooter }}" hint-size="520px,200px"></x-import>
+
+  <!-- ============ TOASTS ============ -->
+  <x-import component-from-global-scope="VioletDesignSystem_7273c4.ToastViewport" position="bottom-start" hint-size="0,0">{{ toasts }}</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = {
+    cart: [
+      { id: 'VLT-2601', name: 'Chronograph Classic 42', sku: 'VLT-2601', price: 18500000, qty: 20, moq: 10, f: 0 },
+      { id: 'VLT-1180', name: 'Aurora Skeleton 42', sku: 'VLT-1180', price: 33800000, qty: 10, moq: 5, f: 7 },
+      { id: 'VLT-2604', name: 'Lunar Moonphase 41', sku: 'VLT-2604', price: 24300000, qty: 15, moq: 10, f: 6 },
+    ],
+    confirmOpen: false,
+    toasts: [],
+  };
+
+  fa(s) { return String(s).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+  toman(n) { return this.fa(Number(n).toLocaleString('en-US')) + ' تومان'; }
+  img(i) {
+    const f = ['photo-1523275335684-37898b6baf30','photo-1547996160-81dfa63595aa','photo-1524805444758-089113d48a6d','photo-1533139502658-0198f920d8e8','photo-1612817159949-195b6eb9e31a','photo-1508685096489-7aacd43bd3b1','photo-1434056886845-dac89ffe9b56','photo-1495856458515-0637185db551'];
+    return `https://images.unsplash.com/${f[i % f.length]}?auto=format&fit=crop&w=200&q=80`;
+  }
+
+  componentDidMount() {
+    this._t = setInterval(() => { if (window.lucide) { window.lucide.createIcons(); } if (window.VioletDesignSystem_7273c4) this.forceUpdate(); }, 120);
+  }
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  setQty(id, qty) { this.setState((s) => ({ cart: s.cart.map((l) => l.id === id ? { ...l, qty } : l) })); }
+  remove(id) {
+    const line = this.state.cart.find((l) => l.id === id);
+    this.setState((s) => ({ cart: s.cart.filter((l) => l.id !== id) }));
+    if (line) this.pushToast('warning', 'حذف شد', line.name + ' از سبد حذف شد.');
+  }
+  pushToast(tone, title, description) {
+    const id = Date.now() + Math.random();
+    this.setState((s) => ({ toasts: s.toasts.concat([{ id, tone, title, description }]) }));
+    setTimeout(() => this.setState((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })), 3800);
+  }
+  confirm() {
+    this.setState({ confirmOpen: false });
+    this.pushToast('success', 'پیش‌فاکتور صادر شد', 'سند PRF-5821 برای بررسی ارسال شد ✦');
+  }
+
+  renderVals() {
+    const NS = window.VioletDesignSystem_7273c4;
+    const toman = (n) => this.toman(n);
+    const icon = (name) => NS ? React.createElement('i', { 'data-lucide': name, style: { width: 16, height: 16 } }) : null;
+
+    const lines = this.state.cart.map((l) => ({
+      ...l,
+      image: this.img(l.f),
+      amount: l.price * l.qty,
+      onQty: (n) => this.setQty(l.id, n),
+      onRemove: () => this.remove(l.id),
+    }));
+    const unitCount = this.state.cart.reduce((a, l) => a + l.qty, 0);
+    const subtotal = lines.reduce((a, l) => a + l.amount, 0);
+
+    const base = {
+      toman, lines,
+      isEmpty: lines.length === 0,
+      modelCount: this.fa(this.state.cart.length) + ' مدل',
+      unitCount: this.fa(unitCount) + ' عدد',
+      grandTotal: this.toman(subtotal),
+      subtotal,
+      confirmOpen: this.state.confirmOpen,
+      confirmDesc: 'سند برای ' + this.fa(this.state.cart.length) + ' مدل (' + this.fa(unitCount) + ' عدد) به مبلغ ' + this.toman(subtotal) + ' صادر می‌شود.',
+      openConfirm: () => this.setState({ confirmOpen: true }),
+      closeConfirm: () => this.setState({ confirmOpen: false }),
+      download: () => this.pushToast('info', 'در حال آماده‌سازی', 'فایل PDF پیش‌فاکتور ساخته می‌شود…'),
+    };
+    if (!NS) return base;
+
+    return Object.assign(base, {
+      downloadIcon: icon('download'),
+      confirmFooter: React.createElement('div', { style: { display: 'flex', gap: 10, justifyContent: 'flex-start' } }, [
+        React.createElement(NS.Button, { key: 'c', variant: 'primary', onClick: () => this.confirm() }, 'تأیید و صدور'),
+        React.createElement(NS.Button, { key: 'x', variant: 'secondary', onClick: () => this.setState({ confirmOpen: false }) }, 'انصراف'),
+      ]),
+      toasts: this.state.toasts.map((t) => React.createElement(NS.Toast, {
+        key: t.id, tone: t.tone, title: t.title, description: t.description,
+        onClose: () => this.setState((s) => ({ toasts: s.toasts.filter((x) => x.id !== t.id) })),
+      })),
+    });
+  }
+}
+</script>
+</body>
+</html>

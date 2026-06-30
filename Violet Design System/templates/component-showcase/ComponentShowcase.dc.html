@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Component Showcase — Interactive" description="Live playground for the remaining primitives — Hero banner, Radio groups, Tooltip, Spinner, Skeleton, and Toast/Modal triggers in one page." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .vtSec { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .vtCard { background: var(--vt-color-surface); border: 1px solid var(--vt-color-border); border-radius: var(--vt-radius-lg); padding: 26px; box-shadow: var(--vt-shadow-sm); }
+  .vtH3 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--vt-color-text-muted); font-weight: 600; margin: 0 0 16px; }
+</style>
+</helmet>
+
+<div style="background:var(--vt-color-bg);min-height:100vh;padding-bottom:90px;">
+  <!-- ============ HERO (marketing component) ============ -->
+  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Hero" eyebrow="Component library" title="{{ heroTitle }}" lead="Every Violet primitive, shown live — interact with each one below." actions="{{ heroActions }}" align="center" minHeight="{{ 420 }}" hint-size="100%,420px"></x-import>
+
+  <!-- ============ INTRO ============ -->
+  <div class="vtSec" style="padding-top:64px;padding-bottom:8px;">
+    <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">Playground</span>
+    <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(30px,4vw,46px);color:var(--vt-color-text-strong);margin:8px 0 0;letter-spacing:-.02em;">Interactive elements</h2>
+  </div>
+
+  <!-- ============ GRID OF DEMOS ============ -->
+  <div class="vtSec" style="padding-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+    <!-- RADIO -->
+    <div class="vtCard">
+      <h3 class="vtH3">Radio · shipping method</h3>
+      <div style="display:flex;flex-direction:column;gap:14px;">{{ radios }}</div>
+      <div style="margin:18px 0;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Divider" label="selected" hint-size="100%,20px"></x-import></div>
+      <div style="font-size:14px;color:var(--vt-color-text-muted);">You chose <strong style="color:var(--vt-color-text-strong);">{{ shipLabel }}</strong></div>
+    </div>
+
+    <!-- TOOLTIP -->
+    <div class="vtCard">
+      <h3 class="vtH3">Tooltip · hover or focus</h3>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Tooltip" label="Water resistance: 5 ATM (50 m)" side="top" hint-size="120px,40px"><span style="display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-md);font-size:13px;cursor:default;color:var(--vt-color-text);">Top ▲</span></x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Tooltip" label="Stainless Steel 316L case" side="bottom" hint-size="120px,40px"><span style="display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-md);font-size:13px;cursor:default;color:var(--vt-color-text);">Bottom ▼</span></x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Tooltip" label="42-hour power reserve" side="right" hint-size="120px,40px"><span style="display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-md);font-size:13px;cursor:default;color:var(--vt-color-text);">Side ▶</span></x-import>
+      </div>
+    </div>
+
+    <!-- SPINNER -->
+    <div class="vtCard">
+      <h3 class="vtH3">Spinner · indeterminate</h3>
+      <div style="display:flex;gap:34px;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Spinner" size="{{ 18 }}" hint-size="20px,20px"></x-import><span style="font-size:12px;color:var(--vt-color-text-subtle);font-family:var(--vt-font-mono);">18px</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Spinner" size="{{ 28 }}" hint-size="30px,30px"></x-import><span style="font-size:12px;color:var(--vt-color-text-subtle);font-family:var(--vt-font-mono);">28px</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Spinner" size="{{ 40 }}" thickness="{{ 3 }}" hint-size="42px,42px"></x-import><span style="font-size:12px;color:var(--vt-color-text-subtle);font-family:var(--vt-font-mono);">40px</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--vt-gold-500);"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Spinner" size="{{ 28 }}" hint-size="30px,30px"></x-import><span style="font-size:12px;color:var(--vt-color-text-subtle);font-family:var(--vt-font-mono);">gold</span></div>
+      </div>
+    </div>
+
+    <!-- SKELETON -->
+    <div class="vtCard">
+      <h3 class="vtH3">Skeleton · loading placeholders</h3>
+      <div style="display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Skeleton" variant="circle" width="{{ 96 }}" height="{{ 96 }}" hint-size="96px,96px"></x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Skeleton" variant="text" lines="{{ 4 }}" hint-size="100%,90px"></x-import>
+      </div>
+    </div>
+
+    <!-- TOAST + MODAL TRIGGERS -->
+    <div class="vtCard" style="grid-column:1 / -1;">
+      <h3 class="vtH3">Feedback triggers · Toast &amp; Modal</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">{{ triggers }}</div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Modal" open="{{ modalOpen }}" onClose="{{ closeModal }}" title="Confirm your selection" description="This is the design-system Modal — Esc, backdrop click, or × all close it." footer="{{ modalFooter }}" hint-size="520px,200px"></x-import>
+
+  <!-- TOASTS -->
+  <x-import component-from-global-scope="VioletDesignSystem_7273c4.ToastViewport" position="bottom-end" hint-size="0,0">{{ toasts }}</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { ship: 'express', modalOpen: false, toasts: [] };
+
+  componentDidMount() {
+    this._t = setInterval(() => { if (window.lucide) window.lucide.createIcons(); if (window.VioletDesignSystem_7273c4) this.forceUpdate(); }, 120);
+  }
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  pushToast(tone, title, description) {
+    const id = Date.now() + Math.random();
+    this.setState((s) => ({ toasts: s.toasts.concat([{ id, tone, title, description }]) }));
+    setTimeout(() => this.setState((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })), 3800);
+  }
+
+  renderVals() {
+    const NS = window.VioletDesignSystem_7273c4;
+    const ships = [
+      { value: 'standard', label: 'Standard · 5–7 days' },
+      { value: 'express', label: 'Express · 2 days' },
+      { value: 'pickup', label: 'Collect from dealer' },
+    ];
+    const shipLabel = (ships.find((s) => s.value === this.state.ship) || {}).label || '';
+
+    const base = {
+      heroTitle: 'The full kit, in motion',
+      shipLabel,
+      modalOpen: this.state.modalOpen,
+      closeModal: () => this.setState({ modalOpen: false }),
+    };
+    if (!NS) return base;
+
+    const radios = ships.map((s) => React.createElement(NS.Radio, {
+      key: s.value, name: 'ship', value: s.value, label: s.label,
+      checked: this.state.ship === s.value,
+      onChange: (v) => this.setState({ ship: v }),
+    }));
+
+    const heroActions = [
+      React.createElement(NS.Button, { key: 'a', variant: 'accent', size: 'lg', onClick: () => this.pushToast('success', 'Nice', 'Hero action fired ✦') }, 'Primary action →'),
+      React.createElement(NS.Button, { key: 'b', variant: 'secondary', size: 'lg', onClick: () => this.setState({ modalOpen: true }) }, 'Open modal'),
+    ];
+
+    const triggers = [
+      React.createElement(NS.Button, { key: 't1', variant: 'primary', onClick: () => this.pushToast('success', 'Saved', 'Your changes were saved.') }, 'Success toast'),
+      React.createElement(NS.Button, { key: 't2', variant: 'secondary', onClick: () => this.pushToast('info', 'Heads up', 'A new model just arrived.') }, 'Info toast'),
+      React.createElement(NS.Button, { key: 't3', variant: 'secondary', onClick: () => this.pushToast('warning', 'Low stock', 'Only 3 units left.') }, 'Warning toast'),
+      React.createElement(NS.Button, { key: 't4', variant: 'danger-outline', onClick: () => this.pushToast('error', 'Failed', 'Could not reach the server.') }, 'Error toast'),
+      React.createElement(NS.Button, { key: 't5', variant: 'primary', onClick: () => this.setState({ modalOpen: true }) }, 'Open modal'),
+    ];
+
+    const modalFooter = React.createElement('div', { style: { display: 'flex', gap: 10, justifyContent: 'flex-end' } }, [
+      React.createElement(NS.Button, { key: 'x', variant: 'secondary', onClick: () => this.setState({ modalOpen: false }) }, 'Cancel'),
+      React.createElement(NS.Button, { key: 'c', variant: 'primary', onClick: () => { this.setState({ modalOpen: false }); this.pushToast('success', 'Confirmed', 'Selection confirmed.'); } }, 'Confirm'),
+    ]);
+
+    const toasts = this.state.toasts.map((t) => React.createElement(NS.Toast, {
+      key: t.id, tone: t.tone, title: t.title, description: t.description,
+      onClose: () => this.setState((s) => ({ toasts: s.toasts.filter((x) => x.id !== t.id) })),
+    }));
+
+    return Object.assign(base, { radios, heroActions, triggers, modalFooter, toasts });
+  }
+}
+</script>
+</body>
+</html>

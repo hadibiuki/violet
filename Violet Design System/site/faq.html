@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ · Violet — Answers, plainly</title>
+<meta name="description" content="Frequently asked questions about Violet timepieces — orders, shipping, warranty, care, and returns.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.06)}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s var(--vt-ease-standard),transform .6s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  .vt-faq-row{transition:background var(--vt-duration-base) var(--vt-ease-standard)}
+  .vt-faq-row:hover{background:var(--vt-color-surface)}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#180F19"/>
+  <text x="50" y="44" font-family="Georgia, serif" font-size="20" fill="#E6B453" text-anchor="middle">FAQ</text>
+  <text x="50" y="62" font-family="Georgia, serif" font-size="9" fill="#C4B5FD" text-anchor="middle" letter-spacing="2">VIOLET</text>
+</svg>
+</template>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+  const wrap = { maxWidth: 1100, margin: '0 auto', padding: '0 40px' };
+
+  function Eyebrow({ children, dark }) {
+    return <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', fontWeight: 500, color: dark ? 'var(--vt-gold-300)' : 'var(--vt-color-accent-strong)' }}>{children}</span>;
+  }
+
+  const CATEGORIES = [
+    {
+      key: 'orders',
+      icon: 'package',
+      label: 'Orders & Shipping',
+      items: [
+        ['How long does delivery take?', 'In-stock pieces ship within 1–2 business days. Standard delivery arrives in 3–5 business days; express is available at checkout for next-day arrival in most regions. International orders typically clear customs within 7–10 business days.'],
+        ['Do you ship internationally?', 'Yes. Violet ships to over 60 countries across three of our supported languages — English, Russian, and Arabic. Duties and import taxes are calculated transparently at checkout, so there are no surprises on arrival.'],
+        ['Can I track my order?', 'Every shipment includes a tracking link sent by email the moment your piece leaves our atelier. You can also view live status from your account under Orders.'],
+        ['Is my package insured?', 'All orders are fully insured in transit and require a signature on delivery. If anything arrives damaged, contact us within 48 hours and we will arrange a replacement.'],
+      ],
+    },
+    {
+      key: 'products',
+      icon: 'shield-check',
+      label: 'Products & Warranty',
+      items: [
+        ['What warranty comes with a Violet watch?', 'Each timepiece carries a 2-year international warranty covering movement and manufacturing defects. The warranty card is included with your watch and is honoured at every authorised Violet service centre.'],
+        ['Are the movements quartz or automatic?', 'Both. Our Classic and Smart lines use precision quartz calibres, while the Heritage and Sport lines feature self-winding automatic movements. The movement type is listed on every product page.'],
+        ['How water resistant are Violet watches?', 'Ratings range from 3 ATM for dress models to 20 ATM for our diver line. Each piece is individually tested and rated for life, sport, or the deep — check the specifications tab for the exact rating.'],
+        ['Where are Violet watches made?', 'Movements are engineered to Japanese precision standards and cases are finished by hand in our atelier. Every watch passes a multi-point inspection before it ships.'],
+      ],
+    },
+    {
+      key: 'care',
+      icon: 'sparkles',
+      label: 'Care & Maintenance',
+      items: [
+        ['How do I care for my watch?', 'Wipe the case and bracelet with a soft, dry cloth. Avoid contact with perfumes and solvents, and keep the watch away from strong magnetic fields. For water-resistant models, rinse with fresh water after exposure to salt water.'],
+        ['How often should it be serviced?', 'Automatic movements benefit from a service every 3–5 years; quartz models every 4–6 years, typically alongside a battery change. Authorised servicing preserves both accuracy and warranty cover.'],
+        ['Can I change the strap myself?', 'Many Violet straps use quick-release spring bars and can be swapped without tools. For integrated bracelets we recommend a visit to an authorised dealer to avoid scratching the lugs.'],
+      ],
+    },
+    {
+      key: 'returns',
+      icon: 'rotate-ccw',
+      label: 'Returns & Support',
+      items: [
+        ['What is your return policy?', 'Unworn pieces in original condition can be returned within 30 days for a full refund. Simply request a return from your account and we will email a prepaid, insured shipping label.'],
+        ['How do I find an authorised dealer?', 'Use the dealer locator on our Contact page, or reach our concierge directly — we will point you to the nearest authorised Violet boutique or service centre.'],
+        ['I need help with an existing order.', 'Our support team responds within one business day. Reach us through the Contact page with your order number and we will take it from there.'],
+      ],
+    },
+  ];
+
+  function FaqHero({ onJump }) {
+    return (
+      <header style={{ position: 'relative', overflow: 'hidden', paddingTop: 132,
+        background: 'radial-gradient(1100px 640px at 72% 24%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+          'radial-gradient(560px 380px at 18% 28%,rgba(168,85,247,.24),transparent 60%),radial-gradient(460px 460px at 84% 70%,rgba(124,58,237,.20),transparent 60%),radial-gradient(360px 360px at 60% 16%,rgba(201,168,106,.12),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'relative', zIndex: 2, ...wrap, padding: '70px 40px 70px', textAlign: 'center' }}>
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', fontSize: 13, color: 'rgba(196,181,253,.8)', marginBottom: 24 }}>
+            <a href="index.html" style={{ color: 'inherit', textDecoration: 'none' }}>Home</a><span style={{ opacity: .5 }}>›</span><b style={{ color: '#fff', fontWeight: 500 }}>FAQ</b>
+          </div>
+          <Eyebrow dark>Help & answers</Eyebrow>
+          <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, letterSpacing: '-.02em', fontSize: 'clamp(48px,6vw,84px)', lineHeight: 1.04, color: '#fff', margin: '16px auto 18px', maxWidth: 880 }}>
+            Questions, answered<br /><em style={{ fontStyle: 'italic', color: '#C4B5FD' }}>plainly</em>
+          </h1>
+          <p style={{ fontSize: 19, lineHeight: 1.7, color: '#C4B5FD', maxWidth: 600, margin: '0 auto 36px' }}>
+            Everything you might want to know about ordering, owning, and caring for a Violet timepiece.
+          </p>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+            {CATEGORIES.map((c) => (
+              <button key={c.key} onClick={() => onJump(c.key)} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8, cursor: 'pointer',
+                padding: '9px 16px', borderRadius: 999, fontSize: 13.5, fontWeight: 500,
+                color: 'rgba(255,255,255,.86)', background: 'rgba(255,255,255,.07)',
+                border: '1px solid rgba(196,181,253,.28)', backdropFilter: 'blur(6px)',
+              }}>
+                <i data-lucide={c.icon} style={{ width: 15, height: 15 }}></i>{c.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  function FaqRow({ q, a, open, onToggle }) {
+    return (
+      <div className="vt-faq-row" style={{ borderBottom: '1px solid var(--vt-color-divider)' }}>
+        <button onClick={onToggle} aria-expanded={open} style={{
+          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
+          padding: '24px 8px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
+        }}>
+          <span style={{ fontSize: 'clamp(16px,1.6vw,18.5px)', fontWeight: 500, color: 'var(--vt-color-text-strong)', lineHeight: 1.4 }}>{q}</span>
+          <span style={{ flex: 'none', width: 34, height: 34, borderRadius: '50%', display: 'grid', placeItems: 'center',
+            background: open ? 'var(--vt-color-primary)' : 'var(--vt-color-primary-subtle)',
+            color: open ? '#fff' : 'var(--vt-color-primary)',
+            transition: 'all var(--vt-duration-base) var(--vt-ease-emphasized)', transform: open ? 'rotate(45deg)' : 'none' }}>
+            <i data-lucide="plus" style={{ width: 17, height: 17 }}></i>
+          </span>
+        </button>
+        <div style={{ display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows var(--vt-duration-slow) var(--vt-ease-standard)' }}>
+          <div style={{ overflow: 'hidden' }}>
+            <p style={{ margin: 0, padding: '0 56px 26px 8px', fontSize: 16, lineHeight: 1.75, color: 'var(--vt-color-text-muted)', maxWidth: 760 }}>{a}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function FaqGroup({ cat, openKey, setOpenKey }) {
+    return (
+      <section id={cat.key} className="reveal" style={{ scrollMarginTop: 90, marginBottom: 64 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 8 }}>
+          <span style={{ width: 44, height: 44, borderRadius: 'var(--vt-radius-md)', background: 'var(--vt-color-primary-subtle)', color: 'var(--vt-color-primary)', display: 'grid', placeItems: 'center' }}>
+            <i data-lucide={cat.icon} style={{ width: 21, height: 21 }}></i>
+          </span>
+          <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 400, fontSize: 'clamp(26px,3vw,34px)', color: 'var(--vt-color-text-strong)', margin: 0, letterSpacing: '-.01em' }}>{cat.label}</h2>
+        </div>
+        <div style={{ borderTop: '1px solid var(--vt-color-divider)', marginTop: 18 }}>
+          {cat.items.map(([q, a], i) => {
+            const id = `${cat.key}-${i}`;
+            return <FaqRow key={id} q={q} a={a} open={openKey === id} onToggle={() => setOpenKey(openKey === id ? null : id)} />;
+          })}
+        </div>
+      </section>
+    );
+  }
+
+  function ContactCta() {
+    return (
+      <section style={{ padding: '20px 0 110px' }}>
+        <div style={wrap}>
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--vt-radius-2xl)', textAlign: 'center',
+            color: '#fff', padding: 'clamp(48px,6vw,72px) 40px', border: '1px solid rgba(230,180,83,.25)',
+            background: 'radial-gradient(800px 400px at 50% 0%,#45304B,transparent 60%),linear-gradient(160deg,#180F19,#27192A)' }}>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '150px', opacity: .08 }} />
+            <div style={{ position: 'relative', zIndex: 2 }}>
+              <Eyebrow dark>Still need a hand?</Eyebrow>
+              <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(32px,4.5vw,52px)', margin: '12px 0 14px', letterSpacing: '-.02em' }}>Our concierge is here for you</h2>
+              <p style={{ color: 'rgba(255,255,255,.74)', fontSize: 17, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 30px' }}>
+                Can't find what you're looking for? Reach our team directly — we usually reply within one business day.
+              </p>
+              <a href="contact.html" style={{ textDecoration: 'none' }}><Button variant="accent" size="lg" trailingIcon={<span>→</span>}>Contact Violet</Button></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function Faq() {
+    const [openKey, setOpenKey] = React.useState('orders-0');
+
+    React.useEffect(() => {
+      if (window.lucide) lucide.createIcons();
+    });
+    React.useEffect(() => {
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.06 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    }, []);
+    React.useEffect(() => { if (window.lucide) lucide.createIcons(); }, [openKey]);
+
+    const jump = (key) => {
+      const el = document.getElementById(key);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    };
+
+    return (
+      <div>
+        <SiteHeader active="faq" variant="overlay" />
+        <FaqHero onJump={jump} />
+        <section style={{ padding: '80px 0 40px' }}>
+          <div style={wrap}>
+            {CATEGORIES.map((cat) => (
+              <FaqGroup key={cat.key} cat={cat} openKey={openKey} setOpenKey={setOpenKey} />
+            ))}
+          </div>
+        </section>
+        <ContactCta />
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<Faq />);
+</script>
+</body>
+</html>

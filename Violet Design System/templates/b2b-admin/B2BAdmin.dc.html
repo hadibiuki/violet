@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="B2B Admin — Sales Panel" description="RTL Persian admin panel: dealer approvals, product & pricing management, order status control, and reports/export." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<script src="../b2b-app/b2b-data.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-fa); -webkit-font-smoothing: antialiased; }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-thumb { background: var(--vt-color-border-strong); border-radius: 9px; border: 2px solid var(--vt-color-bg); }
+  .vtNavItem { background: transparent; transition: background .15s; }
+  .vtNavItem:hover { background: var(--vt-color-surface-sunken); }
+  .vtNavItem[data-active="true"]:hover { background: var(--vt-color-primary-subtle); }
+  .vtNavItem[data-active="true"] { background: var(--vt-color-primary-subtle) !important; color: var(--vt-color-primary) !important; font-weight: 600; }
+  .vtRow:hover { background: var(--vt-color-surface-sunken); }
+  @keyframes vtToastIn { from { opacity: 0; transform: translateY(12px) translateX(-50%); } to { opacity: 1; transform: translateY(0) translateX(-50%); } }
+  .vtUserPill[data-state="active"] { background: var(--vt-color-success-bg); color: var(--vt-color-success); }
+  .vtUserPill[data-state="pending"] { background: var(--vt-color-warning-bg); color: var(--vt-color-warning); }
+  .vtUserPill[data-state="disabled"], .vtUserPill[data-state="rejected"] { background: var(--vt-color-danger-bg); color: var(--vt-color-danger); }
+  .vtUserPill .vtDot { background: currentColor; }
+  .vtStockTxt[data-state="ok"] { color: var(--vt-color-text); }
+  .vtStockTxt[data-state="low"] { color: var(--vt-color-warning); }
+  .vtStockTxt[data-state="out"] { color: var(--vt-color-danger); }
+</style>
+</helmet>
+
+<div dir="rtl" lang="fa" data-theme="{{ theme }}" data-density="{{ density }}" style="display:grid;grid-template-columns:248px 1fr;height:100vh;background:var(--vt-color-bg);font-family:var(--vt-font-fa);overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <aside style="background:var(--vt-color-surface);border-inline-end:1px solid var(--vt-color-border);color:var(--vt-color-text);display:flex;flex-direction:column;padding:20px 16px;overflow-y:auto;">
+    <div style="display:flex;align-items:center;gap:12px;padding:2px 6px 22px;">
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" variant="monogram" size="sm" hint-size="48px,38px"></x-import>
+      <div style="line-height:1.25;">
+        <div style="font-family:var(--vt-font-wordmark);font-weight:600;letter-spacing:.2em;font-size:16px;color:var(--vt-color-text-strong);">VIOLET</div>
+        <div style="font-size:10px;color:var(--vt-color-primary);letter-spacing:.24em;margin-top:1px;">ADMIN PANEL</div>
+      </div>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:3px;">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a class="vtNavItem" data-active="{{ n.active }}" onClick="{{ n.go }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--vt-radius-md);text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text);cursor:pointer;">
+          <i data-lucide="{{ n.icon }}" style="width:18px;height:18px;flex:none;"></i>
+          <span style="flex:1;">{{ n.label }}</span>
+          <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--vt-color-warning);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;">{{ n.badge }}</span></sc-if>
+        </a>
+      </sc-for>
+    </nav>
+    <a href="../b2b-app/B2BApp.dc.html" style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--vt-radius-md);background:var(--vt-color-surface-sunken);color:var(--vt-color-text-muted);text-decoration:none;font-size:13px;"><i data-lucide="external-link" style="width:16px;height:16px;"></i>نمای فروشنده</a>
+  </aside>
+
+  <!-- MAIN -->
+  <div style="display:flex;flex-direction:column;overflow:hidden;">
+    <header style="height:64px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--vt-color-surface);border-bottom:1px solid var(--vt-color-border);z-index:5;">
+      <div style="display:flex;align-items:center;gap:10px;background:var(--vt-color-surface-sunken);border-radius:var(--vt-radius-sm);padding:9px 14px;width:320px;max-width:36vw;">
+        <i data-lucide="search" style="width:16px;height:16px;color:var(--vt-color-text-muted);"></i>
+        <input placeholder="جستجوی کاربر، محصول یا سفارش…" style="border:none;background:transparent;outline:none;font:14px var(--vt-font-fa);color:var(--vt-color-text);flex:1;text-align:start;">
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.IconButton" variant="secondary" icon="{{ bellIcon }}" aria-label="اعلان‌ها" onClick="{{ notify }}" hint-size="40px,40px"></x-import>
+        <div style="display:flex;align-items:center;gap:10px;padding-inline-start:6px;border-inline-start:1px solid var(--vt-color-divider);">
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Avatar" name="مدیر سیستم" hint-size="36px,36px"></x-import>
+          <div style="font-size:13px;line-height:1.3;"><b style="color:var(--vt-color-text-strong);">مدیر سیستم</b><br><span style="color:var(--vt-color-text-muted);">فروش و عملیات</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="vtMain" style="flex:1;overflow-y:auto;padding:28px 28px 60px;">
+
+      <!-- ========== OVERVIEW ========== -->
+      <sc-if value="{{ showOverview }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:27px;color:var(--vt-color-text-strong);margin:0 0 4px;">نمای کلی</h1>
+        <p style="color:var(--vt-color-text-muted);font-size:14px;margin:0 0 22px;">خلاصهٔ وضعیت پورتال عمدهٔ ویولت</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <x-import component-from-global-scope="VioletDesignSystem_7273c4.StatTile" value="{{ s.value }}" label="{{ s.label }}" icon="{{ s.iconNode }}" hint-size="100%,116px"></x-import>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <!-- pending approvals -->
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--vt-color-divider);">
+              <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:16px;color:var(--vt-color-text-strong);margin:0;">تأییدهای در انتظار</h2>
+              <a class="vtRow" onClick="{{ goUsers }}" style="font-size:13px;color:var(--vt-color-primary);cursor:pointer;">مدیریت کاربران</a>
+            </div>
+            <div style="padding:6px 0;">
+              <sc-for list="{{ pendingUsers }}" as="u" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 20px;border-top:1px solid var(--vt-color-divider);">
+                  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Avatar" name="{{ u.name }}" hint-size="36px,36px"></x-import>
+                  <div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;color:var(--vt-color-text-strong);">{{ u.name }}</div><div style="font-size:12px;color:var(--vt-color-text-muted);margin-top:2px;">{{ u.contact }} · {{ u.city }}</div></div>
+                  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="success" size="sm" onClick="{{ u.approve }}" hint-size="58px,32px">تأیید</x-import>
+                  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="danger-outline" size="sm" onClick="{{ u.reject }}" hint-size="48px,32px">رد</x-import>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noPending }}" hint-placeholder-val="{{ false }}"><div style="padding:28px 20px;text-align:center;font-size:13px;color:var(--vt-color-text-muted);">درخواست در انتظاری وجود ندارد ✦</div></sc-if>
+            </div>
+          </div>
+          <!-- orders needing action -->
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--vt-color-divider);">
+              <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:16px;color:var(--vt-color-text-strong);margin:0;">سفارش‌های نیازمند بررسی</h2>
+              <a class="vtRow" onClick="{{ goOrders }}" style="font-size:13px;color:var(--vt-color-primary);cursor:pointer;">همهٔ سفارش‌ها</a>
+            </div>
+            <div style="padding:6px 0;">
+              <sc-for list="{{ actionOrders }}" as="o" hint-placeholder-count="3">
+                <div onClick="{{ goOrders }}" class="vtRow" style="display:flex;align-items:center;gap:12px;padding:13px 20px;border-top:1px solid var(--vt-color-divider);cursor:pointer;">
+                  <bdi style="font-family:var(--vt-font-mono);font-size:13px;color:var(--vt-color-text-strong);">{{ o.id }}</bdi>
+                  <div style="flex:1;min-width:0;font-size:13px;color:var(--vt-color-text-muted);">{{ o.dealer }}</div>
+                  <span style="font-size:13px;font-weight:600;color:var(--vt-color-text);">{{ o.total }}</span>
+                  <x-import component-from-global-scope="VioletDesignSystem_7273c4.OrderStatusPill" status="{{ o.status }}" label="{{ o.statusLabel }}" hint-size="90px,26px"></x-import>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ========== USERS ========== -->
+      <sc-if value="{{ showUsers }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0;">مدیریت کاربران</h1>
+            <p style="color:var(--vt-color-text-muted);font-size:13.5px;margin:5px 0 0;">نمایندگان عمده · تأیید، ایجاد و مدیریت دسترسی</p>
+          </div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" leading-icon="{{ userPlusIcon }}" onClick="{{ openCreateUser }}" hint-size="160px,40px">ایجاد کاربر جدید</x-import>
+        </div>
+        <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+            <thead><tr style="color:var(--vt-color-text-muted);font-size:12px;background:var(--vt-color-surface-sunken);">
+              <th style="text-align:start;font-weight:500;padding:13px 20px;">نمایندگی</th><th style="text-align:start;font-weight:500;padding:13px 20px;">مسئول</th><th style="text-align:start;font-weight:500;padding:13px 20px;">شهر</th><th style="text-align:start;font-weight:500;padding:13px 20px;">کد</th><th style="text-align:start;font-weight:500;padding:13px 20px;">وضعیت</th><th style="padding:13px 20px;"></th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ dealers }}" as="u" hint-placeholder-count="5">
+                <tr class="vtRow" style="border-top:1px solid var(--vt-color-divider);">
+                  <td style="padding:14px 20px;font-weight:600;color:var(--vt-color-text-strong);">{{ u.name }}</td>
+                  <td style="padding:14px 20px;color:var(--vt-color-text);">{{ u.contact }}</td>
+                  <td style="padding:14px 20px;color:var(--vt-color-text-muted);">{{ u.city }}</td>
+                  <td style="padding:14px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-muted);"><bdi>{{ u.code }}</bdi></td>
+                  <td style="padding:14px 20px;"><span class="vtUserPill" data-state="{{ u.status }}" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 11px;border-radius:var(--vt-radius-pill);"><span class="vtDot" style="width:6px;height:6px;border-radius:50%;"></span>{{ u.label }}</span></td>
+                  <td style="padding:14px 20px;text-align:start;">
+                    <sc-if value="{{ u.isPending }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;gap:7px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="success" size="sm" onClick="{{ u.approve }}" hint-size="58px,32px">تأیید</x-import><x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="danger-outline" size="sm" onClick="{{ u.reject }}" hint-size="48px,32px">رد</x-import></span></sc-if>
+                    <sc-if value="{{ u.notPending }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" size="sm" onClick="{{ u.edit }}" hint-size="70px,32px">ویرایش</x-import></sc-if>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ========== PRODUCTS ========== -->
+      <sc-if value="{{ showProducts }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0;">مدیریت محصولات</h1>
+            <p style="color:var(--vt-color-text-muted);font-size:13.5px;margin:5px 0 0;">قیمت عمده، حداقل سفارش، موجودی و وضعیت انتشار</p>
+          </div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" leading-icon="{{ plusIcon }}" onClick="{{ openAddProduct }}" hint-size="140px,40px">افزودن محصول</x-import>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:9px;background:var(--vt-color-surface);border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-sm);padding:9px 13px;width:280px;max-width:60vw;">
+            <i data-lucide="search" style="width:16px;height:16px;color:var(--vt-color-text-muted);"></i>
+            <input value="{{ prodSearch }}" onInput="{{ onProdSearch }}" placeholder="جستجوی نام یا کد محصول…" style="border:none;background:transparent;outline:none;font:14px var(--vt-font-fa);color:var(--vt-color-text);flex:1;text-align:start;">
+          </div>
+          <div style="width:160px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Select" value="{{ prodCat }}" onChange="{{ onProdCat }}" options="{{ prodCatOptions }}" hint-size="160px,40px"></x-import></div>
+          <div style="width:180px;margin-inline-start:auto;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Select" value="{{ prodSort }}" onChange="{{ onProdSort }}" options="{{ prodSortOptions }}" hint-size="180px,40px"></x-import></div>
+        </div>
+        <sc-if value="{{ productsHasResults }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+            <thead><tr style="color:var(--vt-color-text-muted);font-size:12px;background:var(--vt-color-surface-sunken);">
+              <th style="text-align:start;font-weight:500;padding:13px 20px;">محصول</th><th style="text-align:start;font-weight:500;padding:13px 20px;">کد</th><th style="text-align:start;font-weight:500;padding:13px 20px;">قیمت همکار</th><th style="text-align:start;font-weight:500;padding:13px 20px;">حداقل سفارش</th><th style="text-align:start;font-weight:500;padding:13px 20px;">موجودی</th><th style="text-align:start;font-weight:500;padding:13px 20px;">وضعیت</th><th style="padding:13px 20px;"></th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+                <tr class="vtRow" style="border-top:1px solid var(--vt-color-divider);">
+                  <td style="padding:12px 20px;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:42px;height:42px;border-radius:var(--vt-radius-sm);overflow:hidden;background:var(--vt-color-surface-sunken);flex:none;"><img src="{{ p.image }}" alt="" style="width:100%;height:100%;object-fit:cover;"></div><span style="font-weight:600;color:var(--vt-color-text-strong);"><bdi>{{ p.name }}</bdi></span></div></td>
+                  <td style="padding:12px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-muted);"><bdi>{{ p.sku }}</bdi></td>
+                  <td style="padding:12px 20px;color:var(--vt-color-text-strong);font-weight:500;">{{ p.price }}</td>
+                  <td style="padding:12px 20px;color:var(--vt-color-text);">{{ p.moq }} عدد</td>
+                  <td style="padding:12px 20px;"><span class="vtStockTxt" data-state="{{ p.stockState }}">{{ p.stock }} عدد</span></td>
+                  <td style="padding:12px 20px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Switch" checked="{{ p.active }}" onChange="{{ p.toggle }}" label="{{ p.activeLabel }}" hint-size="92px,24px"></x-import></td>
+                  <td style="padding:12px 20px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.IconButton" variant="secondary" size="sm" icon="{{ p.editIcon }}" aria-label="ویرایش محصول" onClick="{{ p.edit }}" hint-size="34px,34px"></x-import></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        </sc-if>
+        <sc-if value="{{ productsEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:60px 20px;background:var(--vt-color-surface);border:1px dashed var(--vt-color-border-strong);border-radius:var(--vt-radius-lg);">
+          <div style="width:54px;height:54px;border-radius:50%;background:var(--vt-color-surface-sunken);display:grid;place-items:center;margin:0 auto 14px;color:var(--vt-color-text-muted);"><i data-lucide="search-x" style="width:25px;height:25px;"></i></div>
+          <div style="font-size:15px;font-weight:600;color:var(--vt-color-text-strong);margin-bottom:5px;">محصولی یافت نشد</div>
+          <p style="font-size:13px;color:var(--vt-color-text-muted);margin:0 0 16px;">عبارت جستجو یا فیلتر دسته‌بندی را تغییر دهید.</p>
+          <button onClick="{{ clearProdFilters }}" style="border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);font:600 13px var(--vt-font-fa);padding:9px 18px;border-radius:var(--vt-radius-md);cursor:pointer;">پاک کردن فیلترها</button>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ========== ORDERS ========== -->
+      <sc-if value="{{ showOrders }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0 0 4px;">مدیریت سفارش‌ها</h1>
+        <p style="color:var(--vt-color-text-muted);font-size:13.5px;margin:5px 0 18px;">بررسی سفارش‌ها و تغییر وضعیت — تغییر وضعیت برای فروشنده اطلاع‌رسانی می‌شود</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+          <div style="min-width:300px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Tabs" tabs="{{ orderTabsData }}" value="{{ activeTab }}" onChange="{{ setActiveTab }}" hint-size="300px,40px"></x-import></div>
+          <div style="display:flex;align-items:center;gap:9px;background:var(--vt-color-surface);border:1.5px solid var(--vt-color-border-strong);border-radius:var(--vt-radius-sm);padding:9px 13px;width:260px;max-width:48vw;">
+            <i data-lucide="search" style="width:16px;height:16px;color:var(--vt-color-text-muted);"></i>
+            <input value="{{ orderSearch }}" onInput="{{ onOrderSearch }}" placeholder="جستجوی شماره یا نمایندگی…" style="border:none;background:transparent;outline:none;font:14px var(--vt-font-fa);color:var(--vt-color-text);flex:1;text-align:start;">
+          </div>
+          <div style="width:180px;margin-inline-start:auto;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.Select" value="{{ orderSort }}" onChange="{{ onOrderSort }}" options="{{ orderSortOptions }}" hint-size="180px,40px"></x-import></div>
+        </div>
+        <sc-if value="{{ ordersHasResults }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+            <thead><tr style="color:var(--vt-color-text-muted);font-size:12px;background:var(--vt-color-surface-sunken);">
+              <th style="text-align:start;font-weight:500;padding:13px 20px;">شماره</th><th style="text-align:start;font-weight:500;padding:13px 20px;">نمایندگی</th><th style="text-align:start;font-weight:500;padding:13px 20px;">تاریخ</th><th style="text-align:start;font-weight:500;padding:13px 20px;">تعداد</th><th style="text-align:start;font-weight:500;padding:13px 20px;">مبلغ</th><th style="text-align:start;font-weight:500;padding:13px 20px;">وضعیت فعلی</th><th style="text-align:start;font-weight:500;padding:13px 20px;">تغییر وضعیت</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ orders }}" as="o" hint-placeholder-count="5">
+                <tr class="vtRow" style="border-top:1px solid var(--vt-color-divider);">
+                  <td style="padding:14px 20px;font-family:var(--vt-font-mono);color:var(--vt-color-text-strong);"><bdi>{{ o.id }}</bdi></td>
+                  <td style="padding:14px 20px;color:var(--vt-color-text);">{{ o.dealer }}</td>
+                  <td style="padding:14px 20px;color:var(--vt-color-text-muted);">{{ o.date }}</td>
+                  <td style="padding:14px 20px;color:var(--vt-color-text-muted);">{{ o.units }} عدد</td>
+                  <td style="padding:14px 20px;color:var(--vt-color-text-strong);font-weight:500;">{{ o.total }}</td>
+                  <td style="padding:14px 20px;"><x-import component-from-global-scope="VioletDesignSystem_7273c4.OrderStatusPill" status="{{ o.status }}" label="{{ o.statusLabel }}" hint-size="90px,26px"></x-import></td>
+                  <td style="padding:14px 20px;min-width:170px;">
+                    <x-import component-from-global-scope="VioletDesignSystem_7273c4.Select" value="{{ o.status }}" onChange="{{ o.onStatusVal }}" options="{{ o.options }}" hint-size="160px,40px"></x-import>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        </sc-if>
+        <sc-if value="{{ ordersEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:60px 20px;background:var(--vt-color-surface);border:1px dashed var(--vt-color-border-strong);border-radius:var(--vt-radius-lg);">
+          <div style="width:54px;height:54px;border-radius:50%;background:var(--vt-color-surface-sunken);display:grid;place-items:center;margin:0 auto 14px;color:var(--vt-color-text-muted);"><i data-lucide="search-x" style="width:25px;height:25px;"></i></div>
+          <div style="font-size:15px;font-weight:600;color:var(--vt-color-text-strong);margin-bottom:5px;">سفارشی یافت نشد</div>
+          <p style="font-size:13px;color:var(--vt-color-text-muted);margin:0 0 16px;">عبارت جستجو یا فیلتر را تغییر دهید.</p>
+          <button onClick="{{ clearOrderFilters }}" style="border:1.5px solid var(--vt-color-border-strong);background:var(--vt-color-surface);color:var(--vt-color-text);font:600 13px var(--vt-font-fa);padding:9px 18px;border-radius:var(--vt-radius-md);cursor:pointer;">پاک کردن فیلترها</button>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ========== REPORTS ========== -->
+      <sc-if value="{{ showReports }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:25px;color:var(--vt-color-text-strong);margin:0;">گزارش‌ها</h1>
+            <p style="color:var(--vt-color-text-muted);font-size:13.5px;margin:5px 0 0;">حجم سفارش، مدل‌های پرفروش و خروجی داده</p>
+          </div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" leading-icon="{{ downloadIcon }}" onClick="{{ exportData }}" hint-size="180px,40px">خروجی CSV / Excel</x-import>
+        </div>
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px;">
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);padding:22px;">
+            <h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:16px;color:var(--vt-color-text-strong);margin:0 0 20px;">حجم سفارش‌ها (۶ ماه اخیر)</h2>
+            {{ report.chart }}
+          </div>
+          <div style="background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--vt-color-divider);"><h2 style="font-family:var(--vt-font-fa-display);font-weight:700;font-size:16px;color:var(--vt-color-text-strong);margin:0;">مدل‌های پرفروش</h2></div>
+            <div style="padding:6px 0;">
+              <sc-for list="{{ report.top }}" as="t" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-top:1px solid var(--vt-color-divider);">
+                  <span style="width:26px;height:26px;border-radius:50%;background:var(--vt-color-primary-subtle);color:var(--vt-color-primary);display:grid;place-items:center;font-weight:700;font-size:12.5px;flex:none;">{{ t.rank }}</span>
+                  <div style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:600;color:var(--vt-color-text-strong);"><bdi>{{ t.name }}</bdi></div><div style="font-family:var(--vt-font-mono);font-size:11px;color:var(--vt-color-text-muted);"><bdi>{{ t.sku }}</bdi></div></div>
+                  <span style="font-size:13px;font-weight:600;color:var(--vt-color-text);">{{ t.sold }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+    </main>
+  </div>
+
+  <!-- MODAL (design-system Modal) -->
+  <x-import component-from-global-scope="VioletDesignSystem_7273c4.Modal" open="{{ modalOpen }}" onClose="{{ closeModal }}" title="{{ modalTitle }}" description="{{ modalDesc }}" size="{{ modalSize }}" hint-size="0px,0px">
+    <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:10px;justify-content:flex-start;margin-top:6px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="{{ confirmVariant }}" onClick="{{ modalConfirm }}" hint-size="130px,40px">{{ confirmLabel }}</x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" onClick="{{ closeModal }}" hint-size="80px,40px">انصراف</x-import>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isUserForm }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;gap:15px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="نام نمایندگی" placeholder="مثلاً ساعت پارس" default-value="{{ formName }}" hint-size="100%,64px"></x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="مسئول" placeholder="نام و نام خانوادگی" default-value="{{ formContact }}" hint-size="100%,64px"></x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="شهر" placeholder="مثلاً تهران" default-value="{{ formCity }}" hint-size="100%,64px"></x-import>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:22px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" onClick="{{ saveForm }}" hint-size="110px,40px">{{ saveLabel }}</x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" onClick="{{ closeModal }}" hint-size="80px,40px">انصراف</x-import>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isProductForm }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;gap:15px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="نام محصول" placeholder="مثلاً کرونوگراف پارس" default-value="{{ formName }}" hint-size="100%,64px"></x-import>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="کد (SKU)" placeholder="VT-000" default-value="{{ formSku }}" hint-size="100%,64px"></x-import>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="قیمت همکار (تومان)" placeholder="0" default-value="{{ formPrice }}" hint-size="100%,64px"></x-import>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="حداقل سفارش" placeholder="0" default-value="{{ formMoq }}" hint-size="100%,64px"></x-import>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.Input" label="موجودی" placeholder="0" default-value="{{ formStock }}" hint-size="100%,64px"></x-import>
+        </div>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.ImageUploader" label="تصاویر محصول" add-label="افزودن" hint="فرمت PNG یا JPG · حداکثر ۸ تصویر" max="{{ 8 }}" value="{{ formImagesValue }}" onChange="{{ setFormImages }}" hint-size="100%,110px"></x-import>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:22px;">
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="primary" onClick="{{ saveForm }}" hint-size="110px,40px">{{ saveLabel }}</x-import>
+        <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="secondary" onClick="{{ closeModal }}" hint-size="80px,40px">انصراف</x-import>
+      </div>
+    </sc-if>
+  </x-import>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:28px;inset-inline-start:50%;transform:translateX(-50%);z-index:50;background:var(--vt-color-text-strong);color:var(--vt-color-surface);font-size:13.5px;font-weight:500;padding:13px 22px;border-radius:var(--vt-radius-pill);box-shadow:var(--vt-shadow-xl);display:flex;align-items:center;gap:9px;animation:vtToastIn .3s ease;"><i data-lucide="check-circle" style="width:17px;height:17px;color:var(--vt-green-400,#4ade80);"></i>{{ toast }}</div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:760},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;compact&quot;,&quot;tsType&quot;:&quot;'comfortable' | 'compact'&quot;}}">
+class Component extends DCLogic {
+  state = { route: 'overview', userOverride: {}, statusOverride: {}, activeTab: 'all', prodActive: {}, toast: null, modal: null, formImages: [],
+    prodSearch: '', prodCat: 'all', prodSort: 'name', orderSearch: '', orderSort: 'new' };
+
+  componentDidMount() { if (!window.VTB) { const w = setInterval(() => { if (window.VTB) { clearInterval(w); this.forceUpdate(); } }, 60); } this._icons(); }
+  componentDidUpdate() { this._icons(); }
+  componentWillUnmount() { clearTimeout(this._it); clearTimeout(this._tt); }
+  _icons() { clearTimeout(this._it); const tick = () => { if (window.lucide) window.lucide.createIcons(); else this._it = setTimeout(tick, 80); }; this._it = setTimeout(tick, 30); }
+  icon(name, size) { return React.createElement('i', { 'data-lucide': name, style: { width: size || 18, height: size || 18 } }); }
+
+  D() { return window.VTB; }
+  toast(m) { this.setState({ toast: m }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: null }), 2600); }
+  goto(r) { this.setState({ route: r }); const m = document.querySelector('#vtMain'); if (m) m.scrollTop = 0; }
+
+  baseDealers() {
+    return [
+      { name: 'ساعت پارس', contact: 'رضا کریمی', city: 'تهران', code: 'DLR-0192', status: 'active', joined: '۱۴۰۴/۱۱/۰۲' },
+      { name: 'گالری زمان', contact: 'مریم احمدی', city: 'اصفهان', code: 'DLR-0188', status: 'active', joined: '۱۴۰۴/۰۹/۱۵' },
+      { name: 'ساعت ونک', contact: 'علی رضایی', city: 'تهران', code: 'DLR-0205', status: 'pending', joined: '۱۴۰۵/۰۳/۲۰' },
+      { name: 'زمان‌سنج شیراز', contact: 'حسین مرادی', city: 'شیراز', code: 'DLR-0206', status: 'pending', joined: '۱۴۰۵/۰۳/۲۲' },
+      { name: 'ساعت البرز', contact: 'سارا کاظمی', city: 'کرج', code: 'DLR-0177', status: 'disabled', joined: '۱۴۰۴/۰۶/۱۰' },
+    ];
+  }
+  setUser(code, status, msg) { this.setState((s) => ({ userOverride: { ...s.userOverride, [code]: status } })); this.toast(msg); }
+  setStatus(id, val) { this.setState((s) => ({ statusOverride: { ...s.statusOverride, [id]: val } })); this.toast('وضعیت ' + id + ' به‌روزرسانی شد'); }
+  toggleProduct(id) { this.setState((s) => ({ prodActive: { ...s.prodActive, [id]: !(s.prodActive[id] !== undefined ? s.prodActive[id] : true) } })); }
+
+  openConfirm(opts) { this._pending = opts.onConfirm; this.setState({ modal: { kind: 'confirm', title: opts.title, message: opts.message, confirmLabel: opts.confirmLabel, tone: opts.tone } }); }
+  openUserForm(mode, u) { this.setState({ modal: { kind: 'user', mode, title: mode === 'create' ? 'ایجاد کاربر جدید' : 'ویرایش نمایندگی', name: u ? u.name : '', contact: u ? u.contact : '', city: u ? u.city : '' } }); }
+  openProductForm(mode, p) { const D = this.D(); const imgs = (mode === 'edit' && p && D) ? [{ id: 'cur', url: D.frame(p.f, 200) }] : []; this.setState({ formImages: imgs, modal: { kind: 'product', mode, title: mode === 'add' ? 'افزودن محصول' : 'ویرایش محصول', name: p ? p.name : '', sku: p ? p.sku : '', price: p ? String(p.price) : '', moq: p ? String(p.moq) : '', stock: p ? String(p.stock) : '' } }); }
+  closeModal() { this._pending = null; this.setState({ modal: null }); }
+  confirmModal() { const f = this._pending; this.closeModal(); if (f) f(); }
+  saveForm() { const m = this.state.modal; this.closeModal(); if (!m) return; if (m.kind === 'user') this.toast(m.mode === 'create' ? 'کاربر جدید ایجاد شد' : 'تغییرات نمایندگی ذخیره شد'); else this.toast(m.mode === 'add' ? 'محصول جدید افزوده شد' : 'تغییرات محصول ذخیره شد'); }
+
+  renderVals() {
+    const D = this.D(); const S = this.state;
+    if (!D) return { theme: this.props.theme || 'light', density: this.props.density || 'comfortable', showOverview: true, navItems: [] };
+    const fa = D.fa, toman = D.toman;
+    const go = (r) => () => this.goto(r);
+
+    const statusMeta = {
+      active: { label: 'فعال' }, pending: { label: 'در انتظار تأیید' },
+      disabled: { label: 'غیرفعال' }, rejected: { label: 'رد شد' },
+    };
+    const dealers = this.baseDealers().map((u) => {
+      const st = S.userOverride[u.code] || u.status; const m = statusMeta[st] || statusMeta.active;
+      return { ...u, status: st, label: m.label, isPending: st === 'pending', notPending: st !== 'pending',
+        approve: () => this.openConfirm({ title: 'تأیید نماینده', message: 'نمایندگی «' + u.name + '» تأیید شود؟ با تأیید، دسترسی پنل عمده برای این نماینده فعال می‌شود.', confirmLabel: 'تأیید نماینده', tone: 'primary', onConfirm: () => this.setUser(u.code, 'active', 'کاربر «' + u.name + '» تأیید شد') }),
+        reject: () => this.openConfirm({ title: 'رد درخواست', message: 'درخواست «' + u.name + '» رد شود؟ نماینده از این تصمیم مطلع خواهد شد.', confirmLabel: 'رد درخواست', tone: 'danger', onConfirm: () => this.setUser(u.code, 'rejected', 'درخواست «' + u.name + '» رد شد') }),
+        edit: () => this.openUserForm('edit', u) };
+    });
+    const pendingUsers = dealers.filter((u) => u.status === 'pending');
+
+    const dealerNames = ['ساعت پارس', 'گالری زمان', 'ساعت ونک', 'زمان‌سنج شیراز', 'ساعت البرز'];
+    const statusList = D.stageOrder.concat(['rejected']);
+    const orders = D.orders.map((o, i) => {
+      const st = S.statusOverride[o.id] || o.status;
+      return { id: o.id, dealer: dealerNames[i % dealerNames.length], date: o.date, status: st, statusLabel: D.statusFa[st],
+        total: toman(D.orderTotal(o)), units: fa(D.orderUnits(o)),
+        _idx: i, _totalN: D.orderTotal(o),
+        options: statusList.map((k) => ({ value: k, label: D.statusFa[k] })),
+        onStatusVal: (val) => this.setStatus(o.id, val) };
+    });
+    const actionOrders = orders.filter((o) => ['submitted', 'reviewing'].includes(o.status)).slice(0, 4);
+    let shownOrders = orders;
+    if (S.activeTab === 'open') shownOrders = orders.filter((o) => !['completed', 'rejected'].includes(o.status));
+    else if (S.activeTab === 'done') shownOrders = orders.filter((o) => o.status === 'completed');
+    const oq = (S.orderSearch || '').trim().toLowerCase();
+    if (oq) shownOrders = shownOrders.filter((o) => o.id.toLowerCase().includes(oq) || o.dealer.toLowerCase().includes(oq));
+    const oSorters = { new: (a, b) => a._idx - b._idx, old: (a, b) => b._idx - a._idx, high: (a, b) => b._totalN - a._totalN, low: (a, b) => a._totalN - b._totalN };
+    shownOrders = shownOrders.slice().sort(oSorters[S.orderSort] || oSorters.new);
+    const orderSortOptions = [{ value: 'new', label: 'جدیدترین' }, { value: 'old', label: 'قدیمی‌ترین' }, { value: 'high', label: 'بیشترین مبلغ' }, { value: 'low', label: 'کمترین مبلغ' }];
+
+    // Products: search + category filter + sort
+    const pq = (S.prodSearch || '').trim().toLowerCase();
+    let prodList = D.products.filter((p) => (S.prodCat === 'all' || p.cat === S.prodCat) && (!pq || p.name.toLowerCase().includes(pq) || p.sku.toLowerCase().includes(pq)));
+    const pSorters = { name: (a, b) => a.name.localeCompare(b.name), priceLow: (a, b) => a.price - b.price, priceHigh: (a, b) => b.price - a.price, stockLow: (a, b) => a.stock - b.stock };
+    prodList = prodList.slice().sort(pSorters[S.prodSort] || pSorters.name);
+    const prodCatOptions = [{ value: 'all', label: 'همهٔ دسته‌ها' }, { value: 'classic', label: 'کلاسیک' }, { value: 'sport', label: 'اسپرت' }, { value: 'dress', label: 'مجلسی' }];
+    const prodSortOptions = [{ value: 'name', label: 'مرتب‌سازی: الفبا' }, { value: 'priceLow', label: 'ارزان‌ترین' }, { value: 'priceHigh', label: 'گران‌ترین' }, { value: 'stockLow', label: 'کم‌موجودی' }];
+
+    const products = prodList.map((p) => {
+      const active = S.prodActive[p.id] !== undefined ? S.prodActive[p.id] : p.stock > 0;
+      return { id: p.id, name: p.name, sku: p.sku, image: D.frame(p.f, 120), price: toman(p.price), moq: fa(p.moq),
+        stock: fa(p.stock), stockState: p.stock === 0 ? 'out' : (p.stock < 25 ? 'low' : 'ok'), active,
+        activeLabel: active ? 'فعال' : 'غیرفعال',
+        toggle: () => this.toggleProduct(p.id), edit: () => this.openProductForm('edit', p), editIcon: this.icon('pencil', 15) };
+    });
+
+    const pendCount = pendingUsers.length;
+    const openOrders = orders.filter((o) => !['completed', 'rejected'].includes(o.status)).length;
+    const revenue = D.orders.reduce((s, o) => s + D.orderTotal(o), 0);
+    const stats = [
+      { label: 'کاربران در انتظار', value: fa(pendCount), icon: 'user-check' },
+      { label: 'سفارش‌های باز', value: fa(openOrders), icon: 'package' },
+      { label: 'محصولات فعال', value: fa(products.filter((p) => p.active).length), icon: 'watch' },
+      { label: 'درآمد کل', value: (revenue / 1e9).toFixed(1).replace('.', '٫').replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]) + ' میلیارد', icon: 'trending-up' },
+    ].map((s) => ({ ...s, iconNode: this.icon(s.icon, 17) }));
+
+    const volumes = [
+      { m: 'دی', v: 42 }, { m: 'بهمن', v: 55 }, { m: 'اسفند', v: 38 }, { m: 'فروردین', v: 61 }, { m: 'اردیبهشت', v: 74 }, { m: 'خرداد', v: 88 },
+    ];
+    const maxV = Math.max.apply(null, volumes.map((x) => x.v));
+    const ce = React.createElement;
+    const chart = ce('div', { style: { display: 'flex', alignItems: 'flex-end', gap: 16, height: 200, paddingTop: 10 } },
+      volumes.map((x, i) => ce('div', { key: i, style: { flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, height: '100%', justifyContent: 'flex-end' } },
+        ce('span', { style: { fontSize: 12, fontWeight: 600, color: 'var(--vt-color-text)' } }, fa(x.v)),
+        ce('div', { style: { width: '100%', borderRadius: '6px 6px 0 0', background: 'linear-gradient(180deg,var(--vt-violet-500),var(--vt-violet-700))', height: Math.round((x.v / maxV) * 100) + '%', minHeight: 6 } }),
+        ce('span', { style: { fontSize: 12, color: 'var(--vt-color-text-muted)' } }, x.m))));
+    const report = { chart,
+      top: D.products.slice(0, 5).map((p, i) => ({ name: p.name, sku: p.sku, sold: fa((5 - i) * 40 + 60) + ' عدد', rank: fa(i + 1) })) };
+
+    return {
+      theme: this.props.theme || 'light', density: this.props.density || 'comfortable',
+      navItems: [
+        { key: 'overview', label: 'نمای کلی', icon: 'layout-dashboard' },
+        { key: 'users', label: 'کاربران', icon: 'users', badge: pendCount ? fa(pendCount) : null },
+        { key: 'products', label: 'محصولات', icon: 'watch' },
+        { key: 'orders', label: 'سفارش‌ها', icon: 'package' },
+        { key: 'reports', label: 'گزارش‌ها', icon: 'bar-chart-3' },
+      ].map((n) => ({ ...n, active: S.route === n.key, go: go(n.key) })),
+      showOverview: S.route === 'overview', showUsers: S.route === 'users', showProducts: S.route === 'products',
+      showOrders: S.route === 'orders', showReports: S.route === 'reports',
+      goUsers: go('users'), goOrders: go('orders'),
+      stats, pendingUsers, noPending: pendingUsers.length === 0, actionOrders,
+      dealers, orders: shownOrders, products, report,
+      activeTab: S.activeTab,
+      orderTabsData: [{ value: 'all', label: 'همه' }, { value: 'open', label: 'در جریان' }, { value: 'done', label: 'تکمیل‌شده' }],
+      setActiveTab: (v) => this.setState({ activeTab: v }),
+      orderSearch: S.orderSearch, onOrderSearch: (e) => this.setState({ orderSearch: e.target.value }),
+      orderSort: S.orderSort, onOrderSort: (v) => this.setState({ orderSort: v }), orderSortOptions,
+      ordersHasResults: shownOrders.length > 0, ordersEmpty: shownOrders.length === 0,
+      clearOrderFilters: () => this.setState({ orderSearch: '', orderSort: 'new', activeTab: 'all' }),
+      prodSearch: S.prodSearch, onProdSearch: (e) => this.setState({ prodSearch: e.target.value }),
+      prodCat: S.prodCat, onProdCat: (v) => this.setState({ prodCat: v }), prodCatOptions,
+      prodSort: S.prodSort, onProdSort: (v) => this.setState({ prodSort: v }), prodSortOptions,
+      productsHasResults: products.length > 0, productsEmpty: products.length === 0,
+      clearProdFilters: () => this.setState({ prodSearch: '', prodCat: 'all', prodSort: 'name' }),
+      toast: S.toast,
+      openCreateUser: () => this.openUserForm('create'),
+      openAddProduct: () => this.openProductForm('add'),
+      exportData: () => this.toast('در حال آماده‌سازی خروجی Excel…'),
+      notify: () => this.toast('اعلان جدیدی ندارید'),
+      bellIcon: this.icon('bell', 18),
+      userPlusIcon: this.icon('user-plus', 16),
+      plusIcon: this.icon('plus', 16),
+      downloadIcon: this.icon('download', 16),
+      closeModal: () => this.closeModal(),
+      modalConfirm: () => this.confirmModal(),
+      saveForm: () => this.saveForm(),
+      setFormImages: (imgs) => this.setState({ formImages: imgs }),
+      formImagesValue: S.formImages || [],
+      modalOpen: !!S.modal,
+      isConfirm: !!S.modal && S.modal.kind === 'confirm',
+      isUserForm: !!S.modal && S.modal.kind === 'user',
+      isProductForm: !!S.modal && S.modal.kind === 'product',
+      modalTitle: S.modal ? S.modal.title : '',
+      modalDesc: S.modal && S.modal.kind === 'confirm' ? S.modal.message : '',
+      modalSize: S.modal && S.modal.kind === 'confirm' ? 'sm' : 'md',
+      confirmLabel: S.modal && S.modal.kind === 'confirm' ? S.modal.confirmLabel : '',
+      confirmVariant: S.modal && S.modal.kind === 'confirm' ? (S.modal.tone === 'danger' ? 'danger' : S.modal.tone === 'success' ? 'success' : 'primary') : 'primary',
+      formName: S.modal ? (S.modal.name || '') : '',
+      formContact: S.modal ? (S.modal.contact || '') : '',
+      formCity: S.modal ? (S.modal.city || '') : '',
+      formSku: S.modal ? (S.modal.sku || '') : '',
+      formPrice: S.modal ? (S.modal.price || '') : '',
+      formMoq: S.modal ? (S.modal.moq || '') : '',
+      formStock: S.modal ? (S.modal.stock || '') : '',
+      saveLabel: S.modal && ['create', 'add'].includes(S.modal.mode) ? 'ایجاد' : 'ذخیره تغییرات',
+    };
+  }
+}
+</script>
+</body>
+</html>

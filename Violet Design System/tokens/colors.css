@@ -1,0 +1,149 @@
+/* ============================================================
+   VIOLET — Color tokens
+   Primitives (raw ramps) → Semantic roles → Dark theme
+   Naming: --vt-<group>-<name>   (vt = violet token)
+   Pick tokens by ROLE, never by hex. 60/30/10 budget:
+   60% neutral surfaces · 30% ink type+structure · 10% violet (gold is a fraction of that).
+   ============================================================ */
+
+:root {
+  /* ---------- PRIMITIVES — raw ramps (don't use directly in UI) ---------- */
+  /* Violet — brand core. AUBERGINE ramp anchored on the brand card ink #27192A (=900). */
+  --vt-violet-50:  #FAF6F9;
+  --vt-violet-100: #F2E9F0;
+  --vt-violet-200: #E2D2DF;
+  --vt-violet-300: #C9B0C4;
+  --vt-violet-400: #A6839F;
+  --vt-violet-500: #7E587A;
+  --vt-violet-600: #5E3C59;
+  --vt-violet-700: #45304B;  /* mid hero plum */
+  --vt-violet-800: #342032;
+  --vt-violet-900: #27192A;  /* ← the brand card aubergine */
+  --vt-violet-950: #180F19;
+
+  /* Gold — champagne accent anchored on the brand card gold #E6B453 (=400). */
+  --vt-gold-50:  #FCF6EA;
+  --vt-gold-100: #F8EBCC;
+  --vt-gold-200: #F1D89B;
+  --vt-gold-300: #ECC676;
+  --vt-gold-400: #E6B453;  /* ← the brand card gold */
+  --vt-gold-500: #CF9C3B;
+  --vt-gold-600: #A87B2A;
+
+  /* Ink — aubergine-tinted neutrals */
+  --vt-ink-50:  #FAF8F9;
+  --vt-ink-100: #F4F1F3;
+  --vt-ink-150: #EEEAEE;
+  --vt-ink-200: #E5DFE4;
+  --vt-ink-300: #C8BFC8;
+  --vt-ink-400: #9C909B;
+  --vt-ink-500: #6E6470;
+  --vt-ink-600: #4C4150;
+  --vt-ink-700: #352B39;
+  --vt-ink-800: #261C2A;
+  --vt-ink-900: #1C131F;
+  --vt-ink-950: #120B14;
+
+  /* Status ramps */
+  --vt-green-50: #ECFDF5; --vt-green-500: #10B981; --vt-green-600: #059669; --vt-green-700: #047857;
+  --vt-amber-50: #FFF7ED; --vt-amber-500: #F59E0B; --vt-amber-600: #D97706; --vt-amber-700: #B45309;
+  --vt-red-50:   #FEF2F2; --vt-red-500:   #EF4444; --vt-red-600:   #DC2626; --vt-red-700:   #B91C1C;
+  --vt-blue-50:  #EFF6FF; --vt-blue-500:  #3B82F6; --vt-blue-600:  #2563EB; --vt-blue-700:  #1D4ED8;
+
+  --vt-white: #FFFFFF;
+  --vt-black: #000000;
+
+  /* ---------- SEMANTIC COLOR — Light (use THESE in UI) ---------- */
+  --vt-color-bg:               var(--vt-ink-50);
+  --vt-color-surface:          var(--vt-white);
+  --vt-color-surface-sunken:   var(--vt-ink-100);
+  --vt-color-surface-raised:   var(--vt-white);
+  --vt-color-surface-inverse:  var(--vt-ink-950);
+
+  --vt-color-text:        var(--vt-ink-900);
+  --vt-color-text-strong: var(--vt-ink-950);
+  --vt-color-text-muted:  var(--vt-ink-500);
+  --vt-color-text-subtle: var(--vt-ink-400);
+  --vt-color-text-on-brand: var(--vt-white);
+  --vt-color-link:        var(--vt-violet-700);
+
+  --vt-color-border:        var(--vt-ink-200);
+  --vt-color-border-strong: var(--vt-ink-300);
+  --vt-color-divider:       var(--vt-ink-150);
+
+  --vt-color-primary:        var(--vt-violet-900);
+  --vt-color-primary-hover:  var(--vt-violet-800);
+  --vt-color-primary-active: var(--vt-violet-950);
+  --vt-color-primary-subtle: var(--vt-violet-50);
+  --vt-color-on-primary:     var(--vt-white);
+
+  /* Brand identity — the card lockup colors */
+  --vt-color-brand-ink:    var(--vt-violet-900);  /* #27192A aubergine field */
+  --vt-color-brand-gold:   var(--vt-gold-400);    /* #E6B453 champagne */
+  --vt-color-on-brand-ink: var(--vt-gold-400);
+
+  --vt-color-accent:        var(--vt-gold-400);
+  --vt-color-accent-strong: var(--vt-gold-600);
+  --vt-color-on-accent:     var(--vt-ink-950);
+
+  --vt-color-success:    var(--vt-green-600);  --vt-color-success-bg: var(--vt-green-50);
+  --vt-color-warning:    var(--vt-amber-600);  --vt-color-warning-bg: var(--vt-amber-50);
+  --vt-color-danger:     var(--vt-red-600);    --vt-color-danger-bg:  var(--vt-red-50);
+  --vt-color-info:       var(--vt-blue-600);   --vt-color-info-bg:    var(--vt-blue-50);
+  --vt-color-focus-ring: var(--vt-violet-600);
+
+  /* B2B order pipeline */
+  --vt-color-status-submitted:     var(--vt-ink-500);   --vt-color-status-submitted-bg:  var(--vt-ink-100);
+  --vt-color-status-reviewing:     var(--vt-blue-600);  --vt-color-status-reviewing-bg:  var(--vt-blue-50);
+  --vt-color-status-approved:      var(--vt-violet-600);--vt-color-status-approved-bg:   var(--vt-violet-50);
+  --vt-color-status-shipped:       var(--vt-amber-600); --vt-color-status-shipped-bg:    var(--vt-amber-50);
+  --vt-color-status-completed:     var(--vt-green-600); --vt-color-status-completed-bg:  var(--vt-green-50);
+  --vt-color-status-rejected:      var(--vt-red-600);   --vt-color-status-rejected-bg:   var(--vt-red-50);
+
+  --vt-color-badge-new:     var(--vt-violet-600);
+  --vt-color-badge-limited: var(--vt-gold-500);
+
+  /* Overlay / scrim */
+  --vt-scrim:       rgba(24,15,25,.58);   /* modal / zoom backdrop */
+  --vt-scrim-light: rgba(24,15,25,.34);
+}
+
+/* ============================================================
+   DARK THEME — applied via <html data-theme="dark">
+   Only the vitrine hero ships dark by default; full dark is opt-in.
+   ============================================================ */
+[data-theme="dark"] {
+  --vt-color-bg:              var(--vt-ink-950);
+  --vt-color-surface:         var(--vt-ink-900);
+  --vt-color-surface-sunken:  var(--vt-ink-950);
+  --vt-color-surface-raised:  var(--vt-ink-800);
+  --vt-color-surface-inverse: var(--vt-white);
+
+  --vt-color-text:        var(--vt-violet-100);
+  --vt-color-text-strong: var(--vt-white);
+  --vt-color-text-muted:  var(--vt-violet-300);
+  --vt-color-text-subtle: var(--vt-ink-400);
+  --vt-color-link:        var(--vt-violet-300);
+
+  --vt-color-border:        var(--vt-violet-800);
+  --vt-color-border-strong: var(--vt-violet-700);
+  --vt-color-divider:       var(--vt-ink-800);
+
+  --vt-color-primary:        var(--vt-violet-500);
+  --vt-color-primary-hover:  var(--vt-violet-400);
+  --vt-color-primary-active: var(--vt-violet-300);
+  --vt-color-primary-subtle: var(--vt-violet-900);
+
+  --vt-color-accent:        var(--vt-gold-300);
+  --vt-color-accent-strong: var(--vt-gold-400);
+
+  --vt-color-success-bg: var(--vt-green-700); --vt-color-warning-bg: var(--vt-amber-700);
+  --vt-color-danger-bg:  var(--vt-red-700);   --vt-color-info-bg:    var(--vt-blue-700);
+
+  --vt-color-status-submitted-bg: var(--vt-ink-800);
+  --vt-color-status-reviewing-bg: var(--vt-blue-700);
+  --vt-color-status-approved-bg:  var(--vt-violet-900);
+  --vt-color-status-shipped-bg:   var(--vt-amber-700);
+  --vt-color-status-completed-bg: var(--vt-green-700);
+  --vt-color-status-rejected-bg:  var(--vt-red-700);
+}

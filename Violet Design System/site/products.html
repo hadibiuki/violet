@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Products · Violet</title>
+<meta name="description" content="Browse the full Violet collection — over a thousand models of precision timekeeping.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s var(--vt-ease-standard),transform .55s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button, ProductCard } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+  const INK = 'var(--vt-color-brand-ink)';
+
+  const PAGE = 8; // load-more increment
+
+  // Branded aubergine page-header band — mirrors the home hero so inner pages
+  // don't "start" on a plain white bar.
+  function PageHero() {
+    return (
+      <header style={{ position: 'relative', overflow: 'hidden', background: INK, color: '#fff',
+        paddingTop: 128 }}>
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0,
+          backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '150px', opacity: .1, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(900px 380px at 78% 40%, rgba(230,180,83,.10), transparent 60%)' }} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto', padding: '40px 40px 52px' }}>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: 'rgba(255,255,255,.6)', marginBottom: 18 }}>
+            <a href="index.html" style={{ color: 'inherit', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: 'var(--vt-color-brand-gold)' }}>›</span>
+            <b style={{ color: '#fff', fontWeight: 500 }}>Products</b>
+          </div>
+          <span style={{ fontSize: 12, letterSpacing: '.28em', textTransform: 'uppercase', fontWeight: 500, color: 'var(--vt-color-brand-gold)' }}>The collection</span>
+          <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(44px,5.4vw,72px)', color: '#fff', margin: '14px 0 10px', letterSpacing: '-.02em', lineHeight: 1.02 }}>All Products</h1>
+          <p style={{ color: 'rgba(255,255,255,.66)', fontSize: 17, margin: 0, maxWidth: 560 }}>Over a thousand models of precision timekeeping — a curated selection shown here.</p>
+        </div>
+      </header>
+    );
+  }
+
+  // facet config: label → product key + option list
+  const FACETS = [
+    { label: 'Collection', key: 'line', opts: ['Classic', 'Sport', 'Smart'] },
+    { label: 'Gender', key: 'gender', opts: D.facets.Gender },
+    { label: 'Strap', key: 'strap', opts: D.facets.Strap },
+    { label: 'Color', key: 'color', opts: D.facets.Color },
+    { label: 'Movement', key: 'movement', opts: D.facets.Movement },
+  ];
+
+  function FilterRail({ filters, setFilters, newOnly, setNewOnly }) {
+    const toggle = (key, value) => setFilters((f) => {
+      const cur = f[key] || [];
+      const next = cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value];
+      return { ...f, [key]: next };
+    });
+    return (
+      <aside style={{ position: 'sticky', top: 88, alignSelf: 'start', background: 'var(--vt-color-surface-sunken)', borderRadius: 'var(--vt-radius-lg)', padding: '6px 20px 16px' }}>
+        <div style={{ borderBottom: '1px solid var(--vt-color-divider)', padding: '16px 0' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, cursor: 'pointer', color: 'var(--vt-color-text)', fontWeight: 500 }}>
+            <input type="checkbox" checked={newOnly} onChange={(e) => setNewOnly(e.target.checked)} style={{ accentColor: 'var(--vt-color-primary)', width: 16, height: 16 }} />
+            New models only
+          </label>
+        </div>
+        {FACETS.map((f) => (
+          <div key={f.key} style={{ borderBottom: '1px solid var(--vt-color-divider)', padding: '16px 0' }}>
+            <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.04em', color: 'var(--vt-color-text-muted)', textTransform: 'uppercase', marginBottom: 12 }}>{f.label}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+              {f.opts.map((opt) => {
+                const on = (filters[f.key] || []).includes(opt);
+                return (
+                  <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, cursor: 'pointer', color: on ? 'var(--vt-color-primary)' : 'var(--vt-color-text)', fontWeight: on ? 600 : 400 }}>
+                    <input type="checkbox" checked={on} onChange={() => toggle(f.key, opt)} style={{ accentColor: 'var(--vt-color-primary)', width: 16, height: 16 }} />
+                    {opt}
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </aside>
+    );
+  }
+
+  function Catalog() {
+    const [filters, setFilters] = React.useState({}); // {line:[...], gender:[...]}
+    const [newOnly, setNewOnly] = React.useState(false);
+    const [sort, setSort] = React.useState('Newest');
+    const [shown, setShown] = React.useState(PAGE);
+
+    let items = D.products.filter((p) => {
+      if (newOnly && !p.isNew) return false;
+      return FACETS.every((f) => {
+        const sel = filters[f.key] || [];
+        return sel.length === 0 || sel.includes(p[f.key]);
+      });
+    });
+    if (sort === 'A–Z') items = [...items].sort((a, b) => a.name.localeCompare(b.name));
+    else items = [...items].sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); // Newest = new first
+
+    const visible = items.slice(0, shown);
+
+    // active chips
+    const chips = [];
+    if (newOnly) chips.push(['New only', () => setNewOnly(false)]);
+    FACETS.forEach((f) => (filters[f.key] || []).forEach((v) => chips.push([v, () => setFilters((s) => ({ ...s, [f.key]: s[f.key].filter((x) => x !== v) }))])));
+
+    const clearAll = () => { setFilters({}); setNewOnly(false); };
+
+    React.useEffect(() => { setShown(PAGE); }, [JSON.stringify(filters), newOnly, sort]);
+    React.useEffect(() => {
+      if (window.lucide) lucide.createIcons();
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.06 });
+      document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    });
+
+    return (
+      <div>
+        <SiteHeader active="products" variant="overlay" />
+        <PageHero />
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 96px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '256px 1fr', gap: 36, alignItems: 'start' }}>
+            <FilterRail filters={filters} setFilters={setFilters} newOnly={newOnly} setNewOnly={setNewOnly} />
+
+            <div>
+              {/* toolbar */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+                  <span aria-live="polite" style={{ fontSize: 14, color: 'var(--vt-color-text-muted)' }}><b style={{ color: 'var(--vt-color-text-strong)' }}>{items.length}</b> results</span>
+                  {chips.map(([label, clear], i) => (
+                    <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, padding: '5px 6px 5px 12px', borderRadius: 'var(--vt-radius-pill)', background: 'var(--vt-color-primary-subtle)', color: 'var(--vt-color-primary)', fontWeight: 500 }}>
+                      {label}<span onClick={clear} style={{ cursor: 'pointer', width: 16, height: 16, display: 'grid', placeItems: 'center', borderRadius: '50%', background: 'rgba(39,25,42,.14)' }}>×</span>
+                    </span>
+                  ))}
+                  {chips.length > 0 && <button onClick={clearAll} style={{ cursor: 'pointer', background: 'none', border: 'none', fontFamily: 'var(--vt-font-sans)', fontSize: 13, color: 'var(--vt-color-text-muted)', textDecoration: 'underline' }}>Clear all</button>}
+                </div>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13.5, color: 'var(--vt-color-text-muted)' }}>
+                  Sort
+                  <select value={sort} onChange={(e) => setSort(e.target.value)} style={{ fontFamily: 'var(--vt-font-sans)', fontSize: 14, padding: '8px 12px', borderRadius: 'var(--vt-radius-sm)', border: '1.5px solid var(--vt-color-border-strong)', background: 'var(--vt-color-surface)', color: 'var(--vt-color-text)' }}>
+                    <option>Newest</option><option>A–Z</option>
+                  </select>
+                </label>
+              </div>
+
+              {/* grid OR empty */}
+              {items.length > 0 ? (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
+                    {visible.map((p, i) => (
+                      <div key={p.sku} className="reveal" style={{ transitionDelay: `${(i % 3) * 50}ms` }}>
+                        <ProductCard name={p.name} sku={p.sku} badge={p.isNew ? 'new' : null} image={D.frame(p.f)} hoverImage={D.frame(p.f2)} href={`product.html?sku=${p.sku}`} />
+                      </div>
+                    ))}
+                  </div>
+                  {shown < items.length && (
+                    <div style={{ textAlign: 'center', marginTop: 44 }}>
+                      <Button variant="secondary" onClick={() => setShown((s) => s + PAGE)}>Load more ({items.length - shown} more)</Button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '72px 20px', background: 'var(--vt-color-surface-sunken)', borderRadius: 'var(--vt-radius-xl)' }}>
+                  <div style={{ width: 56, height: 56, margin: '0 auto 18px', borderRadius: '50%', background: 'var(--vt-color-surface)', display: 'grid', placeItems: 'center', boxShadow: 'var(--vt-shadow-sm)' }}>
+                    <i data-lucide="search-x" style={{ width: 24, height: 24, color: 'var(--vt-color-text-muted)' }}></i>
+                  </div>
+                  <h3 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 400, fontSize: 26, color: 'var(--vt-color-text-strong)', margin: '0 0 8px' }}>No results</h3>
+                  <p style={{ fontSize: 15, color: 'var(--vt-color-text-muted)', margin: '0 0 22px' }}>Try relaxing the last filter you added.</p>
+                  <Button variant="primary" onClick={clearAll}>Clear all filters</Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<Catalog />);
+</script>
+</body>
+</html>

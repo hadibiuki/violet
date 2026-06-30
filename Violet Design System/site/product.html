@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product · Violet</title>
+<meta name="description" content="A Violet timepiece — precision movement, refined design.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button, ProductCard, SpecTable, Badge } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+
+  const COLOR_HEX = { Midnight: '#231940', Gold: '#C9A86A', Steel: '#6B7280', Plum: '#2E2348' };
+  const caseMm = (name) => (name.match(/(\d{2})\s*$/) || [, '40'])[1] + ' mm';
+
+  function PDP() {
+    const params = new URLSearchParams(location.search);
+    const sku = params.get('sku');
+    const p = D.products.find((x) => x.sku === sku) || D.products[0];
+
+    const views = [p.f, p.f2, (p.f + 3) % D.frames.length, (p.f + 5) % D.frames.length];
+    const [main, setMain] = React.useState(0);
+    const [colorIdx, setColorIdx] = React.useState(Object.keys(COLOR_HEX).indexOf(p.color));
+    const related = D.products.filter((r) => r.sku !== p.sku && r.line === p.line).slice(0, 4);
+    const relatedFill = related.length < 4 ? [...related, ...D.products.filter((r) => r.sku !== p.sku && !related.includes(r)).slice(0, 4 - related.length)] : related;
+
+    React.useEffect(() => { if (window.lucide) lucide.createIcons(); });
+
+    const highlights = [`${p.movement} movement`, 'Stainless Steel 316L case', `Water resistant — ${p.water} ATM (${p.water * 10} m)`, 'Sapphire-grade mineral glass', `${caseMm(p.name)} case diameter`];
+
+    return (
+      <div>
+        <SiteHeader active="products" variant="overlay" />
+        <header style={{ position: 'relative', overflow: 'hidden', background: 'var(--vt-color-brand-ink)', color: '#fff', paddingTop: 110 }}>
+          <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '140px', opacity: .08, pointerEvents: 'none' }} />
+          <div style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto', padding: '22px 40px 24px' }}>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: 'rgba(255,255,255,.62)' }}>
+              <a href="index.html" style={{ color: 'inherit', textDecoration: 'none' }}>Home</a><span style={{ color: 'var(--vt-color-brand-gold)' }}>›</span>
+              <a href="products.html" style={{ color: 'inherit', textDecoration: 'none' }}>Products</a><span style={{ color: 'var(--vt-color-brand-gold)' }}>›</span>
+              <b style={{ color: '#fff', fontWeight: 500 }}>{p.name}</b>
+            </div>
+          </div>
+        </header>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px 0' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '560px 1fr', gap: 56, padding: '40px 0 72px', alignItems: 'start' }}>
+            {/* gallery */}
+            <div style={{ position: 'sticky', top: 88 }}>
+              <div style={{ position: 'relative', aspectRatio: '1/1', borderRadius: 'var(--vt-radius-lg)', overflow: 'hidden', background: 'linear-gradient(160deg,var(--vt-ink-100),var(--vt-violet-50))' }}>
+                {p.isNew && <span style={{ position: 'absolute', top: 18, insetInlineStart: 18, zIndex: 2 }}><Badge variant="new" /></span>}
+                <img src={D.frame(views[main], 900)} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity var(--vt-duration-base)' }} />
+              </div>
+              <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
+                {views.map((v, i) => (
+                  <button key={i} onClick={() => setMain(i)} style={{ width: 84, height: 84, padding: 0, borderRadius: 'var(--vt-radius-md)', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${i === main ? 'var(--vt-color-primary)' : 'transparent'}`, background: 'none' }}>
+                    <img src={D.frame(v, 200)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* info */}
+            <div>
+              <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-color-accent-strong)', fontWeight: 500 }}>{p.line} Collection</span>
+              <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', color: 'var(--vt-color-text-strong)', lineHeight: 1.05, margin: '10px 0 8px', letterSpacing: '-.02em' }}>{p.name}</h1>
+              <div style={{ fontFamily: 'var(--vt-font-mono)', fontSize: 13, color: 'var(--vt-color-text-muted)' }}>{p.sku}</div>
+              <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+                {p.isNew && <Badge variant="new" />}
+                <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.06em', padding: '5px 11px', borderRadius: 'var(--vt-radius-pill)', background: 'var(--vt-color-info-bg)', color: 'var(--vt-color-info)' }}>{p.water} ATM</span>
+                <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.06em', padding: '5px 11px', borderRadius: 'var(--vt-radius-pill)', background: 'var(--vt-color-surface-sunken)', color: 'var(--vt-color-text-muted)' }}>{p.gender}</span>
+              </div>
+
+              <div style={{ height: 1, background: 'var(--vt-color-divider)', margin: '26px 0' }} />
+              <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.06em', color: 'var(--vt-color-text-muted)', marginBottom: 14 }}>KEY HIGHLIGHTS</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+                {highlights.map((h) => (
+                  <div key={h} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 15, color: 'var(--vt-color-text)' }}>
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--vt-color-accent-strong)', flex: 'none' }} />{h}
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ height: 1, background: 'var(--vt-color-divider)', margin: '26px 0' }} />
+              <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.06em', color: 'var(--vt-color-text-muted)', marginBottom: 14 }}>AVAILABLE COLOURS</div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {Object.entries(COLOR_HEX).map(([nm, c], i) => (
+                  <button key={nm} title={nm} onClick={() => setColorIdx(i)} style={{ width: 32, height: 32, padding: 0, borderRadius: '50%', background: c, cursor: 'pointer', border: '2px solid var(--vt-color-surface)', boxShadow: i === colorIdx ? '0 0 0 2px var(--vt-color-primary)' : '0 0 0 1px var(--vt-color-border)' }} />
+                ))}
+                <span style={{ alignSelf: 'center', marginInlineStart: 6, fontSize: 14, color: 'var(--vt-color-text-muted)' }}>{Object.keys(COLOR_HEX)[colorIdx]}</span>
+              </div>
+
+              <div style={{ height: 1, background: 'var(--vt-color-divider)', margin: '26px 0' }} />
+              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                <Button variant="primary" trailingIcon={<span>→</span>}>Download Catalogue (PDF)</Button>
+                <a href="contact.html" style={{ textDecoration: 'none' }}><Button variant="secondary">Contact a retailer</Button></a>
+              </div>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--vt-color-text-muted)', marginTop: 22 }}>
+                A refined {p.line.toLowerCase()} timepiece — stainless steel, sapphire-clear mineral glass, and a balanced {caseMm(p.name)} case on a {p.strap.toLowerCase()} strap. Designed in the Violet tradition of quiet, lasting elegance.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* specs + related */}
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px' }}>
+          <section style={{ padding: '64px 0', borderTop: '1px solid var(--vt-color-divider)' }}>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 36, color: 'var(--vt-color-text-strong)', marginBottom: 24, letterSpacing: '-.02em' }}>Specifications</h2>
+            <div style={{ maxWidth: 760, border: '1px solid var(--vt-color-border)', borderRadius: 'var(--vt-radius-lg)', overflow: 'hidden' }}>
+              <SpecTable rows={[
+                ['Case Diameter', caseMm(p.name)],
+                ['Case Material', 'Stainless Steel 316L'],
+                ['Strap Material', p.strap],
+                ['Glass Type', 'Mineral Crystal'],
+                ['Movement', p.movement],
+                ['Water Resistance', `${p.water} ATM (${p.water * 10} m)`],
+                ['Gender', p.gender],
+                ['Available Colours', 'Midnight · Gold · Steel · Plum'],
+              ]} />
+            </div>
+          </section>
+
+          <section style={{ padding: '64px 0', borderTop: '1px solid var(--vt-color-divider)' }}>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 36, color: 'var(--vt-color-text-strong)', marginBottom: 24, letterSpacing: '-.02em' }}>You may also like</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+              {relatedFill.map((r) => (
+                <ProductCard key={r.sku} name={r.name} sku={r.sku} badge={r.isNew ? 'new' : null} image={D.frame(r.f)} hoverImage={D.frame(r.f2)} href={`product.html?sku=${r.sku}`} />
+              ))}
+            </div>
+          </section>
+        </div>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<PDP />);
+</script>
+</body>
+</html>

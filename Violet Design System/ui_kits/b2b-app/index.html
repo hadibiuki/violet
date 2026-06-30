@@ -1,0 +1,102 @@
+<!-- @dsCard group="B2B App" viewport="1280x800" name="B2B Order App — Persian / RTL" subtitle="Login · Dashboard · Wholesale catalog · Order tracking" -->
+<!doctype html>
+<html lang="fa" dir="rtl" data-product="b2b">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ویولت — پنل سفارش عمده</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font-family:var(--vt-font-fa);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  #root{height:100vh;overflow:hidden}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.08)}}
+  .vt-scrim{position:fixed;inset:0;background:var(--vt-scrim);z-index:390;animation:vt-fade var(--vt-duration-base) ease}
+  @keyframes vt-fade{from{opacity:0}to{opacity:1}}
+  .vt-drawer{animation:vt-slidein var(--vt-duration-slow) var(--vt-ease-standard)}
+  @keyframes vt-slidein{from{transform:translateX(-30px);opacity:.4}to{transform:none;opacity:1}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="AppShell.jsx"></script>
+<script type="text/babel" src="LoginScreen.jsx"></script>
+<script type="text/babel" src="DashboardScreen.jsx"></script>
+<script type="text/babel" src="OrdersScreen.jsx"></script>
+<script type="text/babel">
+  const { AppShell, LoginScreen, DashboardScreen, OrdersScreen } = window;
+  const { Button } = window.VioletDesignSystem_7273c4;
+  const B = window.VT_B2B;
+
+  function CartDrawer({ items, onClose, onSubmit }) {
+    const total = items.reduce((s, it) => s + it.price * it.qty, 0);
+    return (
+      <>
+        <div className="vt-scrim" onClick={onClose}></div>
+        <aside className="vt-drawer" style={{ position: 'fixed', insetBlock: 0, insetInlineEnd: 0, width: 380, maxWidth: '90vw', background: 'var(--vt-color-surface)', zIndex: 400, boxShadow: 'var(--vt-shadow-2xl)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '18px 22px', borderBottom: '1px solid var(--vt-color-divider)' }}>
+            <h2 style={{ fontFamily: 'var(--vt-font-fa)', fontWeight: 600, fontSize: 17, margin: 0, color: 'var(--vt-color-text-strong)' }}>سبد سفارش</h2>
+            <span onClick={onClose} style={{ cursor: 'pointer', width: 32, height: 32, display: 'grid', placeItems: 'center', borderRadius: 'var(--vt-radius-md)', color: 'var(--vt-color-text-muted)' }}><i data-lucide="x" style={{ width: 18, height: 18 }}></i></span>
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
+            {items.length === 0 && <div style={{ textAlign: 'center', color: 'var(--vt-color-text-muted)', padding: '60px 20px', fontSize: 14 }}>سبد شما خالی است.<br />از کاتالوگ مدلی اضافه کنید.</div>}
+            {items.map((it) => (
+              <div key={it.sku} style={{ display: 'flex', gap: 12, padding: '14px 22px', borderBottom: '1px solid var(--vt-color-divider)' }}>
+                <div style={{ width: 52, height: 52, borderRadius: 'var(--vt-radius-md)', overflow: 'hidden', flex: 'none', background: 'var(--vt-color-surface-sunken)' }}><img src={B.frame(it.f, 120)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 500, color: 'var(--vt-color-text-strong)' }}><bdi>{it.name}</bdi></div>
+                  <div style={{ fontSize: 11.5, color: 'var(--vt-color-text-muted)', marginTop: 2 }}>{B.faDigits(it.qty)} عدد × {B.toman(it.price)}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--vt-color-primary)', marginTop: 4 }}>{B.toman(it.qty * it.price)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {items.length > 0 && (
+            <div style={{ padding: '18px 22px', borderTop: '1px solid var(--vt-color-divider)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}><span style={{ color: 'var(--vt-color-text-muted)', fontSize: 14 }}>مبلغ کل</span><span style={{ fontSize: 17, fontWeight: 700, color: 'var(--vt-color-text-strong)' }}>{B.toman(total)}</span></div>
+              <Button variant="primary" size="lg" style={{ width: '100%' }} onClick={onSubmit}>ثبت سفارش</Button>
+            </div>
+          )}
+        </aside>
+      </>
+    );
+  }
+
+  function App() {
+    const [auth, setAuth] = React.useState(false);
+    const [screen, setScreen] = React.useState('dashboard');
+    const [cart, setCart] = React.useState([]);
+    const [cartOpen, setCartOpen] = React.useState(false);
+
+    React.useEffect(() => { if (window.lucide) lucide.createIcons(); });
+
+    const add = (p) => {
+      setCart((c) => c.find((x) => x.sku === p.sku) ? c.map((x) => x.sku === p.sku ? { ...x, qty: x.qty + p.moq } : x) : [...c, { ...p, qty: p.moq }]);
+      setCartOpen(true);
+    };
+    const cartCount = cart.reduce((s, x) => s + x.qty, 0);
+
+    if (!auth) return <LoginScreen onLogin={() => setAuth(true)} />;
+
+    return (
+      <AppShell active={screen} onNav={setScreen} cartCount={cartCount} onCart={() => setCartOpen(true)}>
+        {screen === 'dashboard' && <DashboardScreen onAdd={add} onTrack={() => setScreen('orders')} />}
+        {screen === 'orders' && <OrdersScreen onBack={() => setScreen('dashboard')} />}
+        {cartOpen && <CartDrawer items={cart} onClose={() => setCartOpen(false)} onSubmit={() => { setCart([]); setCartOpen(false); setScreen('orders'); }} />}
+      </AppShell>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

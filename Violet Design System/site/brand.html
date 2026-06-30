@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violet · Brand & Identity</title>
+<meta name="description" content="The Violet identity system — monogram, palette, typography and the guilloché texture, extracted from Collection 2026.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .vt-spin-slow{animation:vt-spin 90s linear infinite}
+  @keyframes vt-spin{to{transform:rotate(360deg)}}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.08)}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--vt-ease-standard),transform .7s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { BrandMark, Button } = window.VioletDesignSystem_7273c4;
+  const { SiteHeader, SiteFooter } = window;
+  const wrap = { maxWidth: 1200, margin: '0 auto', padding: '0 40px' };
+  const INK = 'var(--vt-color-brand-ink)';
+  const GOLD = 'var(--vt-color-brand-gold)';
+
+  const Eyebrow = ({ children, gold }) => (
+    <span style={{ fontSize: 12, letterSpacing: '.28em', textTransform: 'uppercase', fontWeight: 500,
+      color: gold ? GOLD : 'var(--vt-color-accent-strong)' }}>{children}</span>
+  );
+  const SecHead = ({ eyebrow, title, sub }) => (
+    <div style={{ marginBottom: 48, maxWidth: 720 }}>
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(32px,4vw,46px)',
+        color: 'var(--vt-color-text-strong)', margin: '10px 0 0', letterSpacing: '-.02em', lineHeight: 1.08 }}>{title}</h2>
+      {sub && <p style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--vt-color-text-muted)', marginTop: 16 }}>{sub}</p>}
+    </div>
+  );
+
+  // ---- Floral lattice field (reusable, seamless tile) ----
+  const Guilloche = ({ opacity = 0.4, size = 150 }) => (
+    <div aria-hidden="true" style={{ position: 'absolute', inset: 0,
+      backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat',
+      backgroundSize: size + 'px', opacity, pointerEvents: 'none' }} />
+  );
+
+  // ---------------- HERO ----------------
+  function Hero() {
+    return (
+      <header style={{ position: 'relative', overflow: 'hidden', color: '#fff',
+        minHeight: 660, display: 'grid', paddingTop: 96,
+        background: 'radial-gradient(1100px 700px at 72% 38%,#45304B 0%,transparent 58%),linear-gradient(160deg,#180F19,#27192A 55%,#342032)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-20%', pointerEvents: 'none', background:
+          'radial-gradient(620px 420px at 22% 30%,rgba(230,180,83,.12),transparent 60%),radial-gradient(520px 520px at 80% 70%,rgba(126,88,122,.30),transparent 60%),radial-gradient(420px 420px at 60% 22%,rgba(230,180,83,.08),transparent 60%)', filter: 'blur(10px)' }} />
+        <Guilloche opacity={0.1} size={150} />
+
+        <div style={{ position: 'relative', zIndex: 2, ...wrap, alignSelf: 'center', width: '100%',
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center' }}>
+          <div>
+            <Eyebrow gold>Collection 2026</Eyebrow>
+            <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(46px,5.4vw,82px)',
+              lineHeight: 1.02, letterSpacing: '-.02em', margin: '20px 0 20px' }}>
+              The Violet<br />identity system
+            </h1>
+            <p style={{ fontFamily: 'var(--vt-font-script)', fontSize: 'clamp(26px,3vw,38px)', color: GOLD,
+              margin: '0 0 28px', lineHeight: 1.25 }}>
+              Japanese precision, World reputation
+            </p>
+            <p style={{ fontSize: 16, lineHeight: 1.7, color: 'rgba(255,255,255,.7)', maxWidth: 420, marginBottom: 32 }}>
+              Every element below — the monogram, the champagne palette, the engraved type and the
+              guilloché — is drawn directly from the Collection 2026 master.
+            </p>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+              <a href="#mark" style={{ textDecoration: 'none' }}><Button variant="accent" size="lg">Explore the system</Button></a>
+              <a href="index.html" style={{ textDecoration: 'none' }}>
+                <Button size="lg" style={{ background: 'rgba(255,255,255,.06)', border: '1.5px solid rgba(230,180,83,.4)', color: '#fff' }}>View the vitrine</Button>
+              </a>
+            </div>
+          </div>
+          <div style={{ display: 'grid', placeItems: 'center' }}>
+            <BrandMark variant="lockup" tone="ink" size="xl" framed tagline />
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // ---------------- THE MARK ----------------
+  function MarkSection() {
+    const Cell = ({ label, dark, children }) => (
+      <div style={{ borderRadius: 'var(--vt-radius-xl)', border: '1px solid var(--vt-color-border)',
+        background: dark ? INK : 'var(--vt-color-surface)', overflow: 'hidden',
+        display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, display: 'grid', placeItems: 'center', padding: 40, minHeight: 180 }}>{children}</div>
+        <div style={{ padding: '12px 16px', fontSize: 12, letterSpacing: '.08em', textTransform: 'uppercase',
+          color: dark ? 'rgba(255,255,255,.55)' : 'var(--vt-color-text-muted)',
+          borderTop: `1px solid ${dark ? 'rgba(255,255,255,.1)' : 'var(--vt-color-divider)'}` }}>{label}</div>
+      </div>
+    );
+    return (
+      <section id="mark" style={{ padding: '104px 0' }}>
+        <div style={wrap}>
+          <SecHead eyebrow="The mark" title="A monogram, a wordmark, one lockup"
+            sub="The calligraphic V is the signature; the engraved VIOLET wordmark gives it voice. Use the full medallion lockup for primary placements, the horizontal lockup for headers, and the bare monogram as an app or favicon mark." />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20, marginBottom: 20 }}>
+            <Cell label="Monogram"><BrandMark variant="monogram" tone="light" size="lg" framed /></Cell>
+            <Cell label="Monogram · gold on ink" dark><BrandMark variant="monogram" tone="ink" size="lg" framed /></Cell>
+            <Cell label="Wordmark"><BrandMark variant="wordmark" tone="light" size="md" /></Cell>
+            <Cell label="Wordmark · on ink" dark><BrandMark variant="wordmark" tone="onDark" size="md" /></Cell>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <Cell label="Primary lockup"><BrandMark variant="lockup" tone="light" size="lg" framed tagline /></Cell>
+            <Cell label="Horizontal lockup · on ink" dark><BrandMark variant="horizontal" tone="ink" size="lg" framed /></Cell>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ---------------- PALETTE ----------------
+  function Palette() {
+    const Sw = ({ name, varName, hex, text = '#fff', big }) => (
+      <div style={{ borderRadius: 'var(--vt-radius-lg)', overflow: 'hidden', border: '1px solid var(--vt-color-border)' }}>
+        <div style={{ background: `var(${varName})`, height: big ? 168 : 96, display: 'flex', alignItems: 'flex-end',
+          padding: 14, color: text }}>
+          <span style={{ fontFamily: 'var(--vt-font-mono)', fontSize: 12 }}>{hex}</span>
+        </div>
+        <div style={{ padding: '10px 14px', background: 'var(--vt-color-surface)' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--vt-color-text-strong)' }}>{name}</div>
+          <div style={{ fontSize: 11, color: 'var(--vt-color-text-subtle)', fontFamily: 'var(--vt-font-mono)' }}>{varName}</div>
+        </div>
+      </div>
+    );
+    const ramp = (label, prefix, stops, darkText) => (
+      <div>
+        <div style={{ fontSize: 12, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--vt-color-text-muted)', marginBottom: 10 }}>{label}</div>
+        <div style={{ display: 'flex', borderRadius: 'var(--vt-radius-md)', overflow: 'hidden', border: '1px solid var(--vt-color-border)' }}>
+          {stops.map((s) => (
+            <div key={s} style={{ flex: 1, height: 56, background: `var(--vt-${prefix}-${s})`,
+              display: 'grid', placeItems: 'center', fontSize: 10, fontFamily: 'var(--vt-font-mono)',
+              color: s >= 500 ? '#fff' : 'rgba(0,0,0,.5)' }}>{s}</div>
+          ))}
+        </div>
+      </div>
+    );
+    return (
+      <section style={{ background: 'var(--vt-color-surface)', padding: '104px 0' }}>
+        <div style={wrap}>
+          <SecHead eyebrow="Palette" title="Aubergine leads, champagne signs"
+            sub="Primary is the deep aubergine of the master field; secondary is the champagne gold reserved for signatures, rules and rare premium actions. Neutrals are tinted toward the aubergine so the whole system feels of one ink." />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 40 }}>
+            <Sw name="Primary · Aubergine" varName="--vt-color-primary" hex="#27192A" big />
+            <Sw name="Secondary · Champagne Gold" varName="--vt-color-brand-gold" hex="#E6B453" text="#27192A" big />
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20, marginBottom: 48 }}>
+            <Sw name="Ink (text)" varName="--vt-ink-900" hex="#1C131F" />
+            <Sw name="Surface" varName="--vt-color-surface" hex="#FFFFFF" text="#27192A" />
+            <Sw name="Background" varName="--vt-color-bg" hex="#FAF8F9" text="#27192A" />
+            <Sw name="Gold deep" varName="--vt-gold-600" hex="#A87B2A" />
+          </div>
+          <div style={{ display: 'grid', gap: 22 }}>
+            {ramp('Aubergine ramp', 'violet', [50,100,200,300,400,500,600,700,800,900,950])}
+            {ramp('Champagne ramp', 'gold', [50,100,200,300,400,500,600])}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ---------------- TYPE ----------------
+  function Type() {
+    const Row = ({ font, role, sample, note, size = 44, style }) => (
+      <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 30, padding: '28px 0',
+        borderTop: '1px solid var(--vt-color-divider)', alignItems: 'center' }}>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--vt-color-text-strong)' }}>{font}</div>
+          <div style={{ fontSize: 12, color: 'var(--vt-color-text-muted)', marginTop: 4 }}>{role}</div>
+          <div style={{ fontSize: 11, color: 'var(--vt-color-text-subtle)', marginTop: 8 }}>{note}</div>
+        </div>
+        <div style={{ fontSize: size, lineHeight: 1.05, color: 'var(--vt-color-text-strong)', ...style }}>{sample}</div>
+      </div>
+    );
+    return (
+      <section style={{ padding: '104px 0' }}>
+        <div style={wrap}>
+          <SecHead eyebrow="Typography" title="Engraved, calligraphic, composed"
+            sub="Two faces carry the identity; two carry the interface. Cinzel engraves the wordmark, Pinyon Script signs the monogram, Cormorant Garamond sets heritage headlines, and Inter runs the UI." />
+          <div>
+            <Row font="Pinyon Script" role="Monogram · signature" note="Brand moments only" size={88}
+              sample="Violet" style={{ fontFamily: 'var(--vt-font-script)', color: GOLD }} />
+            <Row font="Cinzel" role="Wordmark · engraved caps" note="Lockups, premium titles" size={40}
+              sample="VIOLET" style={{ fontFamily: 'var(--vt-font-wordmark)', letterSpacing: '.32em', fontWeight: 500 }} />
+            <Row font="Cormorant Garamond" role="Display · headlines" note="Hero & section titles" size={46}
+              sample="Timeless, reimagined" style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300 }} />
+            <Row font="Inter" role="Interface · body & UI" note="All product surfaces" size={22}
+              sample="Precision engineering, considered design." style={{ fontFamily: 'var(--vt-font-sans)' }} />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ---------------- TEXTURE ----------------
+  function Texture() {
+    return (
+      <section style={{ position: 'relative', overflow: 'hidden', background: INK, color: '#fff', padding: '104px 0' }}>
+        <Guilloche opacity={0.14} size={150} />
+        <div style={{ position: 'relative', zIndex: 2, ...wrap }}>
+          <div style={{ maxWidth: 620 }}>
+            <Eyebrow gold>Texture</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(32px,4vw,46px)',
+              margin: '10px 0 16px', letterSpacing: '-.02em', lineHeight: 1.08 }}>The floral lattice</h2>
+            <p style={{ fontSize: 17, lineHeight: 1.7, color: 'rgba(255,255,255,.72)' }}>
+              A six-petal damask drawn from the Collection 2026 master — seamless, recolorable line-work
+              with the script V worked between the blooms. It belongs to dark hero fields, packaging,
+              endpapers and certificates — never behind body copy.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginTop: 44 }}>
+            {[['On aubergine', INK, 0.7],
+              ['On champagne', GOLD, 0.85],
+              ['Tone on tone', '#180F19', 0.5]].map(([l, bg, op]) => (
+              <div key={l} style={{ position: 'relative', borderRadius: 'var(--vt-radius-xl)', overflow: 'hidden', background: bg,
+                aspectRatio: '1', border: '1px solid rgba(230,180,83,.2)' }}>
+                <div aria-hidden="true" style={{ position: 'absolute', inset: 0,
+                  backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '120px',
+                  opacity: op, filter: bg === GOLD ? 'brightness(0) saturate(100%) invert(11%) sepia(20%) saturate(1500%) hue-rotate(255deg)' : 'none' }} />
+                <span style={{ position: 'absolute', left: 14, bottom: 12, fontSize: 12, letterSpacing: '.08em', textTransform: 'uppercase',
+                  color: bg === GOLD ? INK : 'rgba(255,255,255,.7)' }}>{l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ---------------- APPLICATION ----------------
+  function Application() {
+    return (
+      <section style={{ padding: '104px 0', background: 'var(--vt-color-surface)' }}>
+        <div style={wrap}>
+          <SecHead eyebrow="In application" title="One brand, two registers"
+            sub="The dark aubergine register carries heroes and signatures; the light register carries the catalogue and the interface. Gold appears sparingly across both." />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            {/* dark business card */}
+            <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10', borderRadius: 'var(--vt-radius-xl)',
+              background: INK, display: 'grid', placeItems: 'center', border: '1px solid var(--vt-color-border)' }}>
+              <Guilloche opacity={0.22} size={120} />
+              <div style={{ position: 'absolute', inset: 16, border: '1px solid rgba(230,180,83,.3)' }} />
+              <BrandMark variant="lockup" tone="ink" size="md" framed tagline />
+            </div>
+            {/* light card */}
+            <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10', borderRadius: 'var(--vt-radius-xl)',
+              background: 'var(--vt-color-bg)', display: 'grid', placeItems: 'center', border: '1px solid var(--vt-color-border)' }}>
+              <div style={{ position: 'absolute', inset: 16, border: '1px solid var(--vt-color-border-strong)' }} />
+              <BrandMark variant="lockup" tone="light" size="md" framed tagline />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function BrandPage() {
+    React.useEffect(() => {
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    });
+    return (
+      <div>
+        <SiteHeader active="brand" variant="overlay" />
+        <Hero />
+        <MarkSection />
+        <Palette />
+        <Type />
+        <Texture />
+        <Application />
+        <SiteFooter />
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<BrandPage />);
+</script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  @page { margin: 0.5in; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, li, tr { break-inside: avoid; }
+  section, article, [class*="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violet · Timeless watches, reimagined for now</title>
+<meta name="description" content="Over a thousand models of precision timekeeping. Discover the latest Violet collection.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .vt-float{animation:vt-float 7s ease-in-out infinite}
+  @keyframes vt-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-20px) rotate(1deg)}}
+  .vt-spin-slow{animation:vt-spin 40s linear infinite}
+  .vt-spin-rev{animation:vt-spin 60s linear infinite reverse}
+  @keyframes vt-spin{to{transform:rotate(360deg)}}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.08)}}
+  .vt-marquee{animation:vt-scroll 28s linear infinite}
+  @keyframes vt-scroll{to{transform:translateX(-50%)}}
+  .vt-linecard:hover img{transform:scale(1.07)}
+  .vt-slide-in{animation:vt-slide-in .6s var(--vt-ease-standard) both}
+  .vt-slide-img{animation:vt-slide-img .7s var(--vt-ease-standard) both}
+  @keyframes vt-slide-in{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+  @keyframes vt-slide-img{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .65s var(--vt-ease-standard),transform .65s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button, ProductCard, StatTile, BrandMark } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+  const wrap = { maxWidth: 1280, margin: '0 auto', padding: '0 40px' };
+
+  function Hero() {
+    return (
+      <header style={{ position: 'relative', minHeight: 640, display: 'flex', alignItems: 'center', overflow: 'hidden', paddingTop: 96,
+        background: 'radial-gradient(1100px 700px at 72% 38%,#45304B 0%,transparent 58%),linear-gradient(160deg,#180F19,#27192A 55%,#342032)' }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-20%', pointerEvents: 'none', background:
+          'radial-gradient(620px 420px at 22% 30%,rgba(230,180,83,.12),transparent 60%),radial-gradient(520px 520px at 80% 70%,rgba(126,88,122,.30),transparent 60%),radial-gradient(420px 420px at 60% 22%,rgba(230,180,83,.08),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', pointerEvents: 'none' }}>
+          <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '150px', opacity: .1, pointerEvents: 'none' }} />
+        </div>
+        <div style={{ position: 'relative', zIndex: 2, ...wrap, display: 'grid', gridTemplateColumns: '1.1fr .9fr', gap: 40, alignItems: 'center', width: '100%' }}>
+          <div style={{ color: '#fff' }}>
+            <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-gold-300)', fontWeight: 500 }}>Collection 2026</span>
+            <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, letterSpacing: '-.02em', fontSize: 'clamp(52px,6vw,96px)', lineHeight: 1.02, color: '#fff', margin: '18px 0 22px' }}>
+              Timeless,<br />reimagined for <em style={{ fontStyle: 'italic', color: 'var(--vt-gold-300)' }}>now</em>
+            </h1>
+            <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(255,255,255,.74)', maxWidth: 440, marginBottom: 34 }}>
+              Over a thousand models of precision engineering and considered design — discover the latest Violet collection.
+            </p>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+              <a href="new-models.html" style={{ textDecoration: 'none' }}><Button variant="accent" size="lg" trailingIcon={<span>→</span>}>View New Models</Button></a>
+              <a href="about.html" style={{ textDecoration: 'none' }}><Button size="lg" style={{ background: 'rgba(255,255,255,.06)', border: '1.5px solid rgba(255,255,255,.2)', color: '#fff' }}>Explore the brand</Button></a>
+            </div>
+          </div>
+          <div style={{ position: 'relative', display: 'grid', placeItems: 'center', height: 480 }}>
+            <div className="vt-spin-slow" style={{ position: 'absolute', width: 460, height: 460, border: '1px solid rgba(230,180,83,.28)', borderRadius: '50%' }} />
+            <div className="vt-spin-rev" style={{ position: 'absolute', width: 540, height: 540, border: '1px dashed rgba(230,180,83,.18)', borderRadius: '50%' }} />
+            <div style={{ position: 'absolute', width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle,rgba(230,180,83,.20),transparent 62%)', filter: 'blur(8px)' }} />
+            <img className="vt-float" alt="Violet timepiece" src={D.frame(0, 760)} style={{ width: 360, height: 360, borderRadius: '50%', objectFit: 'cover', boxShadow: '0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(230,180,83,.22)' }} />
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  function Marquee() {
+    const words = ['Precision', 'Craftsmanship', 'Heritage', 'Timeless', 'Innovation'];
+    const run = [...words, ...words];
+    return (
+      <div style={{ borderBlock: '1px solid var(--vt-color-divider)', background: 'var(--vt-color-surface)', overflow: 'hidden', padding: '18px 0' }}>
+        <div className="vt-marquee" style={{ display: 'flex', gap: 60, whiteSpace: 'nowrap', width: 'max-content' }}>
+          {run.map((w, i) => (
+            <span key={i} style={{ fontFamily: 'var(--vt-font-display)', fontSize: 26, color: 'var(--vt-color-text-subtle)', display: 'flex', alignItems: 'center', gap: 60 }}>
+              {w}<span style={{ color: 'var(--vt-color-accent)', fontSize: 14 }}>✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  function NewArrivalsCarousel() {
+    const data = D.products.filter((p) => p.isNew);
+    const per = 3;                     // cards visible
+    const maxStart = Math.max(0, data.length - per);
+    const [start, setStart] = React.useState(0);
+    const go = (d) => setStart((v) => Math.min(maxStart, Math.max(0, v + d)));
+    return (
+      <section style={{ background: 'var(--vt-color-surface-sunken)', padding: '88px 0' }}>
+        <div style={wrap}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 36, gap: 24, flexWrap: 'wrap' }}>
+            <div>
+              <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-color-accent-strong)', fontWeight: 500 }}>Just landed</span>
+              <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(32px,4vw,48px)', color: 'var(--vt-color-text-strong)', margin: '6px 0 0', letterSpacing: '-.02em' }}>New arrivals</h2>
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button onClick={() => go(-1)} disabled={start === 0} aria-label="Previous" style={caroBtn(start === 0)}>‹</button>
+              <button onClick={() => go(1)} disabled={start >= maxStart} aria-label="Next" style={caroBtn(start >= maxStart)}>›</button>
+            </div>
+          </div>
+          <div style={{ overflow: 'hidden' }}>
+            <div style={{ display: 'flex', gap: 24, transform: `translateX(calc(${-start} * (100% + 24px) / ${per}))`, transition: 'transform .6s var(--vt-ease-emphasized)' }}>
+              {data.map((p) => (
+                <div key={p.sku} style={{ flex: `0 0 calc((100% - ${24 * (per - 1)}px) / ${per})` }}>
+                  <ProductCard name={p.name} sku={p.sku} badge="new" image={D.frame(p.f)} hoverImage={D.frame(p.f2)} href={`product.html?sku=${p.sku}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 6, marginTop: 28, justifyContent: 'center' }}>
+            {Array.from({ length: maxStart + 1 }).map((_, k) => (
+              <button key={k} onClick={() => setStart(k)} aria-label={`Page ${k + 1}`}
+                style={{ width: k === start ? 24 : 8, height: 8, padding: 0, borderRadius: 999, border: 'none', cursor: 'pointer',
+                  background: k === start ? 'var(--vt-color-accent-strong)' : 'var(--vt-color-border-strong)', transition: 'all .4s var(--vt-ease-standard)' }} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+  const caroBtn = (disabled) => ({
+    width: 46, height: 46, borderRadius: '50%', cursor: disabled ? 'default' : 'pointer',
+    background: 'var(--vt-color-surface-raised)', border: '1px solid var(--vt-color-border-strong)',
+    color: disabled ? 'var(--vt-color-text-subtle)' : 'var(--vt-color-text)', opacity: disabled ? 0.5 : 1,
+    fontSize: 22, lineHeight: 1, display: 'grid', placeItems: 'center',
+  });
+
+  function FeaturedSlider() {
+    const slides = D.products.filter((p) => p.isNew).slice(0, 4);
+    const data = slides.length ? slides : D.products.slice(0, 4);
+    const [i, setI] = React.useState(0);
+    const [paused, setPaused] = React.useState(false);
+    const n = data.length;
+    const go = (d) => setI((v) => (v + d + n) % n);
+    React.useEffect(() => {
+      if (paused) return;
+      const t = setInterval(() => setI((v) => (v + 1) % n), 5500);
+      return () => clearInterval(t);
+    }, [paused, n]);
+    const p = data[i];
+    return (
+      <section
+        onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+        style={{ padding: '0 0 100px' }}>
+        <div style={wrap}>
+          <SecHead eyebrow="In the spotlight" title="Featured this season" />
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--vt-radius-2xl)',
+            border: '1px solid var(--vt-color-border)', background: 'var(--vt-color-surface-raised)',
+            boxShadow: 'var(--vt-shadow-md)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'stretch', minHeight: 440 }}>
+              <div key={`t${i}`} className="vt-slide-in" style={{ padding: 'clamp(32px,4vw,56px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-color-accent-strong)', fontWeight: 500 }}>Featured · {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}</span>
+                <h3 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', lineHeight: 1.05, letterSpacing: '-.02em', margin: '14px 0 10px', color: 'var(--vt-color-text-strong)' }}>{p.name}</h3>
+                <p style={{ fontFamily: 'var(--vt-font-mono)', fontSize: 12, letterSpacing: '.1em', color: 'var(--vt-color-text-muted)', marginBottom: 18 }}>{p.sku}</p>
+                <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--vt-color-text-muted)', maxWidth: 400, marginBottom: 28 }}>
+                  {p.line ? `From the ${p.line} line — ` : ''}precision engineering and considered design, finished to Violet’s exacting standard.
+                </p>
+                <div><a href={`product.html?sku=${p.sku}`} style={{ textDecoration: 'none' }}><Button variant="accent" size="lg" trailingIcon={<span>→</span>}>View this model</Button></a></div>
+              </div>
+              <div style={{ position: 'relative', overflow: 'hidden', minHeight: 440,
+                background: '#180F19' }}>
+                <img key={`i${i}`} className="vt-slide-img" alt={p.name} src={D.frame(p.f, 760)}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
+                  background: 'linear-gradient(110deg,rgba(24,15,25,.72) 0%,rgba(24,15,25,.12) 38%,transparent 60%),linear-gradient(0deg,rgba(24,15,25,.66),transparent 45%)' }} />
+                <span aria-hidden="true" key={`n${i}`} className="vt-slide-in" style={{ position: 'absolute', top: 18, right: 26,
+                  fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 96, lineHeight: 1,
+                  color: 'rgba(255,255,255,.14)', letterSpacing: '-.04em' }}>{String(i + 1).padStart(2, '0')}</span>
+                <div style={{ position: 'absolute', left: 26, bottom: 22, width: 44, height: 2, background: 'var(--vt-gold-300)' }} />
+                <button onClick={() => go(-1)} aria-label="Previous" style={sliderArrow('left')}>‹</button>
+                <button onClick={() => go(1)} aria-label="Next" style={sliderArrow('right')}>›</button>
+              </div>
+            </div>
+            <div style={{ position: 'absolute', bottom: 20, left: 0, width: '50%', display: 'flex', justifyContent: 'center', gap: 10 }}>
+              {data.map((_, k) => (
+                <button key={k} onClick={() => setI(k)} aria-label={`Slide ${k + 1}`}
+                  style={{ width: k === i ? 26 : 8, height: 8, padding: 0, borderRadius: 999, border: 'none', cursor: 'pointer',
+                    background: k === i ? 'var(--vt-color-accent-strong)' : 'var(--vt-color-border-strong)', transition: 'all .4s var(--vt-ease-standard)' }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+  const sliderArrow = (side) => ({
+    position: 'absolute', top: '50%', [side]: 18, transform: 'translateY(-50%)', zIndex: 3,
+    width: 46, height: 46, borderRadius: '50%', cursor: 'pointer',
+    background: 'rgba(255,255,255,.08)', border: '1px solid rgba(230,180,83,.45)', color: '#fff',
+    fontSize: 24, lineHeight: 1, display: 'grid', placeItems: 'center', backdropFilter: 'blur(6px)',
+  });
+
+  function CollectionBanner() {
+    return (
+      <section style={{ padding: '0 0 100px' }}>
+        <div style={wrap}>
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--vt-radius-2xl)',
+            display: 'grid', gridTemplateColumns: '1.15fr 1fr', minHeight: 360,
+            boxShadow: 'var(--vt-shadow-lg)', border: '1px solid rgba(230,180,83,.25)' }}>
+            {/* aubergine side */}
+            <div style={{ position: 'relative', overflow: 'hidden', background:
+              'radial-gradient(120% 140% at 18% 30%,#45304B,#27192A 55%,#180F19)', color: '#fff',
+              padding: 'clamp(36px,4.5vw,64px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '140px', opacity: .12 }} />
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(40px,5vw,68px)', lineHeight: 1, letterSpacing: '-.02em', margin: '0 0 8px' }}>Collection<br/>2026</h2>
+                <p style={{ fontFamily: 'var(--vt-font-wordmark)', fontSize: 'clamp(13px,1.4vw,16px)', letterSpacing: '.12em', color: 'rgba(255,255,255,.78)', margin: '0 0 28px' }}>Japanese precision · World reputation</p>
+                <a href="new-models.html" style={{ textDecoration: 'none' }}><Button variant="accent" size="lg" trailingIcon={<span>→</span>}>See what's new</Button></a>
+              </div>
+            </div>
+            {/* gold side with the lockup, echoing the brand card */}
+            <div style={{ position: 'relative', overflow: 'hidden', display: 'grid', placeItems: 'center',
+              background: 'radial-gradient(130% 130% at 70% 40%,#F0CE83,#E6B453 55%,#D49E3A)' }}>
+              <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '128px', opacity: .5,
+                filter: 'brightness(0) saturate(100%) invert(11%) sepia(20%) saturate(1500%) hue-rotate(255deg)' }} />
+              <div style={{ position: 'absolute', inset: 18, border: '1px solid rgba(39,25,42,.4)', borderRadius: 'var(--vt-radius-xl)', pointerEvents: 'none' }} />
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                <BrandMark variant="lockup" tone="light" size="lg" tagline />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function SecHead({ eyebrow, title, link, href }) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
+        <div>
+          <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-color-accent-strong)', fontWeight: 500 }}>{eyebrow}</span>
+          <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(32px,4vw,48px)', color: 'var(--vt-color-text-strong)', margin: '6px 0 0', letterSpacing: '-.02em' }}>{title}</h2>
+        </div>
+        {link && <a href={href} style={{ textDecoration: 'none', fontSize: 14, fontWeight: 500, color: 'var(--vt-color-primary)', display: 'inline-flex', gap: 8, alignItems: 'center' }}>{link} <span>→</span></a>}
+      </div>
+    );
+  }
+
+  function Home() {
+    const newM = D.products.filter((p) => p.isNew).slice(0, 4);
+    const feat = D.products.slice(4, 8);
+
+    React.useEffect(() => {
+      if (window.lucide) lucide.createIcons();
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    });
+
+    return (
+      <div>
+        <SiteHeader active="home" variant="overlay" />
+        <Hero />
+        <Marquee />
+
+        {/* New Models */}
+        <section style={{ padding: '100px 0' }}>
+          <div style={wrap}>
+            <SecHead eyebrow="Just arrived" title="New Models" link="View All New Models" href="new-models.html" />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+              {newM.map((p, i) => (
+                <div key={p.sku} className="reveal" style={{ transitionDelay: `${i * 60}ms` }}>
+                  <ProductCard name={p.name} sku={p.sku} badge="new" image={D.frame(p.f)} hoverImage={D.frame(p.f2)} href={`product.html?sku=${p.sku}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Lines */}
+        <section style={{ padding: '0 0 100px' }}>
+          <div style={wrap}>
+            <SecHead eyebrow="Find your style" title="Explore the lines" link="View All Products" href="products.html" />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
+              {D.lines.map((l, i) => (
+                <a key={l.name} href="products.html" className="vt-linecard reveal" style={{ position: 'relative', aspectRatio: '3/4', borderRadius: 'var(--vt-radius-xl)', overflow: 'hidden', display: 'block', transitionDelay: `${i * 70}ms` }}>
+                  <img src={D.frame(l.f, 700)} alt={l.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 1s var(--vt-ease-standard)' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(transparent 38%,rgba(24,15,25,.82))' }} />
+                  <div style={{ position: 'absolute', insetInlineStart: 26, bottom: 26, color: '#fff', zIndex: 2 }}>
+                    <h3 style={{ fontFamily: 'var(--vt-font-display)', fontSize: 32, fontWeight: 400, margin: 0 }}>{l.name}</h3>
+                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,.72)', marginTop: 2 }}>{l.desc}</div>
+                    <span style={{ fontSize: 13, color: 'var(--vt-gold-300)', marginTop: 12, display: 'inline-flex', gap: 8, alignItems: 'center' }}>Explore the line →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <FeaturedSlider />
+
+        {/* Featured */}
+        <section style={{ background: 'var(--vt-color-surface)', padding: '100px 0' }}>
+          <div style={wrap}>
+            <SecHead eyebrow="Most loved" title="Featured Pieces" link="Explore All Products" href="products.html" />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+              {feat.map((p, i) => (
+                <div key={p.sku} className="reveal" style={{ transitionDelay: `${i * 60}ms` }}>
+                  <ProductCard name={p.name} sku={p.sku} badge={p.isNew ? 'new' : null} image={D.frame(p.f)} hoverImage={D.frame(p.f2)} href={`product.html?sku=${p.sku}`} />
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 48 }}>
+              <a href="products.html" style={{ textDecoration: 'none' }}><Button variant="secondary" trailingIcon={<span>→</span>}>View All Products</Button></a>
+            </div>
+          </div>
+        </section>
+
+        {/* About teaser */}
+        <section style={{ padding: '100px 0' }}>
+          <div style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+            <div className="reveal" style={{ position: 'relative', aspectRatio: '4/5', borderRadius: 'var(--vt-radius-2xl)', overflow: 'hidden' }}>
+              <img src={D.frame(4, 800)} alt="Craftsmanship" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 16, border: '1px solid rgba(255,255,255,.4)', borderRadius: 'var(--vt-radius-xl)', pointerEvents: 'none' }} />
+            </div>
+            <div className="reveal">
+              <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-color-accent-strong)', fontWeight: 500 }}>About Violet</span>
+              <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(34px,4vw,52px)', color: 'var(--vt-color-text-strong)', margin: '16px 0 22px', lineHeight: 1.1, letterSpacing: '-.02em' }}>Timekeeping, refined to its essence</h2>
+              <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--vt-color-text-muted)', marginBottom: 30, maxWidth: 440 }}>
+                Each Violet timepiece unites precision movements with quiet, considered design — built to carry a sense of authenticity and confidence across borders. Restraint, made to last.
+              </p>
+              <a href="about.html" style={{ textDecoration: 'none' }}><Button variant="secondary" trailingIcon={<span>→</span>}>Discover our story</Button></a>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats */}
+        <section style={{ background: 'var(--vt-color-surface)' }}>
+          <div style={{ ...wrap, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24, borderBlock: '1px solid var(--vt-color-divider)', padding: '56px 40px' }}>
+            <StatTile display label="Watch models" value="1000+" />
+            <StatTile display label="Photography frames" value="4000+" />
+            <StatTile display label="Languages · EN/RU/AR" value="3" />
+            <StatTile display label="Timeless by design" value="✦" />
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section style={{ position: 'relative', overflow: 'hidden', textAlign: 'center', color: '#fff', padding: '110px 0',
+          background: 'radial-gradient(800px 400px at 50% 0%,#45304B,transparent 60%),linear-gradient(160deg,#180F19,#27192A)' }}>
+          <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', pointerEvents: 'none' }}>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: 'url(../assets/brand/violet-floral.svg)', backgroundRepeat: 'repeat', backgroundSize: '150px', opacity: .09, pointerEvents: 'none' }} />
+          </div>
+          <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+            'radial-gradient(520px 360px at 28% 30%,rgba(230,180,83,.12),transparent 60%),radial-gradient(440px 440px at 78% 72%,rgba(126,88,122,.30),transparent 60%)', filter: 'blur(10px)' }} />
+          <div style={{ position: 'relative', zIndex: 2, ...wrap }}>
+            <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-gold-300)', fontWeight: 500 }}>Begin</span>
+            <h2 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, fontSize: 'clamp(38px,5vw,64px)', margin: '12px 0 18px', letterSpacing: '-.02em' }}>Find the one that's yours</h2>
+            <p style={{ color: 'rgba(255,255,255,.74)', fontSize: 18, marginBottom: 32 }}>Explore the complete Violet catalogue — over a thousand models await.</p>
+            <a href="products.html" style={{ textDecoration: 'none' }}><Button variant="accent" size="lg" trailingIcon={<span>→</span>}>Explore the collection</Button></a>
+          </div>
+        </section>
+
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<Home />);
+</script>
+<script>
+(async () => {
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  @page { margin: 0.5cm; }\n  html, body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }\n  section, article, figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Status & feedback" subtitle="success · warning · danger · info — paired with label, never color-only" -->
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body{margin:0;font-family:var(--vt-font-sans);background:var(--vt-color-bg);padding:22px 24px;display:flex;gap:12px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:var(--vt-radius-pill);font:600 13px var(--vt-font-sans)}
+  .dot{width:8px;height:8px;border-radius:50%}
+  .s{background:var(--vt-color-success-bg);color:var(--vt-color-success)}
+  .w{background:var(--vt-color-warning-bg);color:var(--vt-color-warning)}
+  .d{background:var(--vt-color-danger-bg);color:var(--vt-color-danger)}
+  .i{background:var(--vt-color-info-bg);color:var(--vt-color-info)}
+</style></head>
+<body>
+  <span class="pill s"><span class="dot" style="background:var(--vt-color-success)"></span>Success · Completed</span>
+  <span class="pill w"><span class="dot" style="background:var(--vt-color-warning)"></span>Warning · Shipped</span>
+  <span class="pill d"><span class="dot" style="background:var(--vt-color-danger)"></span>Danger · Rejected</span>
+  <span class="pill i"><span class="dot" style="background:var(--vt-color-info)"></span>Info · Reviewing</span>
+</body></html>

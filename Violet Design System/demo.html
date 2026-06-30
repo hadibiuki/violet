@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violet — Design Gallery</title>
+<link rel="stylesheet" href="tokens/fonts.css">
+<link rel="stylesheet" href="tokens/colors.css">
+<link rel="stylesheet" href="tokens/typography.css">
+<link rel="stylesheet" href="tokens/spacing.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+  header.hero { position: relative; overflow: hidden; color: #fff; padding: 96px 0 88px; background: radial-gradient(1000px 600px at 70% 30%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a); }
+  .aurora { position: absolute; inset: -20%; background: radial-gradient(600px 400px at 20% 30%,rgba(168,85,247,.25),transparent 60%),radial-gradient(500px 500px at 80% 70%,rgba(124,58,237,.22),transparent 60%),radial-gradient(400px 400px at 60% 20%,rgba(201,168,106,.12),transparent 60%); filter: blur(10px); animation: aur 18s ease-in-out infinite; }
+  @keyframes aur { 0%,100%{transform:translate(0,0);} 50%{transform:translate(3%,-3%);} }
+  .eyebrow { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--vt-gold-300); font-weight: 500; }
+  h1 { font-family: var(--vt-font-display); font-weight: 300; letter-spacing: -.02em; font-size: clamp(44px,6vw,82px); line-height: 1.02; margin: 16px 0 14px; }
+  .hero p { font-size: 18px; line-height: 1.7; color: #C4B5FD; max-width: 520px; margin: 0; }
+  .counts { display: flex; gap: 40px; margin-top: 34px; flex-wrap: wrap; }
+  .counts b { font-family: var(--vt-font-display); font-size: 34px; font-weight: 400; display: block; }
+  .counts span { font-size: 13px; color: rgba(196,181,253,.8); }
+
+  section.group { padding: 64px 0 0; }
+  .ghead { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
+  .ghead h2 { font-family: var(--vt-font-display); font-weight: 300; font-size: clamp(26px,3.5vw,40px); color: var(--vt-color-text-strong); margin: 0; letter-spacing: -.02em; }
+  .ghead em { font-style: normal; font-size: 13px; color: var(--vt-color-text-subtle); font-family: var(--vt-font-mono); }
+
+  .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .card { display: block; background: var(--vt-color-surface); border: 1px solid var(--vt-color-border); border-radius: var(--vt-radius-lg); overflow: hidden; box-shadow: var(--vt-shadow-sm); transition: transform .18s var(--vt-ease-standard), box-shadow .18s var(--vt-ease-standard); }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--vt-shadow-lg); }
+  .thumb { aspect-ratio: 16/10; position: relative; overflow: hidden; background: linear-gradient(160deg,var(--vt-ink-100),var(--vt-violet-50)); display: grid; place-items: center; }
+  .thumb.dark { background: linear-gradient(160deg,#0D0A1E,#231940); }
+  .glyph { font-family: var(--vt-font-display); font-size: 46px; font-weight: 300; color: var(--vt-color-primary); opacity: .9; }
+  .thumb.dark .glyph { color: var(--vt-gold-300); }
+  .tag { position: absolute; top: 12px; inset-inline-start: 12px; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; padding: 4px 9px; border-radius: var(--vt-radius-pill); background: rgba(255,255,255,.9); color: var(--vt-ink-900); }
+  .body { padding: 18px 20px 20px; }
+  .body h3 { font-size: 17px; font-weight: 600; color: var(--vt-color-text-strong); margin: 0 0 5px; }
+  .body p { font-size: 13.5px; line-height: 1.6; color: var(--vt-color-text-muted); margin: 0 0 12px; }
+  .open { font-size: 13px; font-weight: 500; color: var(--vt-color-primary); display: inline-flex; gap: 7px; align-items: center; }
+  .card:hover .open span { transform: translateX(5px); }
+  .open span { transition: transform .15s var(--vt-ease-standard); }
+
+  footer { margin-top: 72px; border-top: 1px solid var(--vt-color-divider); padding: 30px 0 60px; }
+  footer .wrap { display: flex; justify-content: space-between; color: var(--vt-color-text-subtle); font-size: 13px; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="aurora"></div>
+    <div class="wrap" style="position:relative;z-index:2;">
+      <span class="eyebrow">Design gallery · 2026</span>
+      <h1>Every Violet<br>design, in one place</h1>
+      <p>Eleven ready-to-use screens built on the Violet design system — the international vitrine, the Persian B2B order app, and a live component playground. Click any card to open the live design.</p>
+      <div class="counts">
+        <div><b>11</b><span>Templates</span></div>
+        <div><b>33</b><span>Components</span></div>
+        <div><b>230</b><span>Tokens</span></div>
+        <div><b>3</b><span>Languages · EN · RU · AR · FA</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <!-- REFERENCE SITE -->
+    <section class="group">
+      <div class="ghead"><h2>Reference Site</h2><em>EN · RU · AR — the luxury vitrine</em></div>
+      <div class="grid">
+        <a class="card" href="templates/reference-site-home/ReferenceSiteHome.dc.html">
+          <div class="thumb dark"><span class="tag">Home</span><span class="glyph">✦</span></div>
+          <div class="body"><h3>Home</h3><p>Celestial hero, marquee, product grids, brand story & CTA.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/reference-site-catalog/ReferenceSiteCatalog.dc.html">
+          <div class="thumb"><span class="tag">Catalog</span><span class="glyph">▦</span></div>
+          <div class="body"><h3>Catalog</h3><p>Filter rail, sort, active-filter chips, pagination & skeletons.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/reference-site-product/ReferenceSiteProduct.dc.html">
+          <div class="thumb"><span class="tag">PDP</span><span class="glyph">◷</span></div>
+          <div class="body"><h3>Product Detail</h3><p>Sticky gallery with thumbnails, spec tabs & related models.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/reference-site-line/ReferenceSiteLine.dc.html">
+          <div class="thumb dark"><span class="tag">Collection</span><span class="glyph">❖</span></div>
+          <div class="body"><h3>Collection Line</h3><p>21/9 campaign banner with switchable lines & filtered grid.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/reference-site-rtl/ReferenceSiteRtl.dc.html">
+          <div class="thumb"><span class="tag">RTL · العربية</span><span class="glyph">‹❉›</span></div>
+          <div class="body"><h3>RTL (Arabic)</h3><p>Mirrored storefront proving the system is RTL-first.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/reference-site-dark/ReferenceSiteDark.dc.html">
+          <div class="thumb dark"><span class="tag">Dark mode</span><span class="glyph">☾</span></div>
+          <div class="body"><h3>Dark Mode</h3><p>Full storefront with a live light/dark toggle.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- B2B APP -->
+    <section class="group">
+      <div class="ghead"><h2>B2B Order App</h2><em>Persian · RTL — wholesale ordering</em></div>
+      <div class="grid">
+        <a class="card" href="templates/b2b-app/B2BApp.dc.html">
+          <div class="thumb dark"><span class="tag">Full app</span><span class="glyph">⟐</span></div>
+          <div class="body"><h3>Full Order App</h3><p>Login → catalog → cart → checkout → order tracking.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/b2b-dashboard/B2BDashboard.dc.html">
+          <div class="thumb"><span class="tag">Dashboard</span><span class="glyph">▥</span></div>
+          <div class="body"><h3>Dashboard</h3><p>Sidebar shell, stat cards, recent orders & catalog.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/b2b-cart/B2BCart.dc.html">
+          <div class="thumb"><span class="tag">Cart</span><span class="glyph">⊞</span></div>
+          <div class="body"><h3>Cart & Proforma</h3><p>MOQ stepper cart and a proforma invoice document.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="templates/b2b-admin/B2BAdmin.dc.html">
+          <div class="thumb dark"><span class="tag">Admin</span><span class="glyph">⌥</span></div>
+          <div class="body"><h3>Admin · Sales Panel</h3><p>Approve dealers, manage products & order status.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- SHOWCASE -->
+    <section class="group">
+      <div class="ghead"><h2>Component Playground</h2><em>Every primitive, live</em></div>
+      <div class="grid">
+        <a class="card" href="templates/component-showcase/ComponentShowcase.dc.html">
+          <div class="thumb"><span class="tag">Interactive</span><span class="glyph">◉</span></div>
+          <div class="body"><h3>Component Showcase</h3><p>Hero, radios, tooltips, spinners, skeletons, toasts & modal.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+        <a class="card" href="overview.html">
+          <div class="thumb dark"><span class="tag">Foundations</span><span class="glyph">Aa</span></div>
+          <div class="body"><h3>System Overview</h3><p>Colors, type, spacing & brand specimen cards.</p><span class="open">Open live <span>→</span></span></div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap"><span>© 2026 Violet Watches · Design system gallery</span><span>English · Русский · العربية · فارسی</span></div>
+  </footer>
+</body>
+</html>

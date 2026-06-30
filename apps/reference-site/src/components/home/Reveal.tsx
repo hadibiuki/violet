@@ -10,11 +10,14 @@ export function Reveal({
   children,
   delay = 0,
   style,
+  className,
 }: {
   children: ReactNode;
   /** Stagger in ms, applied as transition-delay. */
   delay?: number;
   style?: CSSProperties;
+  /** Extra classes merged after the internal `reveal` class. */
+  className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -37,7 +40,11 @@ export function Reveal({
   }, []);
 
   return (
-    <div ref={ref} className="reveal" style={{ transitionDelay: `${delay}ms`, ...style }}>
+    <div
+      ref={ref}
+      className={className ? `reveal ${className}` : "reveal"}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
+    >
       {children}
     </div>
   );

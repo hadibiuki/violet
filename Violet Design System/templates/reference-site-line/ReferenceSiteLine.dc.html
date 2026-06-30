@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Reference Site — Collection Line" description="Line landing page for the Violet vitrine — 21/9 campaign banner, switchable lines (Classic/Sport/Smart/Heritage), story split, and a filtered grid." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  body { margin: 0; background: var(--vt-color-bg); color: var(--vt-color-text); font-family: var(--vt-font-sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  @keyframes vtAuroraL { 0%,100% { transform: translate(0,0); } 50% { transform: translate(3%,-3%); } }
+  .vtAuroraL { animation: vtAuroraL 18s ease-in-out infinite; }
+  .vtNavlink { position: relative; }
+  .vtNavlink::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--vt-gold-400); transform: scaleX(0); transform-origin: left; transition: transform .2s var(--vt-ease-emphasized); }
+  .vtNavlink:hover::after { transform: scaleX(1); }
+  .vtBannerImg { transition: opacity .6s var(--vt-ease-standard); }
+  @media (prefers-reduced-motion: reduce) { .vtAuroraL { animation: none; } }
+</style>
+</helmet>
+
+<div>
+  <!-- ============ NAV (frosted light) ============ -->
+  <nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;background:rgba(248,247,255,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--vt-color-divider);">
+    <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" hint-size="150px,40px"></x-import>
+    <div style="display:flex;gap:30px;align-items:center;">
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Home</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">New Models</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:600;color:var(--vt-color-primary);white-space:nowrap;">Products</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Brand</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">About</a>
+      <a class="vtNavlink" href="#" style="text-decoration:none;font-size:14px;font-weight:500;color:var(--vt-color-text-muted);white-space:nowrap;">Contact</a>
+    </div>
+    <div style="display:flex;gap:2px;font-size:12.5px;">
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-strong);background:var(--vt-color-primary-subtle);">EN</a>
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-muted);">RU</a>
+      <a href="#" style="padding:5px 9px;border-radius:6px;text-decoration:none;color:var(--vt-color-text-muted);">AR</a>
+    </div>
+  </nav>
+
+  <!-- ============ 21/9 CAMPAIGN BANNER ============ -->
+  <header style="max-width:1440px;margin:0 auto;padding:28px 40px 0;">
+    <div style="position:relative;aspect-ratio:21/9;border-radius:var(--vt-radius-2xl);overflow:hidden;background:var(--vt-ink-950);">
+      <img class="vtBannerImg" alt="{{ lineName }}" src="{{ bannerImage }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62;">
+      <div class="vtAuroraL" style="position:absolute;inset:-20%;background:radial-gradient(600px 400px at 20% 70%,rgba(124,58,237,.30),transparent 60%),radial-gradient(420px 420px at 80% 30%,rgba(201,168,106,.14),transparent 60%);filter:blur(10px);mix-blend-mode:screen;"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,10,30,.82) 0%,rgba(13,10,30,.45) 45%,transparent 75%);"></div>
+      <div style="position:absolute;inset:22px;border:1px solid rgba(201,168,106,.45);border-radius:var(--vt-radius-xl);pointer-events:none;"></div>
+      <div style="position:absolute;inset-block:0;inset-inline-start:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(32px,6vw,84px);color:#fff;max-width:680px;">
+        <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-gold-300);font-weight:500;">The {{ lineName }} line</span>
+        <h1 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(40px,6vw,84px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 14px;">{{ lineTagline }}</h1>
+        <p style="font-size:clamp(15px,1.4vw,18px);line-height:1.7;color:#C4B5FD;max-width:440px;margin:0;">{{ lineLead }}</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ LINE SWITCHER ============ -->
+  <div style="max-width:1440px;margin:0 auto;padding:28px 40px 0;display:flex;gap:10px;flex-wrap:wrap;">{{ lineTabs }}</div>
+
+  <!-- ============ STORY SPLIT ============ -->
+  <section style="max-width:1440px;margin:0 auto;padding:56px 40px 24px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div>
+      <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">About the line</span>
+      <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(30px,4vw,46px);color:var(--vt-color-text-strong);margin:14px 0 20px;line-height:1.1;letter-spacing:-.02em;">{{ storyTitle }}</h2>
+      <p style="font-size:17px;line-height:1.85;color:var(--vt-color-text-muted);margin:0 0 26px;max-width:460px;">{{ storyBody }}</p>
+      <div style="display:flex;gap:38px;flex-wrap:wrap;">
+        <div>
+          <div style="font-family:var(--vt-font-display);font-size:34px;color:var(--vt-color-text-strong);">{{ statA }}</div>
+          <div style="font-size:13px;color:var(--vt-color-text-subtle);margin-top:2px;">{{ statALabel }}</div>
+        </div>
+        <div>
+          <div style="font-family:var(--vt-font-display);font-size:34px;color:var(--vt-color-text-strong);">{{ statB }}</div>
+          <div style="font-size:13px;color:var(--vt-color-text-subtle);margin-top:2px;">{{ statBLabel }}</div>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;aspect-ratio:4/5;border-radius:var(--vt-radius-2xl);overflow:hidden;">
+      <img class="vtBannerImg" src="{{ storyImage }}" alt="{{ lineName }} craftsmanship" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:16px;border:1px solid rgba(255,255,255,.4);border-radius:var(--vt-radius-xl);"></div>
+    </div>
+  </section>
+
+  <!-- ============ GRID ============ -->
+  <section style="max-width:1440px;margin:0 auto;padding:48px 40px 96px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:24px;flex-wrap:wrap;">
+      <div>
+        <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-color-accent-strong);font-weight:500;">In this line</span>
+        <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(28px,4vw,44px);color:var(--vt-color-text-strong);margin:6px 0 0;letter-spacing:-.02em;">{{ lineName }} Models</h2>
+      </div>
+      <a href="#" style="font-size:14px;font-weight:500;color:var(--vt-color-primary);text-decoration:none;display:inline-flex;gap:8px;align-items:center;">View all in catalog <span>→</span></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">{{ cards }}</div>
+  </section>
+
+  <!-- ============ CTA BAND ============ -->
+  <section style="position:relative;overflow:hidden;text-align:center;color:#fff;padding:96px 0;background:radial-gradient(800px 400px at 50% 0%,#3B0764,transparent 60%),linear-gradient(160deg,#0D0A1E,#231940);">
+    <div class="vtAuroraL" style="position:absolute;inset:-20%;background:radial-gradient(500px 360px at 30% 40%,rgba(168,85,247,.22),transparent 60%),radial-gradient(420px 420px at 72% 60%,rgba(201,168,106,.10),transparent 60%);filter:blur(10px);"></div>
+    <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 40px;">
+      <span style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-gold-300);font-weight:500;">Begin</span>
+      <h2 style="font-family:var(--vt-font-display);font-weight:300;font-size:clamp(34px,5vw,58px);margin:12px 0 18px;letter-spacing:-.02em;">Find your {{ lineName }}</h2>
+      <p style="color:#C4B5FD;font-size:18px;margin:0 0 30px;">Explore the complete {{ lineName }} line — crafted for those who value time.</p>
+      <x-import component-from-global-scope="VioletDesignSystem_7273c4.Button" variant="accent" size="lg" hint-size="220px,48px">Explore the catalog →</x-import>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--vt-ink-950);color:#fff;padding:64px 40px 30px;">
+    <div style="max-width:1440px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:36px;">
+        <div>
+          <x-import component-from-global-scope="VioletDesignSystem_7273c4.BrandMark" tone="onDark" size="lg" hint-size="160px,44px"></x-import>
+          <p style="color:rgba(255,255,255,.6);font-size:13px;line-height:1.7;margin-top:14px;max-width:280px;">Violet · Watches — an international reference for timeless design, crafted for those who value time.</p>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">EXPLORE</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">New Models</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Products</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Technologies</a>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">BRAND</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">About Violet</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">History</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Quality</a>
+        </div>
+        <div>
+          <h4 style="color:var(--vt-gold-300);font-size:12px;letter-spacing:.12em;margin:0 0 16px;font-weight:600;">SUPPORT</h4>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Contact</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">Find a dealer</a>
+          <a href="#" style="display:block;color:rgba(255,255,255,.66);font-size:14px;margin-bottom:10px;text-decoration:none;">FAQ</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(230,180,83,.2);padding-top:24px;display:flex;justify-content:space-between;color:rgba(255,255,255,.5);font-size:13px;flex-wrap:wrap;gap:10px;">
+        <span>© 2026 Violet Watches. All rights reserved.</span>
+        <span>English · Русский · العربية</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { line: 'Classic' };
+
+  img(i, w) {
+    const f = [
+      'photo-1523275335684-37898b6baf30','photo-1547996160-81dfa63595aa',
+      'photo-1524805444758-089113d48a6d','photo-1533139502658-0198f920d8e8',
+      'photo-1612817159949-195b6eb9e31a','photo-1508685096489-7aacd43bd3b1',
+      'photo-1434056886845-dac89ffe9b56','photo-1495856458515-0637185db551',
+      'photo-1539874754764-5a96559165b0','photo-1542496658-e33a6d0d50f6',
+      'photo-1620625515032-6ed0c1790c75','photo-1611591437281-460bfbe1220a',
+    ];
+    return `https://images.unsplash.com/${f[i % f.length]}?auto=format&fit=crop&w=${w || 600}&q=80`;
+  }
+
+  componentDidMount() {
+    if (!window.VioletDesignSystem_7273c4) {
+      this._iv = setInterval(() => {
+        if (window.VioletDesignSystem_7273c4) { clearInterval(this._iv); this.forceUpdate(); }
+      }, 60);
+    }
+  }
+  componentWillUnmount() { if (this._iv) clearInterval(this._iv); }
+
+  lines() {
+    const F = (i) => this.img(i, 600);
+    return {
+      Classic: {
+        tagline: 'Quiet authority',
+        lead: 'Timeless dress watches — restrained dials, slim cases, and the confidence of a piece made to last a lifetime.',
+        banner: this.img(2, 1600), story: this.img(4, 900),
+        storyTitle: 'Dress watches, refined to their essence',
+        storyBody: 'The Classic line distils a century of watchmaking into clean dials and slim profiles. Every detail is considered, nothing is decorative — restraint, made to last.',
+        statA: '12', statALabel: 'Models', statB: '38–42 mm', statBLabel: 'Case range',
+        products: [
+          { name: 'Chronograph Classic 42', sku: 'VLT-2601', badge: 'new', price: '$1,490', image: F(0), hoverImage: F(1) },
+          { name: 'Lunar Moonphase 41', sku: 'VLT-2604', badge: 'new', price: '$1,980', image: F(6), hoverImage: F(4) },
+          { name: 'Aurora Skeleton 42', sku: 'VLT-1180', badge: 'limited', price: '$2,250', image: F(7), hoverImage: F(4) },
+          { name: 'Eclipse Dress 38', sku: 'VLT-1182', badge: null, price: '$980', image: F(5), hoverImage: F(2) },
+        ],
+      },
+      Sport: {
+        tagline: 'Built for motion',
+        lead: 'Dive-ready cases, luminous dials, and engineering built to keep pace — wherever the day takes you.',
+        banner: this.img(3, 1600), story: this.img(5, 900),
+        storyTitle: 'Engineered for depth and motion',
+        storyBody: 'The Sport line pairs robust 316L cases with high-legibility dials and serious water resistance. Tools first, with the quiet polish of a Violet.',
+        statA: '9', statALabel: 'Models', statB: '5–20 ATM', statBLabel: 'Water resist',
+        products: [
+          { name: 'Sport Diver 44', sku: 'VLT-2603', badge: 'new', price: '$1,650', image: F(3), hoverImage: F(5) },
+          { name: 'Meridian GMT 43', sku: 'VLT-1181', badge: null, price: '$1,490', image: F(4), hoverImage: F(0) },
+          { name: 'Nebula Field 40', sku: 'VLT-1184', badge: null, price: '$1,180', image: F(8), hoverImage: F(9) },
+          { name: 'Vesper Chrono 42', sku: 'VLT-1186', badge: null, price: '$1,540', image: F(10), hoverImage: F(11) },
+        ],
+      },
+      Smart: {
+        tagline: 'Connected, quietly',
+        lead: 'Smart features beneath a traditional face — notifications, tracking, and a battery that lasts, without the screen-first look.',
+        banner: this.img(5, 1600), story: this.img(8, 900),
+        storyTitle: 'Intelligence that stays out of the way',
+        storyBody: 'The Smart line hides its sensors behind a classic dial. Connected when you need it, invisible when you don\u2019t — technology with manners.',
+        statA: '5', statALabel: 'Models', statB: '14 days', statBLabel: 'Battery life',
+        products: [
+          { name: 'Solis Smart 44', sku: 'VLT-1185', badge: null, price: '$790', image: F(9), hoverImage: F(8) },
+          { name: 'Astra Connect 41', sku: 'VLT-1187', badge: 'limited', price: '$1,050', image: F(11), hoverImage: F(10) },
+          { name: 'Tempo Quartz 36', sku: 'VLT-1183', badge: null, price: '$640', image: F(1), hoverImage: F(6) },
+          { name: 'Nebula Field 40', sku: 'VLT-1184', badge: null, price: '$1,180', image: F(8), hoverImage: F(9) },
+        ],
+      },
+      Heritage: {
+        tagline: 'A century, on the wrist',
+        lead: 'Hand-finished movements and archival designs reissued for now — the most collectible pieces in the Violet catalogue.',
+        banner: this.img(4, 1600), story: this.img(0, 900),
+        storyTitle: 'Archive designs, reissued for now',
+        storyBody: 'The Heritage line revives Violet\u2019s most storied references with modern movements and hand-finishing. Few are made; each is numbered.',
+        statA: '4', statALabel: 'Models', statB: 'Limited', statBLabel: 'Production',
+        products: [
+          { name: 'Heritage Automatic 40', sku: 'VLT-2602', badge: 'new', price: '$1,290', image: F(2), hoverImage: F(3) },
+          { name: 'Aurora Skeleton 42', sku: 'VLT-1180', badge: 'limited', price: '$2,250', image: F(7), hoverImage: F(4) },
+          { name: 'Lunar Moonphase 41', sku: 'VLT-2604', badge: 'new', price: '$1,980', image: F(6), hoverImage: F(4) },
+          { name: 'Eclipse Dress 38', sku: 'VLT-1182', badge: null, price: '$980', image: F(5), hoverImage: F(2) },
+        ],
+      },
+    };
+  }
+
+  renderVals() {
+    const NS = window.VioletDesignSystem_7273c4;
+    if (!NS) return {};
+    const data = this.lines();
+    const names = Object.keys(data);
+    const active = data[this.state.line] || data.Classic;
+
+    const lineTabs = names.map((n) => {
+      const sel = n === this.state.line;
+      return React.createElement('button', {
+        key: n, onClick: () => this.setState({ line: n }),
+        style: {
+          cursor: 'pointer', font: 'inherit', fontSize: '14px', fontWeight: sel ? 600 : 500,
+          padding: '9px 20px', borderRadius: 'var(--vt-radius-pill, 999px)',
+          border: sel ? '1.5px solid var(--vt-color-primary)' : '1.5px solid var(--vt-color-border)',
+          background: sel ? 'var(--vt-color-primary)' : 'transparent',
+          color: sel ? '#fff' : 'var(--vt-color-text-muted)',
+          transition: 'all .15s var(--vt-ease-standard)',
+        },
+      }, n);
+    });
+
+    const cards = active.products.map((p) => React.createElement(NS.ProductCard, {
+      key: p.sku, name: p.name, sku: p.sku, image: p.image, hoverImage: p.hoverImage,
+      badge: p.badge, price: p.price, href: '#',
+    }));
+
+    return {
+      lineName: this.state.line,
+      lineTagline: active.tagline,
+      lineLead: active.lead,
+      bannerImage: active.banner,
+      storyImage: active.story,
+      storyTitle: active.storyTitle,
+      storyBody: active.storyBody,
+      statA: active.statA, statALabel: active.statALabel,
+      statB: active.statB, statBLabel: active.statBLabel,
+      lineTabs, cards,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Violet plum timepiece">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#32203a"></stop><stop offset="100%" stop-color="#180f1c"></stop>
+    </radialGradient>
+    <radialGradient id="case" cx="38%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#E6B453"></stop><stop offset="55%" stop-color="#E6B453"></stop><stop offset="100%" stop-color="#a87b2a"></stop>
+    </radialGradient>
+    <radialGradient id="dial" cx="42%" cy="36%" r="78%">
+      <stop offset="0%" stop-color="#3a2742"></stop><stop offset="70%" stop-color="#27192A"></stop><stop offset="100%" stop-color="#27192A"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"></rect>
+  
+  <rect x="232" y="40" width="136" height="190" rx="30" fill="#2a1d31"></rect>
+  <rect x="232" y="370" width="136" height="190" rx="30" fill="#2a1d31"></rect>
+  <rect x="232" y="40" width="136" height="190" rx="30" fill="none" stroke="rgba(255,255,255,.06)"></rect>
+  <rect x="232" y="370" width="136" height="190" rx="30" fill="none" stroke="rgba(0,0,0,.18)"></rect>
+  
+  <rect x="468" y="286" width="26" height="28" rx="6" fill="url(#case)" stroke="#a87b2a"></rect>
+  
+  <circle cx="300" cy="300" r="186" fill="url(#case)"></circle>
+  <circle cx="300" cy="300" r="186" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"></circle>
+  <circle cx="300" cy="300" r="172" fill="#3a2742"></circle>
+  
+  <circle cx="300" cy="300" r="158" fill="url(#dial)"></circle>
+  <circle cx="300" cy="300" r="158" fill="none" stroke="rgba(0,0,0,.15)"></circle>
+  
+  <circle cx="300" cy="300" r="40" fill="none" stroke="#3a2742" stroke-width="0.8" opacity="0.5"></circle><circle cx="300" cy="300" r="62" fill="none" stroke="#3a2742" stroke-width="0.8" opacity="0.5"></circle><circle cx="300" cy="300" r="84" fill="none" stroke="#3a2742" stroke-width="0.8" opacity="0.5"></circle><circle cx="300" cy="300" r="106" fill="none" stroke="#3a2742" stroke-width="0.8" opacity="0.5"></circle><circle cx="300" cy="300" r="128" fill="none" stroke="#3a2742" stroke-width="0.8" opacity="0.5"></circle>
+  
+  <line x1="300.0" y1="152.0" x2="300.0" y2="174.0" stroke="#E6B453" stroke-width="6" stroke-linecap="round"></line><line x1="374.0" y1="171.8" x2="368.0" y2="182.2" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="428.2" y1="226.0" x2="417.8" y2="232.0" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="448.0" y1="300.0" x2="426.0" y2="300.0" stroke="#E6B453" stroke-width="6" stroke-linecap="round"></line><line x1="428.2" y1="374.0" x2="417.8" y2="368.0" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="374.0" y1="428.2" x2="368.0" y2="417.8" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="300.0" y1="448.0" x2="300.0" y2="426.0" stroke="#E6B453" stroke-width="6" stroke-linecap="round"></line><line x1="226.0" y1="428.2" x2="232.0" y2="417.8" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="171.8" y1="374.0" x2="182.2" y2="368.0" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="152.0" y1="300.0" x2="174.0" y2="300.0" stroke="#E6B453" stroke-width="6" stroke-linecap="round"></line><line x1="171.8" y1="226.0" x2="182.2" y2="232.0" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line><line x1="226.0" y1="171.8" x2="232.0" y2="182.2" stroke="#E6B453" stroke-width="3" stroke-linecap="round"></line>
+  
+  <circle cx="300" cy="392" r="30" fill="none" stroke="#3a2742" stroke-width="2"></circle>
+  
+  <line x1="300" y1="300" x2="303.4" y2="377.9" stroke="#f3ecd8" stroke-width="9" stroke-linecap="round"></line>
+  <line x1="300" y1="300" x2="242.0" y2="199.5" stroke="#f3ecd8" stroke-width="6" stroke-linecap="round"></line>
+  <circle cx="300" cy="300" r="11" fill="#E6B453"></circle>
+  <circle cx="300" cy="300" r="4" fill="#27192A"></circle>
+  </svg>

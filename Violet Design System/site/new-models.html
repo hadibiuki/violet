@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Models · Violet</title>
+<meta name="description" content="The latest Violet timepieces — just arrived for the 2026 season.">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+  .vt-navlink{position:relative}
+  .vt-navlink::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;height:1.5px;width:0;background:var(--vt-color-accent);transition:width var(--vt-duration-slow)}
+  .vt-navlink:hover::after{width:100%}
+  .vt-aurora{animation:vt-aurora 18s ease-in-out infinite alternate}
+  @keyframes vt-aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-30px,20px,0) scale(1.06)}}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s var(--vt-ease-standard),transform .6s var(--vt-ease-standard)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="data.js"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel">
+  const { SiteHeader, SiteFooter } = window;
+  const { Button, ProductCard, Badge } = window.VioletDesignSystem_7273c4;
+  const D = window.VT_SITE;
+
+  // facets shown as quick filters on New Models (F-A1)
+  const QUICK = ['Gender', 'Strap', 'Color', 'Movement'];
+
+  function Hero() {
+    return (
+      <header style={{
+        position: 'relative', overflow: 'hidden', paddingTop: 132,
+        background: 'radial-gradient(1100px 620px at 72% 26%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a)',
+      }}>
+        <div className="vt-aurora" style={{ position: 'absolute', inset: '-15%', pointerEvents: 'none', background:
+          'radial-gradient(560px 380px at 20% 30%,rgba(168,85,247,.24),transparent 60%),radial-gradient(460px 460px at 82% 70%,rgba(124,58,237,.20),transparent 60%),radial-gradient(360px 360px at 60% 16%,rgba(201,168,106,.12),transparent 60%)', filter: 'blur(10px)' }} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto', padding: '64px 40px 72px' }}>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center', fontSize: 13, color: 'rgba(196,181,253,.8)', marginBottom: 22 }}>
+            <a href="index.html" style={{ color: 'inherit', textDecoration: 'none' }}>Home</a>
+            <span style={{ opacity: .5 }}>›</span><b style={{ color: '#fff', fontWeight: 500 }}>New Models</b>
+          </div>
+          <span style={{ fontSize: 12, letterSpacing: '.26em', textTransform: 'uppercase', color: 'var(--vt-gold-300)', fontWeight: 500 }}>Just arrived · 2026</span>
+          <h1 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 300, letterSpacing: '-.02em', fontSize: 'clamp(48px,6vw,84px)', lineHeight: 1.02, color: '#fff', margin: '16px 0 18px' }}>
+            New Models
+          </h1>
+          <p style={{ fontSize: 19, lineHeight: 1.7, color: '#C4B5FD', maxWidth: 540 }}>
+            The season's latest timepieces — fresh designs, refined movements. Filter by what matters to you and find the one that's yours.
+          </p>
+        </div>
+      </header>
+    );
+  }
+
+  function NewModels() {
+    const allNew = D.products.filter((p) => p.isNew);
+    const [filters, setFilters] = React.useState({}); // {Gender:'Men', ...}
+
+    const toggle = (facet, value) => setFilters((f) => ({ ...f, [facet]: f[facet] === value ? undefined : value }));
+    const clearAll = () => setFilters({});
+
+    const facetKey = { Gender: 'gender', Strap: 'strap', Color: 'color', Movement: 'movement' };
+    const items = allNew.filter((p) => QUICK.every((q) => !filters[q] || p[facetKey[q]] === filters[q]));
+    const activeCount = QUICK.filter((q) => filters[q]).length;
+
+    React.useEffect(() => {
+      if (window.lucide) lucide.createIcons();
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    });
+
+    return (
+      <div>
+        <SiteHeader active="new" variant="overlay" />
+        <Hero />
+
+        <section style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 96px' }}>
+          {/* Quick filters */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 22, alignItems: 'flex-start', paddingBottom: 22, borderBottom: '1px solid var(--vt-color-divider)' }}>
+            {QUICK.map((facet) => (
+              <div key={facet} style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+                <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--vt-color-text-subtle)' }}>{facet}</span>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {D.facets[facet].map((opt) => {
+                    const on = filters[facet] === opt;
+                    return (
+                      <button key={opt} onClick={() => toggle(facet, opt)} style={{
+                        cursor: 'pointer', fontFamily: 'var(--vt-font-sans)', fontSize: 13, fontWeight: 500,
+                        padding: '7px 14px', borderRadius: 'var(--vt-radius-pill)',
+                        border: `1.5px solid ${on ? 'var(--vt-color-primary)' : 'var(--vt-color-border-strong)'}`,
+                        background: on ? 'var(--vt-color-primary)' : 'var(--vt-color-surface)',
+                        color: on ? '#fff' : 'var(--vt-color-text)',
+                        transition: 'all var(--vt-duration-fast)',
+                      }}>{opt}</button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Result count + clear */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '22px 0 26px', flexWrap: 'wrap', gap: 12 }}>
+            <span aria-live="polite" style={{ fontSize: 14, color: 'var(--vt-color-text-muted)' }}>
+              <b style={{ color: 'var(--vt-color-text-strong)' }}>{items.length}</b> new {items.length === 1 ? 'model' : 'models'}
+              {activeCount > 0 && <span> · {activeCount} {activeCount === 1 ? 'filter' : 'filters'} applied</span>}
+            </span>
+            {activeCount > 0 && (
+              <button onClick={clearAll} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer', background: 'none', border: 'none', fontFamily: 'var(--vt-font-sans)', fontSize: 13.5, color: 'var(--vt-color-text-muted)', textDecoration: 'underline' }}>
+                <i data-lucide="x" style={{ width: 14, height: 14 }}></i>Clear filters
+              </button>
+            )}
+          </div>
+
+          {/* Grid OR empty state */}
+          {items.length > 0 ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+              {items.map((p, i) => (
+                <div key={p.sku} className="reveal" style={{ transitionDelay: `${(i % 4) * 60}ms` }}>
+                  <ProductCard name={p.name} sku={p.sku} badge="new" image={D.frame(p.f)} hoverImage={D.frame(p.f2)} href={`product.html?sku=${p.sku}`} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '72px 20px', background: 'var(--vt-color-surface-sunken)', borderRadius: 'var(--vt-radius-xl)' }}>
+              <div style={{ width: 56, height: 56, margin: '0 auto 18px', borderRadius: '50%', background: 'var(--vt-color-surface)', display: 'grid', placeItems: 'center', boxShadow: 'var(--vt-shadow-sm)' }}>
+                <i data-lucide="search-x" style={{ width: 24, height: 24, color: 'var(--vt-color-text-muted)' }}></i>
+              </div>
+              <h3 style={{ fontFamily: 'var(--vt-font-display)', fontWeight: 400, fontSize: 26, color: 'var(--vt-color-text-strong)', margin: '0 0 8px' }}>No new models match those filters</h3>
+              <p style={{ fontSize: 15, color: 'var(--vt-color-text-muted)', margin: '0 0 22px' }}>Try relaxing a filter, or browse the full collection.</p>
+              <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+                <Button variant="secondary" onClick={clearAll}>Clear filters</Button>
+                <a href="products.html" style={{ textDecoration: 'none' }}><Button variant="primary" trailingIcon={<span>→</span>}>Browse all products</Button></a>
+              </div>
+            </div>
+          )}
+
+          {/* Tail CTA */}
+          {items.length > 0 && (
+            <div style={{ textAlign: 'center', marginTop: 56 }}>
+              <a href="products.html" style={{ textDecoration: 'none' }}>
+                <Button variant="secondary" trailingIcon={<span>→</span>}>View all products</Button>
+              </a>
+            </div>
+          )}
+        </section>
+
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<NewModels />);
+</script>
+</body>
+</html>

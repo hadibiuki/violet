@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violet — Design System Overview</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--vt-font-sans);background:var(--vt-color-bg);color:var(--vt-color-text);-webkit-font-smoothing:antialiased}
+
+  /* ---- hero ---- */
+  .hero{position:relative;overflow:hidden;padding:64px 48px 56px;
+    background:radial-gradient(1100px 600px at 74% 22%,#3B0764 0%,transparent 60%),linear-gradient(160deg,#0D0A1E,#18122B 55%,#1c0f3a);color:#fff}
+  .hero .aurora{position:absolute;inset:-15%;pointer-events:none;filter:blur(10px);
+    background:radial-gradient(560px 380px at 18% 28%,rgba(168,85,247,.24),transparent 60%),radial-gradient(460px 460px at 84% 70%,rgba(124,58,237,.20),transparent 60%),radial-gradient(360px 360px at 60% 16%,rgba(201,168,106,.12),transparent 60%);animation:aur 18s ease-in-out infinite alternate}
+  @keyframes aur{to{transform:translate3d(-30px,20px,0) scale(1.06)}}
+  .hero .in{position:relative;z-index:2;max-width:1180px;margin:0 auto}
+  .lockup{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .lockup .tile{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:#fff;font-family:var(--vt-font-display);font-size:30px;background:linear-gradient(135deg,var(--vt-violet-400),var(--vt-violet-600));box-shadow:0 8px 24px rgba(124,58,237,.5)}
+  .lockup b{font-weight:600;letter-spacing:.2em;font-size:22px}
+  .eyebrow{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--vt-gold-300);font-weight:500}
+  .hero h1{font-family:var(--vt-font-display);font-weight:300;letter-spacing:-.02em;font-size:clamp(44px,6vw,72px);line-height:1.04;margin:14px 0 16px}
+  .hero h1 em{font-style:italic;color:#C4B5FD}
+  .hero p{font-size:18px;line-height:1.7;color:#C4B5FD;max-width:560px;margin:0}
+  .metrics{display:flex;gap:40px;margin-top:34px;flex-wrap:wrap}
+  .metrics .m b{display:block;font-family:var(--vt-font-display);font-size:34px;font-weight:300;color:#fff;line-height:1}
+  .metrics .m span{font-size:13px;color:#A78BFA}
+
+  /* ---- nav ---- */
+  .toc{position:sticky;top:0;z-index:50;display:flex;gap:6px;flex-wrap:wrap;padding:14px 48px;
+    background:rgba(248,247,255,.82);backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--vt-color-divider)}
+  .toc a{font-size:13px;font-weight:500;color:var(--vt-color-text-muted);text-decoration:none;padding:7px 13px;border-radius:var(--vt-radius-pill);transition:all .15s}
+  .toc a:hover{background:var(--vt-color-primary-subtle);color:var(--vt-color-primary)}
+
+  /* ---- sections ---- */
+  main{max-width:1180px;margin:0 auto;padding:8px 48px 96px}
+  section{padding-top:56px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-head h2{font-family:var(--vt-font-display);font-weight:300;font-size:38px;color:var(--vt-color-text-strong);letter-spacing:-.02em;margin:0}
+  .sec-head .count{font-family:var(--vt-font-mono);font-size:13px;color:var(--vt-color-accent-strong)}
+  .sec-sub{font-size:15px;color:var(--vt-color-text-muted);margin:0 0 26px;max-width:640px;line-height:1.6}
+
+  .grid{display:grid;gap:22px}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .cols-1{grid-template-columns:1fr}
+
+  .card{background:var(--vt-color-surface);border:1px solid var(--vt-color-border);border-radius:var(--vt-radius-lg);overflow:hidden;box-shadow:var(--vt-shadow-xs)}
+  .card .cap{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 18px 0}
+  .card .cap .name{font-size:14px;font-weight:600;color:var(--vt-color-text-strong)}
+  .card .cap .grp{font-family:var(--vt-font-mono);font-size:11px;color:var(--vt-color-text-subtle)}
+  .card .sub{padding:2px 18px 0;font-size:12.5px;color:var(--vt-color-text-muted)}
+  .card iframe{display:block;width:100%;border:0;margin-top:12px;background:var(--vt-color-bg)}
+
+  footer{max-width:1180px;margin:0 auto;padding:40px 48px 80px;border-top:1px solid var(--vt-color-divider);color:var(--vt-color-text-muted);font-size:14px;line-height:1.8}
+  footer a{color:var(--vt-color-link);text-decoration:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="aurora"></div>
+  <div class="in">
+    <div class="lockup"><span class="tile">V</span><b>VIOLET</b></div>
+    <span class="eyebrow">Design System · Overview</span>
+    <h1>One brand,<br>built from <em>tokens</em></h1>
+    <p>The shared visual language for Violet — foundations, and 32 reusable components powering the reference site and the B2B order app.</p>
+    <div class="metrics">
+      <div class="m"><b>217</b><span>Design tokens</span></div>
+      <div class="m"><b>32</b><span>Components</span></div>
+      <div class="m"><b>7</b><span>Component groups</span></div>
+      <div class="m"><b>2</b><span>Products · LTR + RTL</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#colors">Colors</a>
+  <a href="#type">Type</a>
+  <a href="#spacing">Spacing</a>
+  <a href="#brand">Brand</a>
+  <a href="#forms">Forms</a>
+  <a href="#display">Display</a>
+  <a href="#feedback">Feedback</a>
+  <a href="#navigation">Navigation</a>
+  <a href="#commerce">Commerce</a>
+  <a href="#marketing">Marketing</a>
+</nav>
+
+<main>
+
+  <!-- ================= FOUNDATIONS ================= -->
+  <section id="colors">
+    <div class="sec-head"><h2>Colors</h2><span class="count">foundations</span></div>
+    <p class="sec-sub">Violet-tinted neutrals carry 60% of every screen, ink type & structure 30%, brand violet ~10%, gold a fraction of that. Pick by role, never by hex.</p>
+    <div class="grid cols-2" data-cards="colors"></div>
+  </section>
+
+  <section id="type">
+    <div class="sec-head"><h2>Typography</h2><span class="count">foundations</span></div>
+    <p class="sec-sub">Cormorant Garamond for brand moments; Inter (EN/RU), Vazirmatn (FA), Cairo (AR) for UI; JetBrains Mono for SKUs.</p>
+    <div class="grid cols-2" data-cards="type"></div>
+  </section>
+
+  <section id="spacing">
+    <div class="sec-head"><h2>Spacing & elevation</h2><span class="count">foundations</span></div>
+    <p class="sec-sub">A 4px base scale, brand radii, violet-tinted shadows, and purposeful motion.</p>
+    <div class="grid cols-2" data-cards="spacing"></div>
+  </section>
+
+  <section id="brand">
+    <div class="sec-head"><h2>Brand</h2><span class="count">foundations</span></div>
+    <p class="sec-sub">The mark, the celestial dark register, and the ✦ / → ornaments.</p>
+    <div class="grid cols-2" data-cards="brand"></div>
+  </section>
+
+  <!-- ================= COMPONENTS ================= -->
+  <section id="forms">
+    <div class="sec-head"><h2>Forms</h2><span class="count">8 components</span></div>
+    <p class="sec-sub">Button · IconButton · Input · Select · Checkbox · Radio · Switch · QuantityStepper</p>
+    <div class="grid cols-1" data-cards="forms"></div>
+  </section>
+
+  <section id="display">
+    <div class="sec-head"><h2>Display</h2><span class="count">7 components</span></div>
+    <p class="sec-sub">ProductCard · Badge · SpecTable · Chip · Avatar · StatTile · Divider</p>
+    <div class="grid cols-1" data-cards="display"></div>
+  </section>
+
+  <section id="feedback">
+    <div class="sec-head"><h2>Feedback</h2><span class="count">6 components</span></div>
+    <p class="sec-sub">OrderStatusPill · Spinner · Skeleton · Tooltip · Toast · Modal</p>
+    <div class="grid cols-1" data-cards="feedback"></div>
+  </section>
+
+  <section id="navigation">
+    <div class="sec-head"><h2>Navigation</h2><span class="count">4 components</span></div>
+    <p class="sec-sub">Breadcrumb · Tabs · Pagination · SortDropdown</p>
+    <div class="grid cols-1" data-cards="navigation"></div>
+  </section>
+
+  <section id="commerce">
+    <div class="sec-head"><h2>Commerce</h2><span class="count">3 components · B2B</span></div>
+    <p class="sec-sub">OrderTimeline · CartLineItem · InvoiceRow</p>
+    <div class="grid cols-1" data-cards="commerce"></div>
+  </section>
+
+  <section id="marketing">
+    <div class="sec-head"><h2>Marketing</h2><span class="count">2 components</span></div>
+    <p class="sec-sub">Hero · Marquee</p>
+    <div class="grid cols-1" data-cards="marketing"></div>
+  </section>
+
+</main>
+
+<footer>
+  <strong style="color:var(--vt-color-text-strong)">Violet Design System</strong> — explore the full set in the
+  <em>Design System</em> tab, the live pages in <code>site/</code>, and the interactive product recreations in
+  <code>ui_kits/</code>. Built from <a href="https://github.com/hadibiuki/violet">github.com/hadibiuki/violet</a>.
+</footer>
+
+<script>
+  // Card registry: [path, name, group-label, subtitle, height]
+  const CARDS = {
+    colors: [
+      ['guidelines/cards/color-violet.html','Brand · Violet ramp','Colors','violet-50 → 950',172],
+      ['guidelines/cards/color-gold.html','Accent · Gold ramp','Colors','the one indulgence',172],
+      ['guidelines/cards/color-ink.html','Neutrals · Ink ramp','Colors','violet-tinted greys',172],
+      ['guidelines/cards/color-semantic.html','Semantic roles','Colors','pick by role',180],
+      ['guidelines/cards/color-status.html','Status & feedback','Colors','paired with label',150],
+      ['guidelines/cards/brand-dark-hero.html','Dark celestial','Colors','the second surface',200],
+    ],
+    type: [
+      ['guidelines/cards/type-display.html','Display · Cormorant','Type','hero & brand moments',180],
+      ['guidelines/cards/type-ui.html','UI · Inter','Type','EN/RU interface',190],
+      ['guidelines/cards/type-scale.html','Type scale','Type','6xl → xs',300],
+      ['guidelines/cards/type-mono-eyebrow.html','Mono & eyebrow','Type','SKU · gold caps',150],
+      ['guidelines/cards/type-rtl.html','RTL · FA + AR','Type','Vazirmatn · Cairo',150],
+    ],
+    spacing: [
+      ['guidelines/cards/space-scale.html','Spacing scale','Spacing','4px base',160],
+      ['guidelines/cards/radius-scale.html','Radius scale','Spacing','chips → pill',160],
+      ['guidelines/cards/elevation.html','Elevation','Spacing','violet-tinted shadows',180],
+      ['guidelines/cards/motion.html','Motion','Spacing','durations',150],
+    ],
+    brand: [
+      ['components/brand/brand.card.html','Brand mark','Brand','the wordmark lockup',70],
+      ['guidelines/cards/brand-ornament.html','Ornament','Brand','✦ sparkle · → arrow',150],
+    ],
+    forms: [['components/forms/forms.card.html','Forms','Components','8 controls',560]],
+    display: [['components/display/display.card.html','Display','Components','7 components',560]],
+    feedback: [['components/feedback/feedback.card.html','Feedback','Components','6 components',420]],
+    navigation: [['components/navigation/navigation.card.html','Navigation','Components','4 components',300]],
+    commerce: [['components/commerce/commerce.card.html','Commerce','Components','3 components',440]],
+    marketing: [['components/marketing/marketing.card.html','Marketing','Components','2 components',360]],
+  };
+
+  for (const [key, items] of Object.entries(CARDS)) {
+    const host = document.querySelector(`[data-cards="${key}"]`);
+    if (!host) continue;
+    for (const [path, name, grp, sub, h] of items) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="cap"><span class="name">${name}</span><span class="grp">${grp}</span></div>
+        <div class="sub">${sub}</div>
+        <iframe loading="lazy" src="${path}" style="height:${h}px" title="${name}"></iframe>`;
+      host.appendChild(card);
+    }
+  }
+</script>
+</body>
+</html>
