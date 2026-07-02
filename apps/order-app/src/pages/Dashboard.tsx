@@ -3,7 +3,7 @@
  * catalog" strip. Entry point after login.
  */
 import { useNavigate } from "react-router-dom";
-import { StatTile, OrderStatusPill, ProductCard, Button } from "@violet/ui";
+import { StatTile, OrderStatusPill, Button } from "@violet/ui";
 import { PageHead, Code } from "../components/PageHead";
 import { Package, FileText, TrendingUp, Store } from "../components/icons";
 import { useStore } from "../state/store";
@@ -31,18 +31,17 @@ export function Dashboard() {
   return (
     <div>
       <PageHead
-        eyebrow={`خوش آمدید، ${user?.name ?? ""}`}
-        title="داشبورد همکار"
-        sub={`${dealer.tier} · کد همکار ${dealer.code}`}
-        action={<Button variant="primary" onClick={() => navigate("/catalog")}>ثبت سفارش جدید</Button>}
+        title="داشبورد"
+        sub={`خوش آمدید، ${user?.name ?? ""} — خلاصهٔ فعالیت ${dealer.company}`}
       />
+      <div className="dashboard-notice">ⓘ <span>سفارش <bdi>ORD-4815</bdi> تأیید شد و در حال آماده‌سازی است.</span><button onClick={() => navigate("/orders/ORD-4815")}>پیگیری ←</button></div>
 
       {/* Stats */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--vt-space-4)", marginBlockEnd: "var(--vt-space-8)" }}>
+      <div className="dashboard-stats" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 18, marginBlockEnd: 28 }}>
         <StatTile value={fa(openOrders)} label="سفارش‌های در جریان" icon={<Package size={20} />} />
         <StatTile value={fa(unpaid)} label="فاکتورهای پرداخت‌نشده" icon={<FileText size={20} />} />
         <StatTile value={fa(orders.length)} label="کل سفارش‌ها" icon={<Store size={20} />} />
-        <StatTile display value={toman(totalSpend)} label="مجموع خرید" icon={<TrendingUp size={20} />} />
+        <StatTile value={`${fa((totalSpend / 1_000_000_000).toFixed(1))} میلیارد`} label="جمع خرید ماه" icon={<TrendingUp size={20} />} />
       </div>
 
       {/* Recent orders */}
@@ -50,7 +49,8 @@ export function Dashboard() {
         <h2 style={{ fontSize: "var(--vt-text-xl)", fontWeight: 800, margin: 0 }}>سفارش‌های اخیر</h2>
         <Button variant="ghost" size="sm" onClick={() => navigate("/orders")}>مشاهدهٔ همه</Button>
       </div>
-      <div style={{ background: "var(--vt-color-surface)", border: "1px solid var(--vt-color-divider)", borderRadius: "var(--vt-radius-lg)", overflow: "hidden", marginBlockEnd: "var(--vt-space-8)" }}>
+      <div className="dashboard-orders">
+        <div className="dashboard-order-head"><span>شماره سفارش</span><span>تاریخ</span><span>تعداد</span><span>مبلغ</span><span>وضعیت</span></div>
         {orders.slice(0, 4).map((o) => (
           <button
             key={o.id}
@@ -86,20 +86,11 @@ export function Dashboard() {
         <h2 style={{ fontSize: "var(--vt-text-xl)", fontWeight: 800, margin: 0 }}>جدیدترین مدل‌ها</h2>
         <Button variant="ghost" size="sm" onClick={() => navigate("/catalog")}>کاتالوگ کامل</Button>
       </div>
-      <div className="dashboard-product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--vt-space-4)" }}>
+      <div className="dashboard-compact-products">
         {newModels.map((p) => (
-          <ProductCard
-            key={p.id}
-            name={p.name}
-            sku={p.sku}
-            image={frame(p.f)}
-            badge="new"
-            price={toman(p.price)}
-            priceUnit="عمده"
-            moq={p.moq}
-            href={`/catalog/${p.id}`}
-            onClick={(e) => { e.preventDefault(); navigate(`/catalog/${p.id}`); }}
-          />
+          <button key={p.id} onClick={() => navigate(`/catalog/${p.id}`)}>
+            <img src={frame(p.f)} alt="" /><span><strong>{p.name}</strong><bdi>{p.sku}</bdi></span><em>{toman(p.price)}</em>
+          </button>
         ))}
       </div>
     </div>
