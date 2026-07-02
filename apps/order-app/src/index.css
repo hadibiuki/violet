@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ------------------------------------------------------------
+   Order-app is single-locale Persian (fa) + RTL. The @violet/ui
+   primitives bind their typography to --vt-font-sans, so we remap
+   that token to the self-hosted IRANYekanX face at the app root.
+   This keeps the shared components untouched while rendering the
+   whole app in Persian. (Reference site keeps Inter.)
+   ------------------------------------------------------------ */
+:root {
+  --vt-font-sans: "IRANYekanX", "Vazirmatn", "Inter", Tahoma, sans-serif;
+  --vt-font-ui: var(--vt-font-sans);
+}
+
+* { box-sizing: border-box; }
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--vt-color-bg);
+  color: var(--vt-color-text);
+  font-family: var(--vt-font-fa);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; }
+
+/* Latin runs (SKUs, order refs, tracking codes) keep mono + LTR isolation */
+.vt-code {
+  font-family: var(--vt-font-mono);
+  direction: ltr;
+  unicode-bidi: isolate;
+  letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
