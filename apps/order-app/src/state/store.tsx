@@ -7,6 +7,7 @@
  */
 import {
   createContext,
+  useEffect,
   useContext,
   useMemo,
   useState,
@@ -58,9 +59,18 @@ const StoreContext = createContext<StoreValue | null>(null);
 let orderSeq = 4822;
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [cart, setCart] = useState<CartLine[]>([]);
+  const [user, setUser] = useState<AuthUser | null>(() => readStored<AuthUser>("violet-b2b-user"));
+  const [cart, setCart] = useState<CartLine[]>(() => readStored<CartLine[]>("violet-b2b-cart") ?? []);
   const [allOrders, setAllOrders] = useState<B2BOrder[]>(seedOrders);
+
+  useEffect(() => {
+    if (user) localStorage.setItem("violet-b2b-user", JSON.stringify(user));
+    else localStorage.removeItem("violet-b2b-user");
+  }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem("violet-b2b-cart", JSON.stringify(cart));
+  }, [cart]);
 
   const value = useMemo<StoreValue>(() => {
     const cartUnits = cart.reduce((s, l) => s + l.qty, 0);
@@ -133,7 +143,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 }
 
 function toFa(n: number): string {
-  return String(n).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
+  return String(n).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)] ?? d);
 }
 
 export function useStore(): StoreValue {
@@ -143,3 +153,13 @@ export function useStore(): StoreValue {
 }
 
 export type { B2BProduct };
+
+function readStored<T>(key: string): T | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) as T : null;
+  } catch {
+    return null;
+  }
+}

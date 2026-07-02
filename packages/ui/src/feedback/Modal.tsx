@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useId, useRef } from "react";
 import type * as React from "react";
 
 export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
@@ -25,13 +25,44 @@ export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
  * Closes on Esc and backdrop click; locks body scroll while open.
  */
 export function Modal({ open, onClose, title, description, children, footer, size = "md", style, ...rest }: ModalProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  const descriptionId = useId();
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && onClose) onClose(); };
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const panel = panelRef.current;
+    const focusable = () => Array.from(panel?.querySelectorAll<HTMLElement>(
+      'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',
+    ) ?? []);
+    focusable()[0]?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && onClose) onClose();
+      if (e.key !== "Tab") return;
+      const items = focusable();
+      if (!items.length) {
+        e.preventDefault();
+        panel?.focus();
+        return;
+      }
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = prev; };
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+      previousFocus?.focus();
+    };
   }, [open, onClose]);
 
   if (!open) return null;
@@ -44,7 +75,12 @@ export function Modal({ open, onClose, title, description, children, footer, siz
       style={{ position: "fixed", inset: 0, zIndex: 400, background: "var(--vt-scrim)", display: "grid", placeItems: "center", padding: "var(--vt-space-6)", animation: "vt-fade var(--vt-duration-base) ease" }}
     >
       <div
-        role="dialog" aria-modal="true"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        aria-describedby={description ? descriptionId : undefined}
+        tabIndex={-1}
         className="vt-modal__panel"
         style={{
           width: "100%", maxWidth: maxW, maxHeight: "90vh", overflowY: "auto",
@@ -56,8 +92,8 @@ export function Modal({ open, onClose, title, description, children, footer, siz
       >
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--vt-space-4)", padding: "var(--vt-space-6) var(--vt-space-6) 0" }}>
           <div>
-            {title && <h2 style={{ margin: 0, fontFamily: "var(--vt-font-display)", fontWeight: 400, fontSize: "var(--vt-text-2xl)", color: "var(--vt-color-text-strong)" }}>{title}</h2>}
-            {description && <p style={{ margin: "6px 0 0", fontSize: "var(--vt-text-sm)", color: "var(--vt-color-text-muted)", lineHeight: 1.6 }}>{description}</p>}
+            {title && <h2 id={titleId} style={{ margin: 0, fontFamily: "var(--vt-font-display)", fontWeight: 400, fontSize: "var(--vt-text-2xl)", color: "var(--vt-color-text-strong)" }}>{title}</h2>}
+            {description && <p id={descriptionId} style={{ margin: "6px 0 0", fontSize: "var(--vt-text-sm)", color: "var(--vt-color-text-muted)", lineHeight: 1.6 }}>{description}</p>}
           </div>
           {onClose && (
             <button onClick={onClose} aria-label="Close" style={{ flex: "none", border: "none", background: "none", cursor: "pointer", color: "var(--vt-color-text-muted)", display: "inline-flex", padding: 4, borderRadius: "var(--vt-radius-sm)" }}>

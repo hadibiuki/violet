@@ -9,7 +9,7 @@ import type { OrderStatus } from "@violet/types";
 
 /** Persian (Western→Eastern Arabic) digit conversion. */
 export const fa = (s: string | number): string =>
-  String(s).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
+  String(s).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)] ?? d);
 
 /** Toman formatter with Persian digits. */
 export const toman = (n: number): string =>

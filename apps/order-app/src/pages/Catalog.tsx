@@ -21,10 +21,12 @@ import {
   type StrapKind,
 } from "../lib/b2b-data";
 import { useStore } from "../state/store";
+import { useNavigate } from "react-router-dom";
 
 type ToastMsg = { id: number; text: string };
 
 export function Catalog() {
+  const navigate = useNavigate();
   const { addToCart } = useStore();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<ProductCat | "all">("all");
@@ -60,7 +62,7 @@ export function Catalog() {
         sub={`${fa(list.length)} مدل قابل سفارش · قیمت‌ها به‌صورت عمده و بدون احتساب مالیات`}
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "240px 1fr", gap: "var(--vt-space-8)", alignItems: "start" }}>
+      <div className="catalog-layout" style={{ display: "grid", gridTemplateColumns: "240px 1fr", gap: "var(--vt-space-8)", alignItems: "start" }}>
         {/* Filter rail */}
         <aside
           style={{
@@ -130,9 +132,9 @@ export function Catalog() {
             موردی با این فیلترها یافت نشد.
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "var(--vt-space-5)" }}>
+          <div className="b2b-product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "var(--vt-space-5)" }}>
             {list.map((p) => (
-              <CatalogCard key={p.id} product={p} onAdd={(qty) => { addToCart(p.id, qty); pushToast(`${p.name} به سبد افزوده شد`); }} />
+              <CatalogCard key={p.id} product={p} onOpen={() => navigate(`/catalog/${p.id}`)} onAdd={(qty) => { addToCart(p.id, qty); pushToast(`${p.name} به سبد افزوده شد`); }} />
             ))}
           </div>
         )}
@@ -193,7 +195,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-function CatalogCard({ product: p, onAdd }: { product: B2BProduct; onAdd: (qty: number) => void }) {
+function CatalogCard({ product: p, onAdd, onOpen }: { product: B2BProduct; onAdd: (qty: number) => void; onOpen: () => void }) {
   const [qty, setQty] = useState(p.moq);
   const out = p.stock === 0;
   return (
@@ -206,8 +208,8 @@ function CatalogCard({ product: p, onAdd }: { product: B2BProduct; onAdd: (qty: 
       priceUnit="هر عدد · عمده"
       moq={p.moq}
       unavailable={out}
-      href={undefined}
-      onClick={(e) => e.preventDefault()}
+      href={`/catalog/${p.id}`}
+      onClick={(e) => { e.preventDefault(); onOpen(); }}
       action={
         out ? (
           <Badge variant="soldout">ناموجود</Badge>

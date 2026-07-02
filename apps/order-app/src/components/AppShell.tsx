@@ -3,6 +3,7 @@
  * top bar (dealer identity, cart). All offsets use logical properties so the
  * layout mirrors correctly in RTL.
  */
+import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { BrandMark } from "@violet/ui";
 import {
@@ -11,6 +12,7 @@ import {
   ShoppingCart,
   Package,
   FileText,
+  Users,
   ShieldCheck,
   LogOut,
 } from "./icons";
@@ -23,6 +25,8 @@ const NAV = [
   { to: "/cart", label: "سبد سفارش", icon: ShoppingCart },
   { to: "/orders", label: "سفارش‌های من", icon: Package },
   { to: "/invoices", label: "فاکتورها", icon: FileText },
+  { to: "/profile", label: "پروفایل", icon: Users },
+  { to: "/support", label: "پشتیبانی", icon: FileText },
 ];
 
 const SIDEBAR_W = 268;
@@ -30,6 +34,7 @@ const SIDEBAR_W = 268;
 export function AppShell() {
   const { user, logout, cartCount } = useStore();
   const navigate = useNavigate();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const isAdmin = user?.role === "admin";
 
@@ -37,6 +42,7 @@ export function AppShell() {
     <div style={{ minHeight: "100vh", background: "var(--vt-color-bg)" }}>
       {/* Sidebar */}
       <aside
+        className={`app-sidebar ${mobileNavOpen ? "is-open" : ""}`}
         style={{
           position: "fixed",
           insetBlock: 0,
@@ -120,8 +126,10 @@ export function AppShell() {
       </aside>
 
       {/* Main */}
-      <div style={{ marginInlineStart: SIDEBAR_W, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      {mobileNavOpen && <button className="app-sidebar-backdrop" aria-label="بستن منو" onClick={() => setMobileNavOpen(false)} />}
+      <div className="app-main" style={{ marginInlineStart: SIDEBAR_W, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <header
+          className="app-topbar"
           style={{
             height: 68,
             display: "flex",
@@ -135,7 +143,8 @@ export function AppShell() {
             zIndex: 40,
           }}
         >
-          <div>
+          <button className="app-menu-button" type="button" aria-label="باز کردن منو" aria-expanded={mobileNavOpen} onClick={() => setMobileNavOpen(true)}>☰</button>
+          <div className="app-account">
             <div style={{ fontWeight: 700, fontSize: "var(--vt-text-base)", color: "var(--vt-color-text-strong)" }}>
               {user?.company}
             </div>
@@ -162,7 +171,7 @@ export function AppShell() {
           </NavLink>
         </header>
 
-        <main style={{ flex: 1, padding: "var(--vt-space-8)" }}>
+        <main className="app-page" style={{ flex: 1, padding: "var(--vt-space-8)" }}>
           <Outlet />
         </main>
       </div>

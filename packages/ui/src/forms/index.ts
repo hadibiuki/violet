@@ -16,3 +16,5 @@ export { QuantityStepper } from "./QuantityStepper";
 export type { QuantityStepperProps } from "./QuantityStepper";
 export { Textarea } from "./Textarea";
 export type { TextareaProps } from "./Textarea";
+export { ImageUploader } from "./ImageUploader";
+export type { ImageUploaderProps, UploadedImage } from "./ImageUploader";

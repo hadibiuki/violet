@@ -86,7 +86,7 @@ export function Dashboard() {
         <h2 style={{ fontSize: "var(--vt-text-xl)", fontWeight: 800, margin: 0 }}>جدیدترین مدل‌ها</h2>
         <Button variant="ghost" size="sm" onClick={() => navigate("/catalog")}>کاتالوگ کامل</Button>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--vt-space-4)" }}>
+      <div className="dashboard-product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--vt-space-4)" }}>
         {newModels.map((p) => (
           <ProductCard
             key={p.id}
@@ -97,8 +97,8 @@ export function Dashboard() {
             price={toman(p.price)}
             priceUnit="عمده"
             moq={p.moq}
-            href={undefined}
-            onClick={(e) => { e.preventDefault(); navigate("/catalog"); }}
+            href={`/catalog/${p.id}`}
+            onClick={(e) => { e.preventDefault(); navigate(`/catalog/${p.id}`); }}
           />
         ))}
       </div>

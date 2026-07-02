@@ -4,7 +4,7 @@
  * in RTL via logical properties).
  */
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, BrandMark } from "@violet/ui";
 import type { UserRole } from "@violet/types";
 import { useStore } from "../state/store";
@@ -28,9 +28,10 @@ export function Login() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+    <div className="login-layout" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
       {/* Brand panel */}
       <div
+        className="login-brand"
         style={{
           background: "var(--vt-color-brand-ink)",
           color: "#fff",
@@ -81,6 +82,7 @@ export function Login() {
 
       {/* Form panel */}
       <div
+        className="login-form-panel"
         style={{
           display: "flex",
           alignItems: "center",
@@ -152,6 +154,9 @@ export function Login() {
           <Button type="submit" variant="primary" size="lg" style={{ width: "100%", marginBlockStart: "var(--vt-space-6)" }}>
             ورود به سامانه
           </Button>
+          <Link to="/forgot-password" style={{ display: "block", marginBlockStart: 14, textAlign: "center", color: "var(--vt-color-primary)", fontSize: "var(--vt-text-sm)" }}>
+            گذرواژه را فراموش کرده‌اید؟
+          </Link>
 
           <p style={{ marginBlockStart: "var(--vt-space-5)", fontSize: "var(--vt-text-xs)", color: "var(--vt-color-text-subtle)", textAlign: "center" }}>
             حساب کاربری ندارید؟ با واحد فروش ویولت تماس بگیرید.

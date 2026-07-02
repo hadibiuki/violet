@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { BrandMark } from "@violet/ui";
 import { Link, usePathname } from "../../i18n/navigation";
 import { routing } from "../../i18n/routing";
+import { ThemeToggle } from "./ThemeToggle";
 
 // Route table: [translation key, path]. Paths are locale-agnostic — the
 // next-intl <Link> adds the /en, /ru, /ar prefix.
@@ -12,6 +13,7 @@ const NAV = [
   ["home", "/"],
   ["newModels", "/new-models"],
   ["products", "/products"],
+  ["collections", "/collections"],
   ["brand", "/brand"],
   ["about", "/about"],
   ["technologies", "/technologies"],
@@ -141,6 +143,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "overlay
       </div>
 
       <div style={{ display: "flex", gap: 2, alignItems: "center", fontSize: 12.5 }}>
+        <ThemeToggle onHero={onHero} />
         {routing.locales.map((loc) => {
           const isActive = loc === activeLocale;
           return (

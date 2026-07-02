@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button, Checkbox, Chip, ProductCard, SortDropdown } from "@violet/ui";
+import { Button, Checkbox, Chip, Pagination, ProductCard, SortDropdown } from "@violet/ui";
 import {
   CATALOG_FACETS,
   filterCatalog,
@@ -11,7 +11,7 @@ import {
   type FacetKey,
 } from "../../lib/catalog-data";
 
-const PAGE = 9; // load-more increment (3 rows of 3 on desktop)
+const PAGE_SIZE = 9;
 
 export function CatalogBrowser({ locale }: { locale: string }) {
   const t = useTranslations("Catalog");
@@ -19,18 +19,19 @@ export function CatalogBrowser({ locale }: { locale: string }) {
   const [filters, setFilters] = useState<CatalogFilters>({});
   const [newOnly, setNewOnly] = useState(false);
   const [sort, setSort] = useState<CatalogSort>("newest");
-  const [shown, setShown] = useState(PAGE);
+  const [page, setPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const items = useMemo(
     () => filterCatalog(filters, newOnly, sort),
     [filters, newOnly, sort],
   );
-  const visible = items.slice(0, shown);
+  const pageCount = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+  const visible = items.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   // Reset paging whenever the result set changes.
   useEffect(() => {
-    setShown(PAGE);
+    setPage(1);
   }, [filters, newOnly, sort]);
 
   // The drawer is a mobile-only affordance: once the viewport reaches lg the
@@ -244,11 +245,9 @@ export function CatalogBrowser({ locale }: { locale: string }) {
                   />
                 ))}
               </div>
-              {shown < items.length && (
+              {pageCount > 1 && (
                 <div style={{ textAlign: "center", marginTop: 44 }}>
-                  <Button variant="secondary" onClick={() => setShown((s) => s + PAGE)}>
-                    {t("loadMore", { count: items.length - shown })}
-                  </Button>
+                  <Pagination page={page} pageCount={pageCount} onChange={setPage} />
                 </div>
               )}
             </>

@@ -2,7 +2,7 @@
 // Visit /gallery in the order-app dev server to browse all components.
 import { useState } from "react";
 import {
-  BrandMark, Button, IconButton, Input, Select, Checkbox, Radio, Switch, QuantityStepper,
+  BrandMark, Button, IconButton, Input, Select, Checkbox, Radio, Switch, QuantityStepper, ImageUploader,
   Badge, ProductCard, SpecTable, Chip, Avatar, StatTile, Divider,
   OrderStatusPill, Spinner, Skeleton, Tooltip, Toast, Modal,
   Breadcrumb, Tabs, Pagination, SortDropdown,
@@ -18,6 +18,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 );
 
 export function Gallery() {
+  const [images, setImages] = useState<import("@violet/ui").UploadedImage[]>([]);
   const [qty, setQty] = useState(10);
   const [tab, setTab] = useState("new");
   const [page, setPage] = useState(3);
@@ -48,6 +49,7 @@ export function Gallery() {
         <Radio name="g" value="a" label="Option A" checked />
         <Switch label="Notify on restock" checked={on} onChange={setOn} />
         <QuantityStepper value={qty} moq={10} onChange={setQty} />
+        <ImageUploader label="Product images" value={images} onChange={setImages} />
       </Section>
 
       <Section title="Display">

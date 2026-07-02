@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "../../i18n/navigation";
-import { Badge, Button, SpecTable, ProductCard } from "@violet/ui";
+import { Badge, Button, SpecTable, ProductCard, Tabs } from "@violet/ui";
 import type { SiteProductDetail } from "../../lib/catalog-data";
 import { getRelated } from "../../lib/catalog-data";
 
@@ -29,6 +29,7 @@ export function ProductDetail({ product, locale }: Props) {
   const initialColor = COLOR_OPTIONS.findIndex((c) => c.name === product.dialColor);
   const [activeImage, setActiveImage] = useState(0);
   const [colorIdx, setColorIdx] = useState(initialColor >= 0 ? initialColor : 0);
+  const [detailTab, setDetailTab] = useState("specs");
   const selectedColor = COLOR_OPTIONS[colorIdx] ?? COLOR_OPTIONS[0];
 
   const mm = product.name.match(/(\d{2})\s*$/)?.[1] ?? "40";
@@ -340,27 +341,22 @@ export function ProductDetail({ product, locale }: Props) {
             borderTop: "1px solid var(--vt-color-divider)",
           }}
         >
-          <h2
-            style={{
-              fontFamily: "var(--vt-font-display)",
-              fontWeight: 300,
-              fontSize: "clamp(28px,3.2vw,36px)",
-              color: "var(--vt-color-text-strong)",
-              marginBottom: 28,
-              letterSpacing: "-.02em",
-            }}
-          >
-            {t("specs.heading")}
-          </h2>
-          <div
-            style={{
-              maxWidth: 760,
-              border: "1px solid var(--vt-color-border)",
-              borderRadius: "var(--vt-radius-lg)",
-              overflow: "hidden",
-            }}
-          >
-            <SpecTable rows={specRows} />
+          <Tabs
+            aria-label={t("specs.heading")}
+            value={detailTab}
+            onChange={setDetailTab}
+            tabs={pdpTabs(locale)}
+          />
+          <div style={{ maxWidth: 760, marginTop: 28 }}>
+            {detailTab === "specs" ? (
+              <div style={{ border: "1px solid var(--vt-color-border)", borderRadius: "var(--vt-radius-lg)", overflow: "hidden" }}>
+                <SpecTable rows={specRows} />
+              </div>
+            ) : (
+              <div style={{ padding: "var(--vt-space-6)", border: "1px solid var(--vt-color-border)", borderRadius: "var(--vt-radius-lg)", color: "var(--vt-color-text-muted)", lineHeight: 1.9, background: "var(--vt-color-surface)" }}>
+                {detailTab === "features" ? pdpCopy(locale).features : pdpCopy(locale).care}
+              </div>
+            )}
           </div>
         </section>
 
@@ -400,4 +396,28 @@ export function ProductDetail({ product, locale }: Props) {
       </div>
     </>
   );
+}
+
+function pdpTabs(locale: string) {
+  const labels = locale === "ar"
+    ? ["المواصفات", "المزايا", "العناية"]
+    : locale === "ru"
+      ? ["Характеристики", "Особенности", "Уход"]
+      : ["Specifications", "Features", "Care"];
+  return ["specs", "features", "care"].map((value, index) => ({ value, label: labels[index] ?? value }));
+}
+
+function pdpCopy(locale: string) {
+  if (locale === "ar") return {
+    features: "حركة دقيقة، زجاج معدني بدرجة صفير، هيكل من فولاذ 316L وحزام قابل للتبديل صُممت جميعها للاستخدام اليومي طويل الأمد.",
+    care: "امسح الساعة بقطعة قماش ناعمة وجافة، وتجنب العطور والمذيبات والمجالات المغناطيسية القوية.",
+  };
+  if (locale === "ru") return {
+    features: "Точный механизм, минеральное стекло сапфирового класса, корпус из стали 316L и сменный ремешок рассчитаны на долгую службу.",
+    care: "Протирайте часы мягкой сухой тканью, избегайте парфюма, растворителей и сильных магнитных полей.",
+  };
+  return {
+    features: "A precision movement, sapphire-grade mineral glass, 316L steel case, and interchangeable strap are engineered for lasting everyday wear.",
+    care: "Wipe with a soft dry cloth and avoid perfumes, solvents, and strong magnetic fields. Rinse water-resistant models after salt-water exposure.",
+  };
 }

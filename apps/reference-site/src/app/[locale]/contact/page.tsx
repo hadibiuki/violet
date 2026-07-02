@@ -226,7 +226,7 @@ export default async function ContactPage({ params }: Props) {
 
             {/* Social / misc icon buttons */}
             <div style={{ display: "flex", gap: 10 }}>
-              {[<GlobeIcon />, <InstagramIcon />, <SendIcon />].map((icon, i) => (
+              {[GlobeIcon, InstagramIcon, SendIcon].map((Icon, i) => (
                 <span
                   key={i}
                   style={{
@@ -240,7 +240,7 @@ export default async function ContactPage({ params }: Props) {
                     cursor: "pointer",
                   }}
                 >
-                  {icon}
+                  <Icon />
                 </span>
               ))}
             </div>

@@ -136,13 +136,13 @@ export default async function HomePage({
             eyebrow={t("lines.eyebrow")}
             title={t("lines.title")}
             link={t("lines.link")}
-            href="/products"
+            href="/collections"
           />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {LINES.map((l, i) => (
               <Reveal key={l.line} delay={i * 70}>
                 <Link
-                  href="/products"
+                  href="/collections"
                   className="vt-linecard"
                   style={{
                     position: "relative",
